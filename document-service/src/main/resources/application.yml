@@ -1,0 +1,64 @@
+server:
+  port: 8084
+  servlet:
+    context-path: /documents
+
+spring:
+  application:
+    name: document-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sems_document
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  elasticsearch:
+    uris: http://localhost:9200
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8888
+      fail-fast: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+app:
+  aws:
+    s3:
+      region: us-east-1
+      bucket-name: sems-documents
+      access-key: ${AWS_ACCESS_KEY:dummy-access-key}
+      secret-key: ${AWS_SECRET_KEY:dummy-secret-key}
+  elasticsearch:
+    index-name: documents 

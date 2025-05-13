@@ -1,0 +1,899 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.sems:expense-service >----------------------
+[INFO] Building Expense Service 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.2.0:run (default-cli) > test-compile @ expense-service >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ expense-service ---
+[INFO] Copying 2 resources from src/main/resources to target/classes
+[INFO] Copying 3 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ expense-service ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ expense-service ---
+[INFO] skip non existing resourceDirectory /Users/darkly/Desktop/SEMS/expense-service/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ expense-service ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] <<< spring-boot:3.2.0:run (default-cli) < test-compile @ expense-service <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.0:run (default-cli) @ expense-service ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+[32m :: Spring Boot :: [39m              [2m (v3.2.0)[0;39m
+
+[2m2025-05-13T19:50:38.484+03:00[0;39m [32m INFO[0;39m [35m41749[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.c.c.ConfigServicePropertySourceLocator[0;39m [2m:[0;39m Fetching config from server at : http://localhost:8888
+[2m2025-05-13T19:50:38.490+03:00[0;39m [32m INFO[0;39m [35m41749[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.c.c.ConfigServicePropertySourceLocator[0;39m [2m:[0;39m Located environment: name=expense-service, profiles=[default], label=null, version=null, state=null
+[2m2025-05-13T19:50:38.491+03:00[0;39m [32m INFO[0;39m [35m41749[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mb.c.PropertySourceBootstrapConfiguration[0;39m [2m:[0;39m Located property source: [BootstrapPropertySource {name='bootstrapProperties-configClient'}]
+[2m2025-05-13T19:50:38.493+03:00[0;39m [32m INFO[0;39m [35m41749[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.s.expense.ExpenseServiceApplication   [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
+[2m2025-05-13T19:50:38.499+03:00[0;39m [32m INFO[0;39m [35m41749[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.c.c.c.ConfigServerConfigDataLoader  [0;39m [2m:[0;39m Fetching config from server at : http://localhost:8888
+[2m2025-05-13T19:50:38.499+03:00[0;39m [32m INFO[0;39m [35m41749[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.c.c.c.ConfigServerConfigDataLoader  [0;39m [2m:[0;39m Located environment: name=expense-service, profiles=[default], label=null, version=null, state=null
+[2m2025-05-13T19:50:38.535+03:00[0;39m [33m WARN[0;39m [35m41749[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mConfigServletWebServerApplicationContext[0;39m [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.sems.expense.ExpenseServiceApplication]
+[2m2025-05-13T19:50:38.543+03:00[0;39m [31mERROR[0;39m [35m41749[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.boot.SpringApplication              [0;39m [2m:[0;39m Application run failed
+
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.sems.expense.ExpenseServiceApplication]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:178) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:416) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:289) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:349) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:118) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:775) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:597) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:455) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:323) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331) ~[spring-boot-3.2.0.jar:3.2.0]
+	at com.sems.expense.ExpenseServiceApplication.main(ExpenseServiceApplication.java:14) ~[classes/:na]
+Caused by: org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'expenseRepositoryAdapter' for bean class [com.sems.expense.adapter.persistence.ExpenseRepositoryAdapter] conflicts with existing, non-compatible bean definition of same name and class [com.sems.expense.adapter.out.persistence.ExpenseRepositoryAdapter]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.checkCandidate(ClassPathBeanDefinitionScanner.java:361) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.doScan(ClassPathBeanDefinitionScanner.java:288) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.annotation.ComponentScanAnnotationParser.parse(ComponentScanAnnotationParser.java:128) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:296) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:245) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:196) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:164) ~[spring-context-6.1.1.jar:6.1.1]
+	... 13 common frames omitted
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.415 s
+[INFO] Finished at: 2025-05-13T19:50:38+03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.2.0:run (default-cli) on project expense-service: Process terminated with exit code: 1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.sems:expense-service >----------------------
+[INFO] Building Expense Service 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.2.0:run (default-cli) > test-compile @ expense-service >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ expense-service ---
+[INFO] Copying 2 resources from src/main/resources to target/classes
+[INFO] Copying 3 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ expense-service ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ expense-service ---
+[INFO] skip non existing resourceDirectory /Users/darkly/Desktop/SEMS/expense-service/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ expense-service ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] <<< spring-boot:3.2.0:run (default-cli) < test-compile @ expense-service <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.0:run (default-cli) @ expense-service ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+[32m :: Spring Boot :: [39m              [2m (v3.2.0)[0;39m
+
+[2m2025-05-13T19:53:48.815+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.c.c.ConfigServicePropertySourceLocator[0;39m [2m:[0;39m Fetching config from server at : http://localhost:8888
+[2m2025-05-13T19:53:48.821+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.c.c.ConfigServicePropertySourceLocator[0;39m [2m:[0;39m Located environment: name=expense-service, profiles=[default], label=null, version=null, state=null
+[2m2025-05-13T19:53:48.822+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mb.c.PropertySourceBootstrapConfiguration[0;39m [2m:[0;39m Located property source: [BootstrapPropertySource {name='bootstrapProperties-configClient'}]
+[2m2025-05-13T19:53:48.824+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.s.expense.ExpenseServiceApplication   [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
+[2m2025-05-13T19:53:48.830+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.c.c.c.ConfigServerConfigDataLoader  [0;39m [2m:[0;39m Fetching config from server at : http://localhost:8888
+[2m2025-05-13T19:53:48.830+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.c.c.c.ConfigServerConfigDataLoader  [0;39m [2m:[0;39m Located environment: name=expense-service, profiles=[default], label=null, version=null, state=null
+[2m2025-05-13T19:53:49.159+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2m2025-05-13T19:53:49.213+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Finished Spring Data repository scanning in 52 ms. Found 4 JPA repository interfaces.
+[2m2025-05-13T19:53:49.325+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.cloud.context.scope.GenericScope    [0;39m [2m:[0;39m BeanFactory id=33610c88-e9ac-3644-9378-41277881805d
+[2m2025-05-13T19:53:49.468+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$RetryInterceptorAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$RetryInterceptorAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+[2m2025-05-13T19:53:49.470+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration' of type [org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.471+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration' of type [org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.475+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration' of type [org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.476+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.477+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerClientsDefaultsMappingsProvider' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration$$Lambda/0x000007fc01577308] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.478+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'defaultsBindHandlerAdvisor' of type [org.springframework.cloud.commons.config.DefaultsBindHandlerAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.480+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration' of type [org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.481+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'stringOrNumberMigrationVersionConverter' of type [org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration$StringOrNumberToMigrationVersionConverter] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.482+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'spring.cloud.loadbalancer-org.springframework.cloud.client.loadbalancer.LoadBalancerClientsProperties' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerClientsProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.486+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'default.org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.487+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'default.org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.487+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'default.org.springframework.cloud.netflix.eureka.loadbalancer.LoadBalancerEurekaAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.487+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerClientFactory' of type [org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.490+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'blockingLoadBalancerClient' of type [org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.494+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerServiceInstanceCookieTransformer' of type [org.springframework.cloud.loadbalancer.core.LoadBalancerServiceInstanceCookieTransformer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.495+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'xForwarderHeadersTransformer' of type [org.springframework.cloud.loadbalancer.blocking.XForwardedHeadersTransformer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.495+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.496+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerRequestFactory' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerRequestFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.497+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerRetryConfig' of type [org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerRetryConfig$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.499+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancedRetryFactory' of type [org.springframework.cloud.loadbalancer.blocking.retry.BlockingLoadBalancedRetryFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.500+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.RetryLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:53:49.607+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port 8082 (http)
+[2m2025-05-13T19:53:49.611+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
+[2m2025-05-13T19:53:49.611+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.apache.catalina.core.StandardEngine   [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/10.1.16]
+[2m2025-05-13T19:53:49.635+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.a.c.c.C.[.[localhost].[/expenses]     [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
+[2m2025-05-13T19:53:49.635+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 805 ms
+[2m2025-05-13T19:53:49.771+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Starting...
+[2m2025-05-13T19:53:49.947+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.pool.HikariPool       [0;39m [2m:[0;39m HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6aa792
+[2m2025-05-13T19:53:49.948+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Start completed.
+[2m2025-05-13T19:53:49.990+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.c.internal.license.VersionPrinter   [0;39m [2m:[0;39m Flyway Community Edition 9.22.3 by Redgate
+[2m2025-05-13T19:53:49.990+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.c.internal.license.VersionPrinter   [0;39m [2m:[0;39m See release notes here: https://rd.gt/416ObMi
+[2m2025-05-13T19:53:49.990+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.c.internal.license.VersionPrinter   [0;39m [2m:[0;39m 
+[2m2025-05-13T19:53:50.022+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36morg.flywaydb.core.FlywayExecutor        [0;39m [2m:[0;39m Database: jdbc:mysql://localhost:3307/sems_expense (MySQL 8.0)
+[2m2025-05-13T19:53:50.062+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.c.i.s.JdbcTableSchemaHistory        [0;39m [2m:[0;39m Schema history table `sems_expense`.`flyway_schema_history` does not exist yet
+[2m2025-05-13T19:53:50.063+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.core.internal.command.DbValidate    [0;39m [2m:[0;39m Successfully validated 3 migrations (execution time 00:00.012s)
+[2m2025-05-13T19:53:50.083+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.c.i.s.JdbcTableSchemaHistory        [0;39m [2m:[0;39m Creating Schema History table `sems_expense`.`flyway_schema_history` with baseline ...
+[2m2025-05-13T19:53:50.114+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.core.internal.command.DbBaseline    [0;39m [2m:[0;39m Successfully baselined schema with version: 1
+[2m2025-05-13T19:53:50.122+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.core.internal.command.DbMigrate     [0;39m [2m:[0;39m Current version of schema `sems_expense`: 1
+[2m2025-05-13T19:53:50.126+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.core.internal.command.DbMigrate     [0;39m [2m:[0;39m Migrating schema `sems_expense` to version "2 - create categories table"
+[2m2025-05-13T19:53:50.145+03:00[0;39m [31mERROR[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.core.internal.command.DbMigrate     [0;39m [2m:[0;39m Migration of schema `sems_expense` to version "2 - create categories table" failed! Please restore backups and roll back database and code!
+[2m2025-05-13T19:53:50.154+03:00[0;39m [33m WARN[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mConfigServletWebServerApplicationContext[0;39m [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Migration V2__create_categories_table.sql failed
+------------------------------------------------
+SQL State  : 42000
+Error Code : 1064
+Message    : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UUID PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    category_type VARCHAR(20) N' at line 3
+Location   : db/migration/V2__create_categories_table.sql (/Users/darkly/Desktop/SEMS/expense-service/target/classes/db/migration/V2__create_categories_table.sql)
+Line       : 2
+Statement  : -- Create categories table
+CREATE TABLE categories (
+    id UUID PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    category_type VARCHAR(20) NOT NULL,
+    description VARCHAR(255),
+    is_active BOOLEAN DEFAULT TRUE
+)
+
+[2m2025-05-13T19:53:50.155+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Shutdown initiated...
+[2m2025-05-13T19:53:50.158+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Shutdown completed.
+[2m2025-05-13T19:53:50.159+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Stopping service [Tomcat]
+[2m2025-05-13T19:53:50.168+03:00[0;39m [32m INFO[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36m.s.b.a.l.ConditionEvaluationReportLogger[0;39m [2m:[0;39m 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[2m2025-05-13T19:53:50.174+03:00[0;39m [31mERROR[0;39m [35m42406[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.boot.SpringApplication              [0;39m [2m:[0;39m Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Migration V2__create_categories_table.sql failed
+------------------------------------------------
+SQL State  : 42000
+Error Code : 1064
+Message    : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UUID PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    category_type VARCHAR(20) N' at line 3
+Location   : db/migration/V2__create_categories_table.sql (/Users/darkly/Desktop/SEMS/expense-service/target/classes/db/migration/V2__create_categories_table.sql)
+Line       : 2
+Statement  : -- Create categories table
+CREATE TABLE categories (
+    id UUID PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    category_type VARCHAR(20) NOT NULL,
+    description VARCHAR(255),
+    is_active BOOLEAN DEFAULT TRUE
+)
+
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1775) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:312) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1173) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:936) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:455) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:323) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331) ~[spring-boot-3.2.0.jar:3.2.0]
+	at com.sems.expense.ExpenseServiceApplication.main(ExpenseServiceApplication.java:14) ~[classes/:na]
+Caused by: org.flywaydb.core.internal.command.DbMigrate$FlywayMigrateException: Migration V2__create_categories_table.sql failed
+------------------------------------------------
+SQL State  : 42000
+Error Code : 1064
+Message    : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UUID PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    category_type VARCHAR(20) N' at line 3
+Location   : db/migration/V2__create_categories_table.sql (/Users/darkly/Desktop/SEMS/expense-service/target/classes/db/migration/V2__create_categories_table.sql)
+Line       : 2
+Statement  : -- Create categories table
+CREATE TABLE categories (
+    id UUID PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    category_type VARCHAR(20) NOT NULL,
+    description VARCHAR(255),
+    is_active BOOLEAN DEFAULT TRUE
+)
+
+	at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:382) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.command.DbMigrate.lambda$applyMigrations$1(DbMigrate.java:272) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:55) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.command.DbMigrate.applyMigrations(DbMigrate.java:271) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.command.DbMigrate.migrateGroup(DbMigrate.java:244) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.command.DbMigrate.lambda$migrateAll$0(DbMigrate.java:139) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.database.mysql.MySQLNamedLockTemplate.execute(MySQLNamedLockTemplate.java:58) ~[flyway-mysql-9.22.3.jar:na]
+	at org.flywaydb.database.mysql.MySQLConnection.lock(MySQLConnection.java:152) ~[flyway-mysql-9.22.3.jar:na]
+	at org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory.lock(JdbcTableSchemaHistory.java:144) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.command.DbMigrate.migrateAll(DbMigrate.java:139) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.command.DbMigrate.migrate(DbMigrate.java:97) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.Flyway.lambda$migrate$0(Flyway.java:188) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:213) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.Flyway.migrate(Flyway.java:140) ~[flyway-core-9.22.3.jar:na]
+	at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66) ~[spring-boot-autoconfigure-3.2.0.jar:3.2.0]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1822) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1771) ~[spring-beans-6.1.1.jar:6.1.1]
+	... 18 common frames omitted
+Caused by: org.flywaydb.core.internal.sqlscript.FlywaySqlScriptException: Migration V2__create_categories_table.sql failed
+------------------------------------------------
+SQL State  : 42000
+Error Code : 1064
+Message    : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UUID PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    category_type VARCHAR(20) N' at line 3
+Location   : db/migration/V2__create_categories_table.sql (/Users/darkly/Desktop/SEMS/expense-service/target/classes/db/migration/V2__create_categories_table.sql)
+Line       : 2
+Statement  : -- Create categories table
+CREATE TABLE categories (
+    id UUID PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    category_type VARCHAR(20) NOT NULL,
+    description VARCHAR(255),
+    is_active BOOLEAN DEFAULT TRUE
+)
+
+	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.handleException(DefaultSqlScriptExecutor.java:267) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:222) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.execute(DefaultSqlScriptExecutor.java:126) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.executeOnce(SqlMigrationExecutor.java:68) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.lambda$execute$0(SqlMigrationExecutor.java:57) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.database.DefaultExecutionStrategy.execute(DefaultExecutionStrategy.java:27) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.execute(SqlMigrationExecutor.java:56) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:374) ~[flyway-core-9.22.3.jar:na]
+	... 34 common frames omitted
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UUID PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    category_type VARCHAR(20) N' at line 3
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-8.1.0.jar:8.1.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.1.0.jar:8.1.0]
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:763) ~[mysql-connector-j-8.1.0.jar:8.1.0]
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648) ~[mysql-connector-j-8.1.0.jar:8.1.0]
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-5.0.1.jar:na]
+	at org.flywaydb.core.internal.jdbc.JdbcTemplate.executeStatement(JdbcTemplate.java:201) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.sqlscript.ParsedSqlStatement.execute(ParsedSqlStatement.java:95) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:210) ~[flyway-core-9.22.3.jar:na]
+	... 40 common frames omitted
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.707 s
+[INFO] Finished at: 2025-05-13T19:53:50+03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.2.0:run (default-cli) on project expense-service: Process terminated with exit code: 1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.sems:expense-service >----------------------
+[INFO] Building Expense Service 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.2.0:run (default-cli) > test-compile @ expense-service >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ expense-service ---
+[INFO] Copying 2 resources from src/main/resources to target/classes
+[INFO] Copying 3 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ expense-service ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ expense-service ---
+[INFO] skip non existing resourceDirectory /Users/darkly/Desktop/SEMS/expense-service/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ expense-service ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] <<< spring-boot:3.2.0:run (default-cli) < test-compile @ expense-service <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.0:run (default-cli) @ expense-service ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+[32m :: Spring Boot :: [39m              [2m (v3.2.0)[0;39m
+
+[2m2025-05-13T19:54:57.331+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.c.c.ConfigServicePropertySourceLocator[0;39m [2m:[0;39m Fetching config from server at : http://localhost:8888
+[2m2025-05-13T19:54:57.341+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.c.c.ConfigServicePropertySourceLocator[0;39m [2m:[0;39m Located environment: name=expense-service, profiles=[default], label=null, version=null, state=null
+[2m2025-05-13T19:54:57.341+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mb.c.PropertySourceBootstrapConfiguration[0;39m [2m:[0;39m Located property source: [BootstrapPropertySource {name='bootstrapProperties-configClient'}]
+[2m2025-05-13T19:54:57.344+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.s.expense.ExpenseServiceApplication   [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
+[2m2025-05-13T19:54:57.350+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.c.c.c.ConfigServerConfigDataLoader  [0;39m [2m:[0;39m Fetching config from server at : http://localhost:8888
+[2m2025-05-13T19:54:57.350+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.c.c.c.ConfigServerConfigDataLoader  [0;39m [2m:[0;39m Located environment: name=expense-service, profiles=[default], label=null, version=null, state=null
+[2m2025-05-13T19:54:57.666+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2m2025-05-13T19:54:57.717+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Finished Spring Data repository scanning in 48 ms. Found 4 JPA repository interfaces.
+[2m2025-05-13T19:54:57.817+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.cloud.context.scope.GenericScope    [0;39m [2m:[0;39m BeanFactory id=33610c88-e9ac-3644-9378-41277881805d
+[2m2025-05-13T19:54:57.951+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$RetryInterceptorAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$RetryInterceptorAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+[2m2025-05-13T19:54:57.954+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration' of type [org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.955+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration' of type [org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.958+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration' of type [org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.958+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.959+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerClientsDefaultsMappingsProvider' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration$$Lambda/0x00003ff801577dd0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.960+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'defaultsBindHandlerAdvisor' of type [org.springframework.cloud.commons.config.DefaultsBindHandlerAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.962+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration' of type [org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.962+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'stringOrNumberMigrationVersionConverter' of type [org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration$StringOrNumberToMigrationVersionConverter] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.964+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'spring.cloud.loadbalancer-org.springframework.cloud.client.loadbalancer.LoadBalancerClientsProperties' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerClientsProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.967+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'default.org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.968+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'default.org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.968+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'default.org.springframework.cloud.netflix.eureka.loadbalancer.LoadBalancerEurekaAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.968+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerClientFactory' of type [org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.971+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'blockingLoadBalancerClient' of type [org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.975+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerServiceInstanceCookieTransformer' of type [org.springframework.cloud.loadbalancer.core.LoadBalancerServiceInstanceCookieTransformer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.975+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'xForwarderHeadersTransformer' of type [org.springframework.cloud.loadbalancer.blocking.XForwardedHeadersTransformer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.976+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.977+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerRequestFactory' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerRequestFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.977+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerRetryConfig' of type [org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerRetryConfig$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.979+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancedRetryFactory' of type [org.springframework.cloud.loadbalancer.blocking.retry.BlockingLoadBalancedRetryFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:57.980+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.RetryLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:54:58.069+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port 8082 (http)
+[2m2025-05-13T19:54:58.072+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
+[2m2025-05-13T19:54:58.072+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.apache.catalina.core.StandardEngine   [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/10.1.16]
+[2m2025-05-13T19:54:58.093+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.a.c.c.C.[.[localhost].[/expenses]     [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
+[2m2025-05-13T19:54:58.094+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 743 ms
+[2m2025-05-13T19:54:58.222+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Starting...
+[2m2025-05-13T19:54:58.370+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.pool.HikariPool       [0;39m [2m:[0;39m HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6cb43fd3
+[2m2025-05-13T19:54:58.370+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Start completed.
+[2m2025-05-13T19:54:58.410+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.c.internal.license.VersionPrinter   [0;39m [2m:[0;39m Flyway Community Edition 9.22.3 by Redgate
+[2m2025-05-13T19:54:58.410+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.c.internal.license.VersionPrinter   [0;39m [2m:[0;39m See release notes here: https://rd.gt/416ObMi
+[2m2025-05-13T19:54:58.410+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.c.internal.license.VersionPrinter   [0;39m [2m:[0;39m 
+[2m2025-05-13T19:54:58.435+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36morg.flywaydb.core.FlywayExecutor        [0;39m [2m:[0;39m Database: jdbc:mysql://localhost:3307/sems_expense (MySQL 8.0)
+[2m2025-05-13T19:54:58.471+03:00[0;39m [33m WARN[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mConfigServletWebServerApplicationContext[0;39m [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Validate failed: Migrations have failed validation
+Detected failed migration to version 2 (create categories table).
+Please remove any half-completed changes then run repair to fix the schema history.
+Need more flexibility with validation rules? Learn more: https://rd.gt/3AbJUZE
+[2m2025-05-13T19:54:58.472+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Shutdown initiated...
+[2m2025-05-13T19:54:58.493+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Shutdown completed.
+[2m2025-05-13T19:54:58.494+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Stopping service [Tomcat]
+[2m2025-05-13T19:54:58.505+03:00[0;39m [32m INFO[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36m.s.b.a.l.ConditionEvaluationReportLogger[0;39m [2m:[0;39m 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[2m2025-05-13T19:54:58.510+03:00[0;39m [31mERROR[0;39m [35m42679[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.boot.SpringApplication              [0;39m [2m:[0;39m Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Validate failed: Migrations have failed validation
+Detected failed migration to version 2 (create categories table).
+Please remove any half-completed changes then run repair to fix the schema history.
+Need more flexibility with validation rules? Learn more: https://rd.gt/3AbJUZE
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1775) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:312) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1173) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:936) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:455) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:323) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331) ~[spring-boot-3.2.0.jar:3.2.0]
+	at com.sems.expense.ExpenseServiceApplication.main(ExpenseServiceApplication.java:14) ~[classes/:na]
+Caused by: org.flywaydb.core.api.exception.FlywayValidateException: Validate failed: Migrations have failed validation
+Detected failed migration to version 2 (create categories table).
+Please remove any half-completed changes then run repair to fix the schema history.
+Need more flexibility with validation rules? Learn more: https://rd.gt/3AbJUZE
+	at org.flywaydb.core.Flyway.lambda$migrate$0(Flyway.java:146) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:213) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.Flyway.migrate(Flyway.java:140) ~[flyway-core-9.22.3.jar:na]
+	at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66) ~[spring-boot-autoconfigure-3.2.0.jar:3.2.0]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1822) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1771) ~[spring-beans-6.1.1.jar:6.1.1]
+	... 18 common frames omitted
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.437 s
+[INFO] Finished at: 2025-05-13T19:54:58+03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.2.0:run (default-cli) on project expense-service: Process terminated with exit code: 1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.sems:expense-service >----------------------
+[INFO] Building Expense Service 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.2.0:run (default-cli) > test-compile @ expense-service >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ expense-service ---
+[INFO] Copying 2 resources from src/main/resources to target/classes
+[INFO] Copying 3 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ expense-service ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ expense-service ---
+[INFO] skip non existing resourceDirectory /Users/darkly/Desktop/SEMS/expense-service/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ expense-service ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] <<< spring-boot:3.2.0:run (default-cli) < test-compile @ expense-service <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.0:run (default-cli) @ expense-service ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+[32m :: Spring Boot :: [39m              [2m (v3.2.0)[0;39m
+
+[2m2025-05-13T19:55:45.113+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.c.c.ConfigServicePropertySourceLocator[0;39m [2m:[0;39m Fetching config from server at : http://localhost:8888
+[2m2025-05-13T19:55:45.119+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.c.c.ConfigServicePropertySourceLocator[0;39m [2m:[0;39m Located environment: name=expense-service, profiles=[default], label=null, version=null, state=null
+[2m2025-05-13T19:55:45.119+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mb.c.PropertySourceBootstrapConfiguration[0;39m [2m:[0;39m Located property source: [BootstrapPropertySource {name='bootstrapProperties-configClient'}]
+[2m2025-05-13T19:55:45.121+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.s.expense.ExpenseServiceApplication   [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
+[2m2025-05-13T19:55:45.127+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.c.c.c.ConfigServerConfigDataLoader  [0;39m [2m:[0;39m Fetching config from server at : http://localhost:8888
+[2m2025-05-13T19:55:45.127+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.c.c.c.ConfigServerConfigDataLoader  [0;39m [2m:[0;39m Located environment: name=expense-service, profiles=[default], label=null, version=null, state=null
+[2m2025-05-13T19:55:45.430+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2m2025-05-13T19:55:45.480+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Finished Spring Data repository scanning in 47 ms. Found 4 JPA repository interfaces.
+[2m2025-05-13T19:55:45.571+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.cloud.context.scope.GenericScope    [0;39m [2m:[0;39m BeanFactory id=33610c88-e9ac-3644-9378-41277881805d
+[2m2025-05-13T19:55:45.696+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$RetryInterceptorAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$RetryInterceptorAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+[2m2025-05-13T19:55:45.698+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration' of type [org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.699+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration' of type [org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.702+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration' of type [org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.703+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.703+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerClientsDefaultsMappingsProvider' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration$$Lambda/0x00000ffe01575820] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.704+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'defaultsBindHandlerAdvisor' of type [org.springframework.cloud.commons.config.DefaultsBindHandlerAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.706+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration' of type [org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.706+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'stringOrNumberMigrationVersionConverter' of type [org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration$StringOrNumberToMigrationVersionConverter] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.708+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'spring.cloud.loadbalancer-org.springframework.cloud.client.loadbalancer.LoadBalancerClientsProperties' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerClientsProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.711+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'default.org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.712+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'default.org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.712+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'default.org.springframework.cloud.netflix.eureka.loadbalancer.LoadBalancerEurekaAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.712+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerClientFactory' of type [org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.715+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'blockingLoadBalancerClient' of type [org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.718+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerServiceInstanceCookieTransformer' of type [org.springframework.cloud.loadbalancer.core.LoadBalancerServiceInstanceCookieTransformer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.719+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'xForwarderHeadersTransformer' of type [org.springframework.cloud.loadbalancer.blocking.XForwardedHeadersTransformer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.719+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.720+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerRequestFactory' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerRequestFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.721+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerRetryConfig' of type [org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerRetryConfig$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.722+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancedRetryFactory' of type [org.springframework.cloud.loadbalancer.blocking.retry.BlockingLoadBalancedRetryFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.724+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.RetryLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:55:45.813+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port 8082 (http)
+[2m2025-05-13T19:55:45.816+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
+[2m2025-05-13T19:55:45.816+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.apache.catalina.core.StandardEngine   [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/10.1.16]
+[2m2025-05-13T19:55:45.838+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.a.c.c.C.[.[localhost].[/expenses]     [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
+[2m2025-05-13T19:55:45.838+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 711 ms
+[2m2025-05-13T19:55:45.970+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Starting...
+[2m2025-05-13T19:55:46.132+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.pool.HikariPool       [0;39m [2m:[0;39m HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@57fc6759
+[2m2025-05-13T19:55:46.132+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Start completed.
+[2m2025-05-13T19:55:46.166+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.c.internal.license.VersionPrinter   [0;39m [2m:[0;39m Flyway Community Edition 9.22.3 by Redgate
+[2m2025-05-13T19:55:46.166+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.c.internal.license.VersionPrinter   [0;39m [2m:[0;39m See release notes here: https://rd.gt/416ObMi
+[2m2025-05-13T19:55:46.166+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.c.internal.license.VersionPrinter   [0;39m [2m:[0;39m 
+[2m2025-05-13T19:55:46.180+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36morg.flywaydb.core.FlywayExecutor        [0;39m [2m:[0;39m Database: jdbc:mysql://localhost:3307/sems_expense (MySQL 8.0)
+[2m2025-05-13T19:55:46.205+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.f.core.internal.command.DbMigrate     [0;39m [2m:[0;39m Current version of schema `sems_expense`: 2
+[2m2025-05-13T19:55:46.214+03:00[0;39m [33m WARN[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mConfigServletWebServerApplicationContext[0;39m [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Schema `sems_expense` contains a failed migration to version 2 !
+[2m2025-05-13T19:55:46.214+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Shutdown initiated...
+[2m2025-05-13T19:55:46.215+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Shutdown completed.
+[2m2025-05-13T19:55:46.216+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Stopping service [Tomcat]
+[2m2025-05-13T19:55:46.225+03:00[0;39m [32m INFO[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36m.s.b.a.l.ConditionEvaluationReportLogger[0;39m [2m:[0;39m 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[2m2025-05-13T19:55:46.231+03:00[0;39m [31mERROR[0;39m [35m42894[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.boot.SpringApplication              [0;39m [2m:[0;39m Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Schema `sems_expense` contains a failed migration to version 2 !
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1775) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:312) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1173) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:936) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:455) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:323) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331) ~[spring-boot-3.2.0.jar:3.2.0]
+	at com.sems.expense.ExpenseServiceApplication.main(ExpenseServiceApplication.java:14) ~[classes/:na]
+Caused by: org.flywaydb.core.internal.command.DbMigrate$FlywayMigrateException: Schema `sems_expense` contains a failed migration to version 2 !
+	at org.flywaydb.core.internal.command.DbMigrate.migrateGroup(DbMigrate.java:218) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.command.DbMigrate.lambda$migrateAll$0(DbMigrate.java:139) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.database.mysql.MySQLNamedLockTemplate.execute(MySQLNamedLockTemplate.java:58) ~[flyway-mysql-9.22.3.jar:na]
+	at org.flywaydb.database.mysql.MySQLConnection.lock(MySQLConnection.java:152) ~[flyway-mysql-9.22.3.jar:na]
+	at org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory.lock(JdbcTableSchemaHistory.java:144) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.command.DbMigrate.migrateAll(DbMigrate.java:139) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.internal.command.DbMigrate.migrate(DbMigrate.java:97) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.Flyway.lambda$migrate$0(Flyway.java:188) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:213) ~[flyway-core-9.22.3.jar:na]
+	at org.flywaydb.core.Flyway.migrate(Flyway.java:140) ~[flyway-core-9.22.3.jar:na]
+	at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66) ~[spring-boot-autoconfigure-3.2.0.jar:3.2.0]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1822) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1771) ~[spring-beans-6.1.1.jar:6.1.1]
+	... 18 common frames omitted
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.437 s
+[INFO] Finished at: 2025-05-13T19:55:46+03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.2.0:run (default-cli) on project expense-service: Process terminated with exit code: 1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.sems:expense-service >----------------------
+[INFO] Building Expense Service 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.2.0:run (default-cli) > test-compile @ expense-service >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ expense-service ---
+[INFO] Copying 2 resources from src/main/resources to target/classes
+[INFO] Copying 3 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ expense-service ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ expense-service ---
+[INFO] skip non existing resourceDirectory /Users/darkly/Desktop/SEMS/expense-service/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ expense-service ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] <<< spring-boot:3.2.0:run (default-cli) < test-compile @ expense-service <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.0:run (default-cli) @ expense-service ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+[32m :: Spring Boot :: [39m              [2m (v3.2.0)[0;39m
+
+[2m2025-05-13T19:57:19.542+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.c.c.ConfigServicePropertySourceLocator[0;39m [2m:[0;39m Fetching config from server at : http://localhost:8888
+[2m2025-05-13T19:57:19.548+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.c.c.ConfigServicePropertySourceLocator[0;39m [2m:[0;39m Located environment: name=expense-service, profiles=[default], label=null, version=null, state=null
+[2m2025-05-13T19:57:19.548+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mb.c.PropertySourceBootstrapConfiguration[0;39m [2m:[0;39m Located property source: [BootstrapPropertySource {name='bootstrapProperties-configClient'}]
+[2m2025-05-13T19:57:19.550+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.s.expense.ExpenseServiceApplication   [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
+[2m2025-05-13T19:57:19.556+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.c.c.c.ConfigServerConfigDataLoader  [0;39m [2m:[0;39m Fetching config from server at : http://localhost:8888
+[2m2025-05-13T19:57:19.556+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.c.c.c.ConfigServerConfigDataLoader  [0;39m [2m:[0;39m Located environment: name=expense-service, profiles=[default], label=null, version=null, state=null
+[2m2025-05-13T19:57:19.856+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2m2025-05-13T19:57:19.904+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Finished Spring Data repository scanning in 46 ms. Found 4 JPA repository interfaces.
+[2m2025-05-13T19:57:19.997+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.cloud.context.scope.GenericScope    [0;39m [2m:[0;39m BeanFactory id=f1b392b0-0196-3327-8805-0410c056daf9
+[2m2025-05-13T19:57:20.122+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$RetryInterceptorAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$RetryInterceptorAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+[2m2025-05-13T19:57:20.125+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration' of type [org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.126+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration' of type [org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.129+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration' of type [org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.130+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.130+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerClientsDefaultsMappingsProvider' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration$$Lambda/0x00001e0001574720] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.131+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'defaultsBindHandlerAdvisor' of type [org.springframework.cloud.commons.config.DefaultsBindHandlerAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.134+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'spring.cloud.loadbalancer-org.springframework.cloud.client.loadbalancer.LoadBalancerClientsProperties' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerClientsProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.137+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'default.org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.138+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'default.org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.138+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'default.org.springframework.cloud.netflix.eureka.loadbalancer.LoadBalancerEurekaAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.138+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerClientFactory' of type [org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.141+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'blockingLoadBalancerClient' of type [org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.144+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerServiceInstanceCookieTransformer' of type [org.springframework.cloud.loadbalancer.core.LoadBalancerServiceInstanceCookieTransformer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.145+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'xForwarderHeadersTransformer' of type [org.springframework.cloud.loadbalancer.blocking.XForwardedHeadersTransformer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.146+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.147+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerRequestFactory' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerRequestFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.147+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerRetryConfig' of type [org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerRetryConfig$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.149+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancedRetryFactory' of type [org.springframework.cloud.loadbalancer.blocking.retry.BlockingLoadBalancedRetryFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.151+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'loadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.RetryLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+[2m2025-05-13T19:57:20.239+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port 8082 (http)
+[2m2025-05-13T19:57:20.242+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
+[2m2025-05-13T19:57:20.242+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.apache.catalina.core.StandardEngine   [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/10.1.16]
+[2m2025-05-13T19:57:20.264+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.a.c.c.C.[.[localhost].[/expenses]     [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
+[2m2025-05-13T19:57:20.264+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 708 ms
+[2m2025-05-13T19:57:20.409+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.hibernate.jpa.internal.util.LogHelper [0;39m [2m:[0;39m HHH000204: Processing PersistenceUnitInfo [name: default]
+[2m2025-05-13T19:57:20.425+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36morg.hibernate.Version                   [0;39m [2m:[0;39m HHH000412: Hibernate ORM core version 6.3.1.Final
+[2m2025-05-13T19:57:20.435+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.h.c.internal.RegionFactoryInitiator   [0;39m [2m:[0;39m HHH000026: Second-level cache disabled
+[2m2025-05-13T19:57:20.507+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.o.j.p.SpringPersistenceUnitInfo     [0;39m [2m:[0;39m No LoadTimeWeaver setup: ignoring JPA class transformer
+[2m2025-05-13T19:57:20.516+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Starting...
+[2m2025-05-13T19:57:20.663+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.pool.HikariPool       [0;39m [2m:[0;39m HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@61c0fb12
+[2m2025-05-13T19:57:20.663+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Start completed.
+[2m2025-05-13T19:57:20.682+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36morg.hibernate.orm.deprecation           [0;39m [2m:[0;39m HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+[2m2025-05-13T19:57:21.010+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.h.e.t.j.p.i.JtaPlatformInitiator      [0;39m [2m:[0;39m HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    alter table expense_documents 
+       drop 
+       foreign key FK7rkajdkkyc6ypkuu8wic1gdvd
+[2m2025-05-13T19:57:21.031+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.h.t.s.i.ExceptionHandlerLoggedImpl    [0;39m [2m:[0;39m GenerationTarget encountered exception accepting command : Error executing DDL "
+    alter table expense_documents 
+       drop 
+       foreign key FK7rkajdkkyc6ypkuu8wic1gdvd" via JDBC [Table 'sems_expense.expense_documents' doesn't exist]
+
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
+    alter table expense_documents 
+       drop 
+       foreign key FK7rkajdkkyc6ypkuu8wic1gdvd" via JDBC [Table 'sems_expense.expense_documents' doesn't exist]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.internal.Helper.applySqlString(Helper.java:233) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.internal.Helper.applySqlStrings(Helper.java:217) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applyConstraintDropping(SchemaDropperImpl.java:470) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.dropConstraintsTablesSequences(SchemaDropperImpl.java:242) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.dropFromMetadata(SchemaDropperImpl.java:215) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.performDrop(SchemaDropperImpl.java:185) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:155) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:115) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:244) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:145) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at java.base/java.util.HashMap.forEach(HashMap.java:1430) ~[na:na]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:142) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:295) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:450) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1507) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1822) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1771) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1173) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:936) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:455) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:323) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331) ~[spring-boot-3.2.0.jar:3.2.0]
+	at com.sems.expense.ExpenseServiceApplication.main(ExpenseServiceApplication.java:14) ~[classes/:na]
+Caused by: java.sql.SQLSyntaxErrorException: Table 'sems_expense.expense_documents' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-8.1.0.jar:8.1.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.1.0.jar:8.1.0]
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:763) ~[mysql-connector-j-8.1.0.jar:8.1.0]
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648) ~[mysql-connector-j-8.1.0.jar:8.1.0]
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-5.0.1.jar:na]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	... 40 common frames omitted
+
+Hibernate: 
+    drop table if exists approval_levels
+Hibernate: 
+    drop table if exists approval_steps
+Hibernate: 
+    drop table if exists budgets
+Hibernate: 
+    drop table if exists expense_documents
+Hibernate: 
+    drop table if exists expenses
+Hibernate: 
+    create table approval_levels (
+        is_active bit not null,
+        level integer not null,
+        max_amount_threshold decimal(38,2),
+        min_amount_threshold decimal(38,2) not null,
+        required_approvers integer,
+        requires_receipt bit,
+        department_id binary(16),
+        id binary(16) not null,
+        role_id binary(16),
+        description varchar(255),
+        name varchar(255) not null,
+        primary key (id)
+    ) engine=InnoDB
+Hibernate: 
+    create table approval_steps (
+        level integer,
+        action_date datetime(6) not null,
+        approver_id binary(16),
+        expense_id binary(16) not null,
+        id binary(16) not null,
+        comments varchar(1000),
+        approver_name varchar(255),
+        approver_role varchar(255),
+        action enum ('APPROVED','REJECTED','REQUESTED_CHANGES','ESCALATED','DELEGATED') not null,
+        primary key (id)
+    ) engine=InnoDB
+Hibernate: 
+    create table budgets (
+        active bit not null,
+        amount decimal(10,2) not null,
+        currency_code varchar(3) not null,
+        end_date date not null,
+        remaining decimal(10,2) not null,
+        spent decimal(10,2) not null,
+        start_date date not null,
+        created_at datetime(6),
+        updated_at datetime(6),
+        department_id BINARY(16),
+        id BINARY(16) not null,
+        project_id BINARY(16),
+        description TEXT,
+        name varchar(255) not null,
+        primary key (id)
+    ) engine=InnoDB
+Hibernate: 
+    create table expense_documents (
+        document_id BINARY(16),
+        expense_id BINARY(16) not null
+    ) engine=InnoDB
+Hibernate: 
+    create table expenses (
+        amount decimal(10,2) not null,
+        currency_code varchar(3) not null,
+        current_approval_level integer,
+        expense_date date not null,
+        flagged_for_review bit,
+        receipt_attached bit,
+        requires_receipt bit,
+        created_at datetime(6),
+        updated_at datetime(6),
+        approved_by BINARY(16),
+        department_id BINARY(16),
+        id BINARY(16) not null,
+        project_id BINARY(16),
+        submitted_by BINARY(16) not null,
+        description TEXT,
+        rejection_reason varchar(255),
+        review_comments TEXT,
+        title varchar(255) not null,
+        category enum ('TRAVEL','ACCOMMODATION','MEALS','ENTERTAINMENT','OFFICE_SUPPLIES','SOFTWARE','HARDWARE','TELECOMMUNICATION','TRAINING','MARKETING','CONSULTING','LEGAL','INSURANCE','TAXES','UTILITIES','MISCELLANEOUS') not null,
+        status enum ('DRAFT','SUBMITTED','UNDER_REVIEW','CHANGES_REQUESTED','APPROVED','REJECTED','PAID') not null,
+        primary key (id)
+    ) engine=InnoDB
+Hibernate: 
+    alter table expense_documents 
+       add constraint FK7rkajdkkyc6ypkuu8wic1gdvd 
+       foreign key (expense_id) 
+       references expenses (id)
+[2m2025-05-13T19:57:21.090+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2m2025-05-13T19:57:21.221+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mJpaBaseConfiguration$JpaWebConfiguration[0;39m [2m:[0;39m spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2m2025-05-13T19:57:21.254+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.c.openfeign.FeignClientFactoryBean  [0;39m [2m:[0;39m For 'user-service' URL not provided. Will try picking an instance via load-balancing.
+[2m2025-05-13T19:57:21.396+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.d.j.r.query.QueryEnhancerFactory    [0;39m [2m:[0;39m Hibernate is in classpath; If applicable, HQL parser will be used.
+[2m2025-05-13T19:57:21.713+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36m.s.s.UserDetailsServiceAutoConfiguration[0;39m [2m:[0;39m 
+
+Using generated security password: 49327ba6-4a49-4ac6-80eb-5fb9dd154f3d
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+[2m2025-05-13T19:57:22.060+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.b.a.e.web.EndpointLinksResolver     [0;39m [2m:[0;39m Exposing 17 endpoint(s) beneath base path '/actuator'
+[2m2025-05-13T19:57:22.087+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.s.web.DefaultSecurityFilterChain    [0;39m [2m:[0;39m Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4c9a434f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@49c50140, org.springframework.security.web.context.SecurityContextHolderFilter@13da85f2, org.springframework.security.web.header.HeaderWriterFilter@1531ec6, org.springframework.web.filter.CorsFilter@69f2cff6, org.springframework.security.web.authentication.logout.LogoutFilter@6d340d36, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@28488f2e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@620bb4ea, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7d69bb0e, org.springframework.security.web.session.SessionManagementFilter@72a2b17d, org.springframework.security.web.access.ExceptionTranslationFilter@78b5f3c6, org.springframework.security.web.access.intercept.AuthorizationFilter@a7e362]
+[2m2025-05-13T19:57:22.321+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mDiscoveryClientOptionalArgsConfiguration[0;39m [2m:[0;39m Eureka HTTP Client uses RestTemplate.
+[2m2025-05-13T19:57:22.335+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36miguration$LoadBalancerCaffeineWarnLogger[0;39m [2m:[0;39m Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+[2m2025-05-13T19:57:22.364+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.c.n.eureka.InstanceInfoFactory      [0;39m [2m:[0;39m Setting initial instance status as: STARTING
+[2m2025-05-13T19:57:22.406+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Initializing Eureka in region us-east-1
+[2m2025-05-13T19:57:22.407+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.n.d.s.r.aws.ConfigClusterResolver     [0;39m [2m:[0;39m Resolving eureka endpoints via configuration
+[2m2025-05-13T19:57:22.414+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Disable delta property : false
+[2m2025-05-13T19:57:22.414+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Single vip registry refresh property : null
+[2m2025-05-13T19:57:22.414+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Force full registry fetch : false
+[2m2025-05-13T19:57:22.414+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Application is null : false
+[2m2025-05-13T19:57:22.414+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Registered Applications size is zero : true
+[2m2025-05-13T19:57:22.414+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Application version is -1: true
+[2m2025-05-13T19:57:22.414+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Getting all instance registry info from the eureka server
+[2m2025-05-13T19:57:22.486+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m The response status is 200
+[2m2025-05-13T19:57:22.487+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Starting heartbeat executor: renew interval is: 5
+[2m2025-05-13T19:57:22.487+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.n.discovery.InstanceInfoReplicator    [0;39m [2m:[0;39m InstanceInfoReplicator onDemand update allowed rate per min is 4
+[2m2025-05-13T19:57:22.489+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Discovery Client initialized at timestamp 1747155442488 with initial instances count: 4
+[2m2025-05-13T19:57:22.492+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.c.n.e.s.EurekaServiceRegistry       [0;39m [2m:[0;39m Registering application EXPENSE-SERVICE with eureka with status UP
+[2m2025-05-13T19:57:22.492+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m Saw local status change event StatusChangeEvent [timestamp=1747155442492, current=UP, previous=STARTING]
+[2m2025-05-13T19:57:22.492+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [nfoReplicator-0][0;39m [2m[0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m DiscoveryClient_EXPENSE-SERVICE/172.16.9.192:expense-service:8082: registering service...
+[2m2025-05-13T19:57:22.499+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat started on port 8082 (http) with context path '/expenses'
+[2m2025-05-13T19:57:22.499+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36m.s.c.n.e.s.EurekaAutoServiceRegistration[0;39m [2m:[0;39m Updating port to 8082
+[2m2025-05-13T19:57:22.506+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [nfoReplicator-0][0;39m [2m[0;39m[36mcom.netflix.discovery.DiscoveryClient   [0;39m [2m:[0;39m DiscoveryClient_EXPENSE-SERVICE/172.16.9.192:expense-service:8082 - registration status: 204
+[2m2025-05-13T19:57:22.510+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [           main][0;39m [2m[0;39m[36mc.s.expense.ExpenseServiceApplication   [0;39m [2m:[0;39m Started ExpenseServiceApplication in 3.371 seconds (process running for 3.523)
+[2m2025-05-13T19:58:04.397+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [nio-8082-exec-1][0;39m [2m[0;39m[36mo.a.c.c.C.[.[localhost].[/expenses]     [0;39m [2m:[0;39m Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2m2025-05-13T19:58:04.398+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [nio-8082-exec-1][0;39m [2m[0;39m[36mo.s.web.servlet.DispatcherServlet       [0;39m [2m:[0;39m Initializing Servlet 'dispatcherServlet'
+[2m2025-05-13T19:58:04.401+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [nio-8082-exec-1][0;39m [2m[0;39m[36mo.s.web.servlet.DispatcherServlet       [0;39m [2m:[0;39m Completed initialization in 3 ms
+[2m2025-05-13T19:58:04.415+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [nio-8082-exec-1][0;39m [2m[0;39m[36mo.s.w.s.h.HandlerMappingIntrospector    [0;39m [2m:[0;39m Cache miss for REQUEST dispatch to '/expenses/actuator/health' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+[2m2025-05-13T19:58:04.420+03:00[0;39m [33m WARN[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [nio-8082-exec-1][0;39m [2m[0;39m[36mo.s.w.s.h.HandlerMappingIntrospector    [0;39m [2m:[0;39m Cache miss for REQUEST dispatch to '/expenses/actuator/health' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+Hibernate: 
+    select
+        ee1_0.id,
+        ee1_0.amount,
+        ee1_0.approved_by,
+        ee1_0.category,
+        ee1_0.created_at,
+        ee1_0.currency_code,
+        ee1_0.current_approval_level,
+        ee1_0.department_id,
+        ee1_0.description,
+        ee1_0.expense_date,
+        ee1_0.flagged_for_review,
+        ee1_0.project_id,
+        ee1_0.receipt_attached,
+        ee1_0.rejection_reason,
+        ee1_0.requires_receipt,
+        ee1_0.review_comments,
+        ee1_0.status,
+        ee1_0.submitted_by,
+        ee1_0.title,
+        ee1_0.updated_at 
+    from
+        expenses ee1_0
+[2m2025-05-13T20:02:22.420+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [trap-executor-0][0;39m [2m[0;39m[36mc.n.d.s.r.aws.ConfigClusterResolver     [0;39m [2m:[0;39m Resolving eureka endpoints via configuration
+[2m2025-05-13T20:07:22.423+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [trap-executor-0][0;39m [2m[0;39m[36mc.n.d.s.r.aws.ConfigClusterResolver     [0;39m [2m:[0;39m Resolving eureka endpoints via configuration
+[2m2025-05-13T20:12:22.425+03:00[0;39m [32m INFO[0;39m [35m43252[0;39m [2m---[0;39m [2m[expense-service] [trap-executor-0][0;39m [2m[0;39m[36mc.n.d.s.r.aws.ConfigClusterResolver     [0;39m [2m:[0;39m Resolving eureka endpoints via configuration

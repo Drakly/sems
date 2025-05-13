@@ -1,0 +1,20 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: integration-service
+
+environment: local
+mongodb:
+  url: mongodb://sems:sems@localhost:27017/
+  db_name: sems_integration
+notification_service:
+  url: http://notification-service:8084
+expense_service:
+  url: http://expense-service:8082
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/ 

@@ -1,0 +1,16 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: document-service
+  data:
+    mongodb:
+      uri: mongodb://sems:sems@localhost:27017/sems_documents
+  elasticsearch:
+    uris: http://localhost:9200
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/ 
