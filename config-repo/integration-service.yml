@@ -4,6 +4,19 @@ server:
 spring:
   application:
     name: integration-service
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: integration-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.sems.expense.adapter.messaging,com.sems.user.adapter.messaging,com.sems.integration.adapter.messaging
+        spring.json.type.mapping: expense:com.sems.integration.adapter.messaging.ExpenseEvent,user:com.sems.integration.adapter.messaging.UserEvent
 
 environment: local
 mongodb:
@@ -17,4 +30,11 @@ expense_service:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/ 
+      defaultZone: http://localhost:8761/eureka/
+
+app:
+  kafka:
+    topics:
+      expense-events: expense-events
+      user-events: user-events
+      integration-events: integration-events 

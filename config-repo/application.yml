@@ -10,6 +10,18 @@ spring:
     serialization:
       INDENT_OUTPUT: true
     default-property-inclusion: non_null
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS:localhost:9092}
+    producer:
+      retries: 3
+      batch-size: 16384
+      buffer-memory: 33554432
+      properties:
+        spring.json.add.type.headers: false
+    consumer:
+      auto-offset-reset: earliest
+      properties:
+        spring.json.use.type.headers: false
 
 management:
   endpoints:
@@ -21,6 +33,8 @@ management:
       show-details: always
   health:
     diskspace:
+      enabled: true
+    kafka:
       enabled: true
   metrics:
     export:

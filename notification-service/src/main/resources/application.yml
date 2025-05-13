@@ -7,7 +7,7 @@ spring:
   application:
     name: notification-service
   datasource:
-    url: jdbc:mysql://localhost:3307/sems_notification?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3307/sems_notification
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -37,12 +37,13 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: com.sems.notification.adapter.messaging
+        spring.json.trusted.packages: com.sems.expense.adapter.messaging,com.sems.notification.adapter.messaging
+        spring.json.type.mapping: expense:com.sems.notification.adapter.messaging.ExpenseEvent
   cloud:
     config:
       enabled: true
       uri: http://localhost:8888
-      fail-fast: true
+      fail-fast: false
 
 eureka:
   client:

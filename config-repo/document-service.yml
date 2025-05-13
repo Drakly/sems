@@ -9,8 +9,27 @@ spring:
       uri: mongodb://sems:sems@localhost:27017/sems_documents
   elasticsearch:
     uris: http://localhost:9200
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: document-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.sems.expense.adapter.messaging,com.sems.document.adapter.messaging
+        spring.json.type.mapping: expense:com.sems.document.adapter.messaging.ExpenseEvent
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/ 
+      defaultZone: http://localhost:8761/eureka/
+
+app:
+  kafka:
+    topics:
+      expense-events: expense-events
+      document-events: document-events 

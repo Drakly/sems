@@ -7,7 +7,7 @@ spring:
   application:
     name: user-service
   datasource:
-    url: jdbc:mysql://localhost:3307/sems_user
+    url: jdbc:mysql://localhost:3307/sems_users
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -23,7 +23,7 @@ spring:
     config:
       enabled: true
       uri: http://localhost:8888
-      fail-fast: true
+      fail-fast: false
 
 eureka:
   client:

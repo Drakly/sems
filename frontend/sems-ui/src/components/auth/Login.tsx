@@ -13,8 +13,13 @@ import {
   Typography,
   Alert,
   CircularProgress,
+  Divider,
+  IconButton,
 } from '@mui/material';
-import { LockOutlined as LockOutlinedIcon } from '@mui/icons-material';
+import {
+  LockOutlined as LockOutlinedIcon,
+  ArrowBack as ArrowBackIcon
+} from '@mui/icons-material';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { login } from '../../store/slices/authSlice';
@@ -60,6 +65,20 @@ const Login: React.FC = () => {
     }
   };
 
+  // For demo purposes
+  const loginAsDemoUser = async () => {
+    try {
+      const demoUser = {
+        email: 'demo@example.com',
+        password: 'password123',
+      };
+      await dispatch(login(demoUser) as any);
+      navigate(from, { replace: true });
+    } catch (error) {
+      console.error('Demo login failed', error);
+    }
+  };
+
   return (
     <Box sx={{ 
       width: '100%', 
@@ -67,6 +86,24 @@ const Login: React.FC = () => {
       display: 'flex',
       flexDirection: { xs: 'column', md: 'row' }
     }}>
+      {/* Back to Home Button */}
+      <IconButton
+        sx={{ 
+          position: 'absolute', 
+          top: 20, 
+          left: 20, 
+          zIndex: 10,
+          backgroundColor: 'rgba(255,255,255,0.8)',
+          '&:hover': {
+            backgroundColor: 'rgba(255,255,255,0.9)',
+          }
+        }}
+        onClick={() => navigate('/')}
+        aria-label="back to home"
+      >
+        <ArrowBackIcon />
+      </IconButton>
+
       <Box
         sx={{
           flex: { xs: 0, md: 7 },
@@ -77,7 +114,32 @@ const Login: React.FC = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
-      />
+      >
+        {/* Overlay with text */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: 4,
+            color: 'white',
+          }}
+        >
+          <Typography variant="h2" component="h1" fontWeight="bold" gutterBottom>
+            SEMS
+          </Typography>
+          <Typography variant="h5" align="center" sx={{ maxWidth: '600px' }}>
+            Smart Expense Management System
+          </Typography>
+        </Box>
+      </Box>
       <Box
         component={Paper}
         elevation={6}
@@ -187,6 +249,26 @@ const Login: React.FC = () => {
                 </Form>
               )}
             </Formik>
+          </Box>
+
+          {/* Add a divider and demo login */}
+          <Divider sx={{ width: '100%', my: 2 }}>
+            <Typography variant="body2" color="text.secondary">OR</Typography>
+          </Divider>
+          
+          <Button
+            fullWidth
+            variant="outlined"
+            onClick={loginAsDemoUser}
+            sx={{ mt: 2, py: 1.5, borderRadius: 2 }}
+          >
+            Continue with Demo User
+          </Button>
+
+          <Box sx={{ mt: 4, width: '100%', textAlign: 'center' }}>
+            <Typography variant="body2" color="text.secondary">
+              © {new Date().getFullYear()} SEMS - Smart Expense Management System
+            </Typography>
           </Box>
         </Box>
       </Box>

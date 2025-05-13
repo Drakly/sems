@@ -19,6 +19,7 @@ import {
   Menu,
   MenuItem,
   Tooltip,
+  Button,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -84,7 +85,7 @@ const MainLayout: React.FC = () => {
   const unreadNotificationsCount = notifications.filter(n => !n.read).length;
 
   const menuItems = [
-    { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
+    { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
     { text: 'Expenses', icon: <ReceiptIcon />, path: '/expenses' },
     { text: 'Approvals', icon: <ApprovalIcon />, path: '/approvals' },
     { text: 'Budgets', icon: <BudgetIcon />, path: '/budgets' },
@@ -128,6 +129,16 @@ const MainLayout: React.FC = () => {
           </Typography>
 
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {/* Home Link */}
+            <Button 
+              color="inherit" 
+              component={Link} 
+              to="/"
+              sx={{ mr: 2 }}
+            >
+              Home
+            </Button>
+            
             {/* Dark Mode Toggle */}
             <Tooltip title={darkMode ? "Light Mode" : "Dark Mode"}>
               <IconButton color="inherit" onClick={handleToggleDarkMode}>

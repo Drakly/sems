@@ -1,48 +1,66 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box } from '@mui/material';
 
-// Layout
-import MainLayout from './layout/MainLayout';
+// Home component
+import HomePage from './components/home/HomePage';
 
 // Auth components
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
-// Dashboard components
-import Dashboard from './components/dashboard/Dashboard';
-
-// Expense components
-import ExpenseList from './components/expense/ExpenseList';
-import ExpenseDetail from './components/expense/ExpenseDetail';
-import ExpenseForm from './components/expense/ExpenseForm';
-
-// Approval components
-import ApprovalList from './components/approval/ApprovalList';
-import ApprovalDetail from './components/approval/ApprovalDetail';
-
-// Budget components
-import BudgetList from './components/budget/BudgetList';
-import BudgetDetail from './components/budget/BudgetDetail';
-import BudgetForm from './components/budget/BudgetForm';
-
-// Report components
-import ReportList from './components/reports/ReportList';
-import ReportDetail from './components/reports/ReportDetail';
-import ReportForm from './components/reports/ReportForm';
-
 // Redux
 import { RootState } from './store';
 import { getCurrentUser } from './store/slices/authSlice';
 
+// Define UIState interface to match the one in uiSlice.ts
+interface UIState {
+  darkMode: boolean;
+  // Add other properties as needed
+  drawerOpen: boolean;
+  notifications: any[];
+  alertMessage: {
+    type: 'success' | 'error' | 'info' | 'warning' | null;
+    message: string | null;
+  };
+  modalState: {
+    open: boolean;
+    type: string | null;
+    data: any | null;
+  };
+}
+
+// Create placeholder components for dashboard and other sections
+// MainLayout that renders Outlet for nested routes
+const MainLayout: React.FC = () => (
+  <Box sx={{ width: '100%' }}>
+    <Outlet />
+  </Box>
+);
+
+const Dashboard = () => <div>Dashboard</div>;
+const ExpenseList = () => <div>Expense List</div>;
+const ExpenseDetail = () => <div>Expense Detail</div>;
+const ExpenseForm = () => <div>Expense Form</div>;
+const ApprovalList = () => <div>Approval List</div>;
+const ApprovalDetail = () => <div>Approval Detail</div>;
+const BudgetList = () => <div>Budget List</div>;
+const BudgetDetail = () => <div>Budget Detail</div>;
+const BudgetForm = () => <div>Budget Form</div>;
+const ReportList = () => <div>Report List</div>;
+const ReportDetail = () => <div>Report Detail</div>;
+const ReportForm = () => <div>Report Form</div>;
+
 const App: React.FC = () => {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-  const { darkMode } = useSelector((state: RootState) => state.ui);
+  // Properly access the darkMode property with type casting
+  const ui = useSelector((state: RootState) => state.ui) as UIState;
+  const darkMode = ui?.darkMode || false;
 
   useEffect(() => {
     // Try to load the current user if there's a token
@@ -67,17 +85,25 @@ const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+        <Box sx={{ 
+          minHeight: '100vh', 
+          width: '100%',
+          // Use flex container for the authenticated routes, block for HomePage
+          display: 'flex' 
+        }}>
           <Routes>
+            {/* Public Home Page */}
+            <Route path="/" element={<HomePage />} />
+
             {/* Auth routes */}
-            <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
-            <Route path="/register" element={isAuthenticated ? <Navigate to="/" /> : <Register />} />
+            <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
+            <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
 
             {/* Protected routes */}
             <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
               <Route element={<MainLayout />}>
                 {/* Dashboard */}
-                <Route path="/" element={<Dashboard />} />
+                <Route path="/dashboard" element={<Dashboard />} />
 
                 {/* Expenses */}
                 <Route path="/expenses" element={<ExpenseList />} />

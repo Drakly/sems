@@ -17,8 +17,23 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: reporting-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.sems.expense.adapter.messaging,com.sems.reporting.adapter.messaging
+        spring.json.type.mapping: expense:com.sems.reporting.adapter.messaging.ExpenseEvent
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/ 
+      defaultZone: http://localhost:8761/eureka/
+
+app:
+  kafka:
+    topics:
+      expense-events: expense-events 

@@ -6,7 +6,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @Component
 @RequiredArgsConstructor
@@ -19,6 +23,11 @@ public class ExpenseEventPublisher {
     private String expenseEventTopic;
     
     public void publishExpenseStatusChange(Expense expense) {
+        if (expense == null || expense.getId() == null) {
+            log.error("Cannot publish event for null expense or expense with null ID");
+            return;
+        }
+        
         try {
             // Get user email from the user service
             var userResponse = userServiceClient.getUserById(expense.getUserId());
@@ -33,27 +42,40 @@ public class ExpenseEventPublisher {
                     userDto.email(),
                     expense.getTitle(),
                     expense.getDescription(),
-                    expense.getAmount().toString(),
-                    expense.getCurrency().toString(),
-                    expense.getCategory().toString(),
+                    expense.getAmount() != null ? expense.getAmount().toString() : "0.00",
+                    expense.getCurrency() != null ? expense.getCurrency().toString() : "USD",
+                    expense.getCategory() != null ? expense.getCategory().toString() : "OTHER",
                     expense.getStatus().toString(),
-                    expense.getExpenseDate().toString()
+                    expense.getExpenseDate() != null ? expense.getExpenseDate().toString() : ""
                 );
                 
-                kafkaTemplate.send(expenseEventTopic, expense.getId().toString(), event);
-                log.info("Published expense event for ID: {}, Status: {}", 
-                         expense.getId(), expense.getStatus());
+                // Send the event and handle the CompletableFuture result
+                CompletableFuture<SendResult<String, Object>> future = 
+                    kafkaTemplate.send(expenseEventTopic, expense.getId().toString(), event);
+                
+                future.whenComplete((result, ex) -> {
+                    if (ex == null) {
+                        log.info("Published expense event successfully for ID: {}, Status: {}", 
+                               expense.getId(), expense.getStatus());
+                    } else {
+                        log.error("Failed to publish expense event for ID: {}, Error: {}", 
+                               expense.getId(), ex.getMessage(), ex);
+                    }
+                });
             } else {
-                log.error("Failed to get user details for expense event: {}", expense.getId());
+                log.error("Failed to get user details for expense event: {}, Status code: {}", 
+                         expense.getId(), 
+                         userResponse.getStatusCode());
             }
         } catch (Exception e) {
-            log.error("Error publishing expense event: {}", e.getMessage(), e);
+            log.error("Error publishing expense event for ID: {}, Error: {}", 
+                     expense.getId(), e.getMessage(), e);
         }
     }
     
-    record ExpenseEvent(
-        java.util.UUID id,
-        java.util.UUID userId,
+    public record ExpenseEvent(
+        UUID id,
+        UUID userId,
         String userEmail,
         String title,
         String description,

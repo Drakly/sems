@@ -5,7 +5,7 @@ spring:
   application:
     name: reporting-service
   datasource:
-    url: jdbc:mysql://localhost:3306/sems_reporting
+    url: jdbc:mysql://localhost:3307/sems_reporting
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -22,7 +22,7 @@ spring:
       discovery:
         enabled: true
         service-id: config-server
-      fail-fast: true
+      fail-fast: false
       retry:
         initial-interval: 1500
         multiplier: 1.5

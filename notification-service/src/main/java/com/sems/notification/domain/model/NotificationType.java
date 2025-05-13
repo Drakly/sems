@@ -3,9 +3,11 @@ package com.sems.notification.domain.model;
 public enum NotificationType {
     EXPENSE_CREATED,
     EXPENSE_SUBMITTED,
+    EXPENSE_UNDER_REVIEW,
     EXPENSE_APPROVED,
     EXPENSE_REJECTED,
     EXPENSE_PAID,
+    EXPENSE_CHANGES_REQUESTED,
     USER_REGISTERED,
     PASSWORD_RESET
 } 

@@ -113,34 +113,27 @@ public class ExpenseRepositoryAdapter implements ExpenseRepository {
     
     @Override
     public List<Expense> findByCurrentApprovalLevelAndStatusIn(Integer level, Collection<ExpenseStatus> statuses) {
-        // Since our JPA repository doesn't have this method, we'll implement it by filtering
-        // the results from findAll()
-        return findAll().stream()
-                .filter(e -> e.getCurrentApprovalLevel() != null 
-                        && e.getCurrentApprovalLevel().equals(level)
-                        && statuses.contains(e.getStatus()))
-                .collect(Collectors.toList());
+        return mapper.toDomainList(
+                expenseRepository.findByCurrentApprovalLevelAndStatusIn(level, statuses)
+        );
     }
     
     @Override
     public long countByCurrentApprovalLevelAndStatusIn(Integer level, Collection<ExpenseStatus> statuses) {
-        return findByCurrentApprovalLevelAndStatusIn(level, statuses).size();
+        return expenseRepository.countByCurrentApprovalLevelAndStatusIn(level, statuses);
     }
     
     @Override
     public BigDecimal sumAmountByCurrentApprovalLevelAndStatusIn(Integer level, Collection<ExpenseStatus> statuses) {
-        return findByCurrentApprovalLevelAndStatusIn(level, statuses).stream()
-                .map(Expense::getAmount)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal sum = expenseRepository.sumAmountByCurrentApprovalLevelAndStatusIn(level, statuses);
+        return sum != null ? sum : BigDecimal.ZERO;
     }
     
     @Override
     public List<Expense> findByStatusAndAmountLessThanEqual(ExpenseStatus status, BigDecimal amount) {
-        // Since our JPA repository doesn't have this method, we'll implement it by filtering
-        // the results from findByStatus()
-        return findByStatus(status).stream()
-                .filter(e -> e.getAmount().compareTo(amount) <= 0)
-                .collect(Collectors.toList());
+        return mapper.toDomainList(
+                expenseRepository.findByStatusAndAmountLessThanEqual(status, amount)
+        );
     }
     
     // This method is not in the interface, but was being called in the adapter

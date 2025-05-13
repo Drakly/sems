@@ -1,6 +1,8 @@
 package com.sems.expense.adapter.persistence.repository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,4 +37,21 @@ public interface ExpenseJpaRepository extends JpaRepository<ExpenseEntity, Strin
             @Param("endDate") LocalDate endDate);
     
     Optional<ExpenseEntity> findByIdAndUserId(String id, String userId);
+    
+    List<ExpenseEntity> findByStatusAndAmountLessThanEqual(ExpenseStatus status, BigDecimal amount);
+    
+    @Query("SELECT e FROM ExpenseEntity e WHERE e.currentApprovalLevel = :level AND e.status IN :statuses")
+    List<ExpenseEntity> findByCurrentApprovalLevelAndStatusIn(
+            @Param("level") Integer level,
+            @Param("statuses") Collection<ExpenseStatus> statuses);
+    
+    @Query("SELECT COUNT(e) FROM ExpenseEntity e WHERE e.currentApprovalLevel = :level AND e.status IN :statuses")
+    long countByCurrentApprovalLevelAndStatusIn(
+            @Param("level") Integer level,
+            @Param("statuses") Collection<ExpenseStatus> statuses);
+    
+    @Query("SELECT SUM(e.amount) FROM ExpenseEntity e WHERE e.currentApprovalLevel = :level AND e.status IN :statuses")
+    BigDecimal sumAmountByCurrentApprovalLevelAndStatusIn(
+            @Param("level") Integer level,
+            @Param("statuses") Collection<ExpenseStatus> statuses);
 } 

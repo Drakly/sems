@@ -5,6 +5,27 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+}
+
+html, body, #root {
+  min-height: 100%;
+  height: auto;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Fix for the App layout on the home page */
+body.home-page #root {
+  display: block !important;
+  width: 100vw !important; 
+  max-width: 100vw !important;
+  height: auto !important;
+  overflow-y: visible !important;
 }
 
 code {

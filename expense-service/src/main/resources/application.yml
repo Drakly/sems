@@ -9,7 +9,7 @@ spring:
   application:
     name: expense-service
   datasource:
-    url: jdbc:mysql://localhost:3307/sems_expense
+    url: jdbc:mysql://localhost:3307/sems_expenses
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -29,20 +29,21 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        spring.json.type.mapping: expense:com.sems.expense.adapter.out.messaging.event.ExpenseEvent
+        spring.json.type.mapping: expense:com.sems.expense.adapter.messaging.ExpenseEventPublisher$ExpenseEvent
     consumer:
+      group-id: expense-service
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: com.sems.expense.adapter.out.messaging.event
+        spring.json.trusted.packages: com.sems.expense.adapter.messaging,com.sems.user.adapter.messaging
   config:
     import: optional:configserver:http://localhost:8888
   cloud:
     config:
       enabled: true
       uri: http://localhost:8888
-      fail-fast: true
+      fail-fast: false
 
 eureka:
   client:

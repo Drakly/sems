@@ -16,8 +16,16 @@ import {
   Select,
   MenuItem,
   FormHelperText,
+  Divider,
+  IconButton,
+  Stepper,
+  Step,
+  StepLabel,
 } from '@mui/material';
-import { PersonAdd as PersonAddIcon } from '@mui/icons-material';
+import { 
+  PersonAdd as PersonAddIcon,
+  ArrowBack as ArrowBackIcon 
+} from '@mui/icons-material';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { register } from '../../store/slices/authSlice';
@@ -56,6 +64,8 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
   const { isLoading, error } = useSelector((state: RootState) => state.auth);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = ['Personal Information', 'Account Details'];
 
   const initialValues: FormValues = {
     username: '',
@@ -109,6 +119,14 @@ const Register: React.FC = () => {
     }
   };
 
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
   return (
     <Box sx={{ 
       width: '100%', 
@@ -116,6 +134,24 @@ const Register: React.FC = () => {
       display: 'flex',
       flexDirection: { xs: 'column', md: 'row' }
     }}>
+      {/* Back to Home Button */}
+      <IconButton
+        sx={{ 
+          position: 'absolute', 
+          top: 20, 
+          left: 20, 
+          zIndex: 10,
+          backgroundColor: 'rgba(255,255,255,0.8)',
+          '&:hover': {
+            backgroundColor: 'rgba(255,255,255,0.9)',
+          }
+        }}
+        onClick={() => navigate('/')}
+        aria-label="back to home"
+      >
+        <ArrowBackIcon />
+      </IconButton>
+
       <Box
         sx={{
           flex: { xs: 0, md: 7 },
@@ -126,7 +162,33 @@ const Register: React.FC = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
-      />
+      >
+        {/* Overlay with text */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: 4,
+            color: 'white',
+          }}
+        >
+          <Typography variant="h2" component="h1" fontWeight="bold" gutterBottom>
+            Join SEMS
+          </Typography>
+          <Typography variant="h5" align="center" sx={{ maxWidth: '600px' }}>
+            Create an account to start managing your expenses professionally
+          </Typography>
+        </Box>
+      </Box>
+
       <Box
         component={Paper}
         elevation={6}
@@ -153,9 +215,19 @@ const Register: React.FC = () => {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 56, height: 56 }}>
             <PersonAddIcon fontSize="large" />
           </Avatar>
-          <Typography component="h1" variant="h5" sx={{ mb: 3, fontWeight: 'bold' }}>
+          <Typography component="h1" variant="h5" sx={{ mb: 2, fontWeight: 'bold' }}>
             Sign up for SEMS
           </Typography>
+          
+          {/* Add stepper for better UX */}
+          <Stepper activeStep={activeStep} sx={{ width: '100%', mb: 3 }}>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          
           <Box sx={{ width: '100%', mb: 2 }}>
             {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
             {registrationSuccess && (
@@ -170,135 +242,161 @@ const Register: React.FC = () => {
             >
               {({ errors, touched, values, handleChange, isSubmitting }) => (
                 <Form style={{ width: '100%' }}>
-                  <Field
-                    as={TextField}
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="username"
-                    label="Username"
-                    name="username"
-                    autoComplete="username"
-                    autoFocus
-                    error={touched.username && Boolean(errors.username)}
-                    helperText={touched.username && errors.username}
-                    sx={{ mb: 2 }}
-                  />
-                  <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2, mb: 1 }}>
-                    <Field
-                      as={TextField}
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="firstName"
-                      label="First Name"
-                      name="firstName"
-                      autoComplete="given-name"
-                      error={touched.firstName && Boolean(errors.firstName)}
-                      helperText={touched.firstName && errors.firstName}
-                    />
-                    <Field
-                      as={TextField}
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="lastName"
-                      label="Last Name"
-                      name="lastName"
-                      autoComplete="family-name"
-                      error={touched.lastName && Boolean(errors.lastName)}
-                      helperText={touched.lastName && errors.lastName}
-                    />
-                  </Box>
-                  <Field
-                    as={TextField}
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    error={touched.email && Boolean(errors.email)}
-                    helperText={touched.email && errors.email}
-                    sx={{ mb: 2 }}
-                  />
-                  <Field
-                    as={TextField}
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="new-password"
-                    error={touched.password && Boolean(errors.password)}
-                    helperText={touched.password && errors.password}
-                    sx={{ mb: 2 }}
-                  />
-                  <Field
-                    as={TextField}
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="confirmPassword"
-                    label="Confirm Password"
-                    type="password"
-                    id="confirmPassword"
-                    error={touched.confirmPassword && Boolean(errors.confirmPassword)}
-                    helperText={touched.confirmPassword && errors.confirmPassword}
-                    sx={{ mb: 2 }}
-                  />
-                  <FormControl 
-                    fullWidth 
-                    margin="normal"
-                    error={touched.department && Boolean(errors.department)}
-                    sx={{ mb: 3 }}
-                  >
-                    <InputLabel id="department-label">Department</InputLabel>
-                    <Select
-                      labelId="department-label"
-                      id="department"
-                      name="department"
-                      value={values.department}
-                      label="Department"
-                      onChange={handleChange}
-                    >
-                      {departments.map((dept) => (
-                        <MenuItem key={dept.id} value={dept.id}>
-                          {dept.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    {touched.department && errors.department && (
-                      <FormHelperText>{errors.department}</FormHelperText>
-                    )}
-                  </FormControl>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    size="large"
-                    sx={{ 
-                      mt: 1, 
-                      mb: 3, 
-                      py: 1.5,
-                      fontSize: '1rem',
-                      fontWeight: 'bold'
-                    }}
-                    disabled={isLoading || isSubmitting}
-                  >
-                    {isLoading ? <CircularProgress size={24} /> : 'SIGN UP'}
-                  </Button>
-                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  {activeStep === 0 ? (
+                    <>
+                      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2, mb: 1 }}>
+                        <Field
+                          as={TextField}
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="firstName"
+                          label="First Name"
+                          name="firstName"
+                          autoComplete="given-name"
+                          error={touched.firstName && Boolean(errors.firstName)}
+                          helperText={touched.firstName && errors.firstName}
+                        />
+                        <Field
+                          as={TextField}
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="lastName"
+                          label="Last Name"
+                          name="lastName"
+                          autoComplete="family-name"
+                          error={touched.lastName && Boolean(errors.lastName)}
+                          helperText={touched.lastName && errors.lastName}
+                        />
+                      </Box>
+                      
+                      <Field
+                        as={TextField}
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="username"
+                        label="Username"
+                        name="username"
+                        autoComplete="username"
+                        autoFocus
+                        error={touched.username && Boolean(errors.username)}
+                        helperText={touched.username && errors.username}
+                        sx={{ mb: 2 }}
+                      />
+                      
+                      <FormControl fullWidth margin="normal" error={touched.department && Boolean(errors.department)} sx={{ mb: 2 }}>
+                        <InputLabel id="department-label">Department</InputLabel>
+                        <Field
+                          as={Select}
+                          labelId="department-label"
+                          id="department"
+                          name="department"
+                          label="Department"
+                          value={values.department}
+                          onChange={handleChange}
+                        >
+                          {departments.map((dept) => (
+                            <MenuItem key={dept.id} value={dept.id}>
+                              {dept.name}
+                            </MenuItem>
+                          ))}
+                        </Field>
+                        {touched.department && errors.department && (
+                          <FormHelperText>{errors.department}</FormHelperText>
+                        )}
+                      </FormControl>
+                      
+                      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', mt: 3 }}>
+                        <Button 
+                          variant="contained" 
+                          onClick={handleNext}
+                          sx={{ borderRadius: 2 }}
+                        >
+                          Next
+                        </Button>
+                      </Box>
+                    </>
+                  ) : (
+                    <>
+                      <Field
+                        as={TextField}
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                        error={touched.email && Boolean(errors.email)}
+                        helperText={touched.email && errors.email}
+                        sx={{ mb: 2 }}
+                      />
+                      
+                      <Field
+                        as={TextField}
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        autoComplete="new-password"
+                        error={touched.password && Boolean(errors.password)}
+                        helperText={touched.password && errors.password}
+                        sx={{ mb: 2 }}
+                      />
+                      
+                      <Field
+                        as={TextField}
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="confirmPassword"
+                        label="Confirm Password"
+                        type="password"
+                        id="confirmPassword"
+                        error={touched.confirmPassword && Boolean(errors.confirmPassword)}
+                        helperText={touched.confirmPassword && errors.confirmPassword}
+                        sx={{ mb: 3 }}
+                      />
+                      
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+                        <Button 
+                          onClick={handleBack}
+                          sx={{ borderRadius: 2 }}
+                        >
+                          Back
+                        </Button>
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          color="primary"
+                          disabled={isLoading || isSubmitting}
+                          sx={{ borderRadius: 2 }}
+                        >
+                          {isLoading ? <CircularProgress size={24} /> : 'Sign Up'}
+                        </Button>
+                      </Box>
+                    </>
+                  )}
+                  
+                  <Box sx={{ mt: 3, textAlign: 'center' }}>
                     <MuiLink component={Link} to="/login" variant="body2">
-                      Already have an account? Sign in
+                      Already have an account? Sign In
                     </MuiLink>
                   </Box>
                 </Form>
               )}
             </Formik>
+          </Box>
+          
+          <Box sx={{ mt: 4, width: '100%', textAlign: 'center' }}>
+            <Typography variant="body2" color="text.secondary">
+              © {new Date().getFullYear()} SEMS - Smart Expense Management System
+            </Typography>
           </Box>
         </Box>
       </Box>
