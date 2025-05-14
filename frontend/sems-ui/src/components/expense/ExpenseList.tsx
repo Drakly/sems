@@ -60,11 +60,11 @@ const ExpenseList: React.FC = () => {
   
   useEffect(() => {
     if (isAdmin) {
-      dispatch(getAllExpenses({ page: pagination.currentPage, size: pagination.pageSize }) as any);
+      dispatch(getAllExpenses({ page: pagination.page, size: pagination.pageSize }) as any);
     } else {
-      dispatch(getUserExpenses({ page: pagination.currentPage, size: pagination.pageSize }) as any);
+      dispatch(getUserExpenses({ page: pagination.page, size: pagination.pageSize }) as any);
     }
-  }, [dispatch, isAdmin, pagination.currentPage, pagination.pageSize]);
+  }, [dispatch, isAdmin, pagination.page, pagination.pageSize]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilters({ ...filters, search: e.target.value });
@@ -404,9 +404,9 @@ const ExpenseList: React.FC = () => {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={pagination.totalElements}
+            count={pagination.totalItems}
             rowsPerPage={pagination.pageSize}
-            page={pagination.currentPage}
+            page={pagination.page}
             onPageChange={handlePageChange}
             onRowsPerPageChange={handleRowsPerPageChange}
           />

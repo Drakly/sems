@@ -49,7 +49,7 @@ const ExpenseDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { selectedExpense, approvalHistory, isLoading, error } = useSelector(
+  const { currentExpense: selectedExpense, approvalHistory, isLoading, error } = useSelector(
     (state: RootState) => state.expenses
   );
   const { user } = useSelector((state: RootState) => state.auth);
@@ -128,11 +128,11 @@ const ExpenseDetail: React.FC = () => {
       case ExpenseStatus.REJECTED:
         color = 'error';
         break;
-      case ExpenseStatus.PAID:
-        color = 'primary';
-        break;
       case ExpenseStatus.CHANGES_REQUESTED:
         color = 'secondary';
+        break;
+      case ExpenseStatus.CANCELLED:
+        color = 'default';
         break;
       default:
         color = 'default';
@@ -215,7 +215,7 @@ const ExpenseDetail: React.FC = () => {
               <Typography variant="body2" color="text.secondary">
                 Status
               </Typography>
-              {getStatusChip(selectedExpense.status)}
+              {getStatusChip(selectedExpense.status as ExpenseStatus)}
             </Box>
             <Box sx={{ flex: '1 1 45%', minWidth: '250px' }}>
               <Typography variant="body2" color="text.secondary">
@@ -260,13 +260,13 @@ const ExpenseDetail: React.FC = () => {
           </Box>
         </Box>
 
-        {selectedExpense.receiptUrl && (
+        {selectedExpense.receipt && (
           <Box sx={{ mt: 2 }}>
             <Button
               variant="outlined"
               color="primary"
               startIcon={<ReceiptIcon />}
-              href={selectedExpense.receiptUrl}
+              href={selectedExpense.receipt}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -341,9 +341,9 @@ const ExpenseDetail: React.FC = () => {
                       <Chip
                         label={step.action}
                         color={
-                          step.action === ApprovalAction.APPROVE
+                          step.action === ApprovalAction.APPROVED
                             ? 'success'
-                            : step.action === ApprovalAction.REJECT
+                            : step.action === ApprovalAction.REJECTED
                             ? 'error'
                             : 'warning'
                         }

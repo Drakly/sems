@@ -1,45 +1,39 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { Budget, PaginatedResponse } from '../../types';
-import budgetService, { BudgetRequest, BudgetFilterParams } from '../../services/budgetService';
+import { Budget } from '../../types';
+import budgetService from '../../services/budgetService';
 
 interface BudgetState {
   budgets: Budget[];
-  selectedBudget: Budget | null;
-  budgetAnalytics: any | null;
-  utilizationData: any | null;
+  currentBudget: Budget | null;
+  utilizationData: any;
   isLoading: boolean;
   error: string | null;
-  pagination: {
-    totalElements: number;
-    totalPages: number;
-    currentPage: number;
-    pageSize: number;
-  };
 }
 
 const initialState: BudgetState = {
   budgets: [],
-  selectedBudget: null,
-  budgetAnalytics: null,
+  currentBudget: null,
   utilizationData: null,
   isLoading: false,
   error: null,
-  pagination: {
-    totalElements: 0,
-    totalPages: 0,
-    currentPage: 0,
-    pageSize: 10,
-  },
 };
 
 // Async thunks
-export const createBudget = createAsyncThunk(
-  'budgets/createBudget',
-  async (budgetData: BudgetRequest, { rejectWithValue }) => {
+export const getBudgets = createAsyncThunk(
+  'budgets/getBudgets',
+  async (params: any, { rejectWithValue }) => {
     try {
-      return await budgetService.createBudget(budgetData);
+      console.log('Getting budgets with params:', params);
+      const response = await budgetService.getAllBudgets(params);
+      console.log('Budgets response:', response);
+      return response;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to create budget');
+      console.error('Error fetching budgets:', error);
+      return rejectWithValue(
+        error.response?.data?.message || 
+        error.response?.data?.error || 
+        'Failed to fetch budgets'
+      );
     }
   }
 );
@@ -48,42 +42,55 @@ export const getBudgetById = createAsyncThunk(
   'budgets/getBudgetById',
   async (id: string, { rejectWithValue }) => {
     try {
-      return await budgetService.getBudgetById(id);
+      console.log('Getting budget by id:', id);
+      const response = await budgetService.getBudgetById(id);
+      console.log('Budget detail response:', response);
+      return response;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch budget details');
+      console.error('Error fetching budget by id:', error);
+      return rejectWithValue(
+        error.response?.data?.message || 
+        error.response?.data?.error || 
+        'Failed to fetch budget details'
+      );
     }
   }
 );
 
-export const getAllBudgets = createAsyncThunk(
-  'budgets/getAllBudgets',
-  async (params: BudgetFilterParams = {}, { rejectWithValue }) => {
+export const createBudget = createAsyncThunk(
+  'budgets/createBudget',
+  async (budget: any, { rejectWithValue }) => {
     try {
-      return await budgetService.getAllBudgets(params);
+      console.log('Creating budget:', budget);
+      const response = await budgetService.createBudget(budget);
+      console.log('Create budget response:', response);
+      return response;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch budgets');
-    }
-  }
-);
-
-export const getDepartmentBudgets = createAsyncThunk(
-  'budgets/getDepartmentBudgets',
-  async ({ departmentId, params }: { departmentId: string; params?: BudgetFilterParams }, { rejectWithValue }) => {
-    try {
-      return await budgetService.getDepartmentBudgets(departmentId, params);
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch department budgets');
+      console.error('Error creating budget:', error);
+      return rejectWithValue(
+        error.response?.data?.message || 
+        error.response?.data?.error || 
+        'Failed to create budget'
+      );
     }
   }
 );
 
 export const updateBudget = createAsyncThunk(
   'budgets/updateBudget',
-  async ({ id, data }: { id: string; data: Partial<BudgetRequest> }, { rejectWithValue }) => {
+  async ({ id, budget }: { id: string; budget: Partial<Budget> }, { rejectWithValue }) => {
     try {
-      return await budgetService.updateBudget(id, data);
+      console.log('Updating budget:', { id, budget });
+      const response = await budgetService.updateBudget(id, budget);
+      console.log('Update budget response:', response);
+      return response;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to update budget');
+      console.error('Error updating budget:', error);
+      return rejectWithValue(
+        error.response?.data?.message || 
+        error.response?.data?.error || 
+        'Failed to update budget'
+      );
     }
   }
 );
@@ -92,32 +99,36 @@ export const deleteBudget = createAsyncThunk(
   'budgets/deleteBudget',
   async (id: string, { rejectWithValue }) => {
     try {
+      console.log('Deleting budget:', id);
       await budgetService.deleteBudget(id);
+      console.log('Budget deleted successfully');
       return id;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to delete budget');
-    }
-  }
-);
-
-export const getBudgetAnalytics = createAsyncThunk(
-  'budgets/getBudgetAnalytics',
-  async (id: string, { rejectWithValue }) => {
-    try {
-      return await budgetService.getBudgetAnalytics(id);
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch budget analytics');
+      console.error('Error deleting budget:', error);
+      return rejectWithValue(
+        error.response?.data?.message || 
+        error.response?.data?.error || 
+        'Failed to delete budget'
+      );
     }
   }
 );
 
 export const getBudgetUtilization = createAsyncThunk(
-  'budgets/getBudgetUtilization',
-  async (params: BudgetFilterParams = {}, { rejectWithValue }) => {
+  'budgets/getUtilization',
+  async (params: any, { rejectWithValue }) => {
     try {
-      return await budgetService.getBudgetUtilization(params);
+      console.log('Getting budget utilization with params:', params);
+      const response = await budgetService.getBudgetUtilization(params);
+      console.log('Budget utilization response:', response);
+      return response;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch budget utilization data');
+      console.error('Error fetching budget utilization:', error);
+      return rejectWithValue(
+        error.response?.data?.message || 
+        error.response?.data?.error || 
+        'Failed to fetch budget utilization'
+      );
     }
   }
 );
@@ -126,22 +137,44 @@ const budgetSlice = createSlice({
   name: 'budgets',
   initialState,
   reducers: {
+    clearCurrentBudget: (state) => {
+      state.currentBudget = null;
+    },
     clearError: (state) => {
       state.error = null;
-    },
-    clearSelectedBudget: (state) => {
-      state.selectedBudget = null;
-    },
-    setPage: (state, action: PayloadAction<number>) => {
-      state.pagination.currentPage = action.payload;
-    },
-    setPageSize: (state, action: PayloadAction<number>) => {
-      state.pagination.pageSize = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-      // Create budget
+      // Get Budgets
+      .addCase(getBudgets.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getBudgets.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.budgets = action.payload;
+      })
+      .addCase(getBudgets.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+
+      // Get Budget By Id
+      .addCase(getBudgetById.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getBudgetById.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.currentBudget = action.payload;
+      })
+      .addCase(getBudgetById.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+
+      // Create Budget
       .addCase(createBudget.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -155,73 +188,15 @@ const budgetSlice = createSlice({
         state.error = action.payload as string;
       })
 
-      // Get budget by ID
-      .addCase(getBudgetById.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(getBudgetById.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.selectedBudget = action.payload;
-      })
-      .addCase(getBudgetById.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
-      })
-
-      // Get all budgets
-      .addCase(getAllBudgets.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(getAllBudgets.fulfilled, (state, action) => {
-        state.isLoading = false;
-        const paginatedResponse = action.payload as PaginatedResponse<Budget>;
-        state.budgets = paginatedResponse.content;
-        state.pagination = {
-          totalElements: paginatedResponse.totalElements,
-          totalPages: paginatedResponse.totalPages,
-          currentPage: paginatedResponse.number,
-          pageSize: paginatedResponse.size,
-        };
-      })
-      .addCase(getAllBudgets.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
-      })
-
-      // Get department budgets
-      .addCase(getDepartmentBudgets.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(getDepartmentBudgets.fulfilled, (state, action) => {
-        state.isLoading = false;
-        const paginatedResponse = action.payload as PaginatedResponse<Budget>;
-        state.budgets = paginatedResponse.content;
-        state.pagination = {
-          totalElements: paginatedResponse.totalElements,
-          totalPages: paginatedResponse.totalPages,
-          currentPage: paginatedResponse.number,
-          pageSize: paginatedResponse.size,
-        };
-      })
-      .addCase(getDepartmentBudgets.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
-      })
-
-      // Update budget
+      // Update Budget
       .addCase(updateBudget.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(updateBudget.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.selectedBudget = action.payload;
-        
-        // Update in the budgets list
-        const index = state.budgets.findIndex(b => b.id === action.payload.id);
+        state.currentBudget = action.payload;
+        const index = state.budgets.findIndex(budget => budget.id === action.payload.id);
         if (index !== -1) {
           state.budgets[index] = action.payload;
         }
@@ -231,7 +206,7 @@ const budgetSlice = createSlice({
         state.error = action.payload as string;
       })
 
-      // Delete budget
+      // Delete Budget
       .addCase(deleteBudget.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -239,8 +214,8 @@ const budgetSlice = createSlice({
       .addCase(deleteBudget.fulfilled, (state, action) => {
         state.isLoading = false;
         state.budgets = state.budgets.filter(budget => budget.id !== action.payload);
-        if (state.selectedBudget?.id === action.payload) {
-          state.selectedBudget = null;
+        if (state.currentBudget && state.currentBudget.id === action.payload) {
+          state.currentBudget = null;
         }
       })
       .addCase(deleteBudget.rejected, (state, action) => {
@@ -248,21 +223,7 @@ const budgetSlice = createSlice({
         state.error = action.payload as string;
       })
 
-      // Get budget analytics
-      .addCase(getBudgetAnalytics.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(getBudgetAnalytics.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.budgetAnalytics = action.payload;
-      })
-      .addCase(getBudgetAnalytics.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
-      })
-
-      // Get budget utilization
+      // Get Budget Utilization
       .addCase(getBudgetUtilization.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -278,5 +239,5 @@ const budgetSlice = createSlice({
   },
 });
 
-export const { clearError, clearSelectedBudget, setPage, setPageSize } = budgetSlice.actions;
+export const { clearCurrentBudget, clearError } = budgetSlice.actions;
 export default budgetSlice.reducer; 
