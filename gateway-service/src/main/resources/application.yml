@@ -31,30 +31,50 @@ spring:
             - Path=/api/auth/**
           filters:
             - RewritePath=/api/(?<segment>.*), /${segment}
+        - id: user-service-direct-auth
+          uri: lb://user-service
+          predicates:
+            - Path=/auth/**
         - id: expense-service
           uri: lb://expense-service
           predicates:
             - Path=/api/expenses/**
           filters:
             - RewritePath=/api/(?<segment>.*), /${segment}
+        - id: expense-service-direct
+          uri: lb://expense-service
+          predicates:
+            - Path=/expenses/**
         - id: document-service
           uri: lb://document-service
           predicates:
             - Path=/api/documents/**
           filters:
             - StripPrefix=1
+        - id: document-service-direct
+          uri: lb://document-service
+          predicates:
+            - Path=/documents/**
         - id: notification-service
           uri: lb://notification-service
           predicates:
             - Path=/api/notifications/**
           filters:
             - StripPrefix=1
+        - id: notification-service-direct
+          uri: lb://notification-service
+          predicates:
+            - Path=/notifications/**
         - id: reporting-service
           uri: lb://reporting-service
           predicates:
             - Path=/api/reports/**
           filters:
             - StripPrefix=1
+        - id: reporting-service-direct
+          uri: lb://reporting-service
+          predicates:
+            - Path=/reports/**
   config:
     enabled: true
     uri: http://localhost:8888

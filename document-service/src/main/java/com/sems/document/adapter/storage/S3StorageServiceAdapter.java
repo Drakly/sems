@@ -4,6 +4,8 @@ import com.sems.document.domain.port.StorageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.ResponseBytes;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
@@ -40,15 +42,22 @@ public class S3StorageServiceAdapter implements StorageService {
     
     @PostConstruct
     public void init() {
-        // For a real implementation, use AWS credentials provider chain
-        // This is a simplified version for demonstration
+        // Create AWS credentials
+        AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(accessKey, secretKey);
+        
+        // Build S3 client with credentials
         s3Client = S3Client.builder()
                 .region(Region.of(region))
+                .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
                 .build();
         
+        // Build S3 presigner with credentials
         s3Presigner = S3Presigner.builder()
                 .region(Region.of(region))
+                .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
                 .build();
+        
+        log.info("S3 client initialized with region: {}, bucket: {}", region, bucketName);
     }
     
     @Override

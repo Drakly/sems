@@ -7,9 +7,9 @@ spring:
   application:
     name: document-service
   datasource:
-    url: jdbc:mysql://localhost:3307/sems_document
+    url: jdbc:mysql://localhost:3306/sems_document?createDatabaseIfNotExist=true
     username: root
-    password: root
+    password: Kirilov06@
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -37,6 +37,8 @@ eureka:
       defaultZone: http://localhost:8761/eureka
   instance:
     prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
 
 management:
   endpoints:

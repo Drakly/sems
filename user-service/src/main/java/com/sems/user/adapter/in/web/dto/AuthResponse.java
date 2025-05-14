@@ -9,4 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AuthResponse {
     private String token;
+    private UserResponse user;
+    
+    public AuthResponse(String token) {
+        this.token = token;
+    }
 } 

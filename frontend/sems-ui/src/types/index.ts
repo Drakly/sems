@@ -122,4 +122,23 @@ export interface PaginatedResponse<T> {
 export interface ApiError {
   status: number;
   message: string;
+}
+
+// ApprovalHistory type for tracking approval steps
+export type ApprovalHistory = ApprovalStep[];
+
+// WorkflowStatistics type for expense approval statistics
+export interface WorkflowStatistics {
+  pendingCount: number;
+  approvedCount: number;
+  rejectedCount: number;
+  changesRequestedCount: number;
+  averageApprovalTime: number;
+  byDepartment?: {
+    [department: string]: {
+      pendingCount: number;
+      approvedCount: number;
+      rejectedCount: number;
+    }
+  };
 } 

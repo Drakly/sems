@@ -3,31 +3,26 @@ package com.sems.expense.adapter.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sems.expense.adapter.web.dto.ApprovalActionRequest;
 import com.sems.expense.adapter.web.dto.ExpenseResponse;
+import com.sems.expense.application.service.ApprovalWorkflowService;
+import com.sems.expense.config.TestSecurityConfig;
 import com.sems.expense.domain.model.*;
-import com.sems.expense.domain.port.ExpenseRepository;
-import com.sems.expense.domain.port.out.ApprovalLevelRepository;
-import com.sems.expense.domain.port.out.ApprovalStepRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -36,9 +31,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(ApprovalWorkflowController.class)
 @ActiveProfiles("test")
+@Import(TestSecurityConfig.class)
 public class ApprovalWorkflowControllerIntegrationTest {
 
     @Autowired
@@ -48,13 +43,7 @@ public class ApprovalWorkflowControllerIntegrationTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private ExpenseRepository expenseRepository;
-
-    @MockBean
-    private ApprovalLevelRepository approvalLevelRepository;
-
-    @MockBean
-    private ApprovalStepRepository approvalStepRepository;
+    private ApprovalWorkflowService approvalWorkflowService;
 
     private UUID expenseId;
     private UUID userId;
@@ -118,10 +107,7 @@ public class ApprovalWorkflowControllerIntegrationTest {
                 .updatedAt(LocalDateTime.now())
                 .build();
 
-        when(expenseRepository.findById(expenseId)).thenReturn(Optional.of(testExpense));
-        when(approvalLevelRepository.findByAmountBetweenThresholds(any(BigDecimal.class)))
-                .thenReturn(Collections.singletonList(level1));
-        when(expenseRepository.save(any(Expense.class))).thenReturn(submittedExpense);
+        when(approvalWorkflowService.submitForApproval(expenseId)).thenReturn(submittedExpense);
 
         // When/Then
         mockMvc.perform(post("/api/v1/expenses/workflow/{expenseId}/submit", expenseId))
@@ -155,11 +141,8 @@ public class ApprovalWorkflowControllerIntegrationTest {
                 .comments("Looks good to me")
                 .build();
 
-        when(expenseRepository.findById(expenseId)).thenReturn(Optional.of(testExpense));
-        when(approvalLevelRepository.findByAmountBetweenThresholds(any(BigDecimal.class)))
-                .thenReturn(Arrays.asList(level1, level2));
-        when(approvalStepRepository.save(any(ApprovalStep.class))).thenAnswer(i -> i.getArgument(0));
-        when(expenseRepository.save(any(Expense.class))).thenReturn(approvedExpense);
+        when(approvalWorkflowService.approveExpense(eq(expenseId), eq(approverId), any(String.class)))
+                .thenReturn(approvedExpense);
 
         // When/Then
         mockMvc.perform(post("/api/v1/expenses/workflow/{expenseId}/approve", expenseId)
@@ -195,9 +178,8 @@ public class ApprovalWorkflowControllerIntegrationTest {
                 .comments("Missing receipts")
                 .build();
 
-        when(expenseRepository.findById(expenseId)).thenReturn(Optional.of(testExpense));
-        when(approvalStepRepository.save(any(ApprovalStep.class))).thenAnswer(i -> i.getArgument(0));
-        when(expenseRepository.save(any(Expense.class))).thenReturn(rejectedExpense);
+        when(approvalWorkflowService.rejectExpense(eq(expenseId), eq(approverId), any(String.class)))
+                .thenReturn(rejectedExpense);
 
         // When/Then
         mockMvc.perform(post("/api/v1/expenses/workflow/{expenseId}/reject", expenseId)
@@ -224,8 +206,8 @@ public class ApprovalWorkflowControllerIntegrationTest {
                 .actionDate(LocalDateTime.now().minusDays(1))
                 .build();
 
-        when(expenseRepository.existsById(expenseId)).thenReturn(true);
-        when(approvalStepRepository.findByExpenseId(expenseId)).thenReturn(Collections.singletonList(step1));
+        when(approvalWorkflowService.getApprovalHistory(expenseId))
+                .thenReturn(Collections.singletonList(step1));
 
         // When/Then
         mockMvc.perform(get("/api/v1/expenses/workflow/{expenseId}/history", expenseId))
@@ -248,7 +230,7 @@ public class ApprovalWorkflowControllerIntegrationTest {
                 .title("Business Trip to New York")
                 .amount(new BigDecimal("500.00"))
                 .status(ExpenseStatus.CHANGES_REQUESTED)
-                .reviewComments("Please add itemized receipts")
+                .reviewComments("Please add receipts")
                 .category(Category.builder().id(UUID.randomUUID()).name("Travel").build())
                 .expenseDate(LocalDate.now())
                 .createdAt(LocalDateTime.now())
@@ -257,12 +239,11 @@ public class ApprovalWorkflowControllerIntegrationTest {
 
         ApprovalActionRequest request = ApprovalActionRequest.builder()
                 .actorId(approverId)
-                .comments("Please add itemized receipts")
+                .comments("Please add receipts")
                 .build();
 
-        when(expenseRepository.findById(expenseId)).thenReturn(Optional.of(testExpense));
-        when(approvalStepRepository.save(any(ApprovalStep.class))).thenAnswer(i -> i.getArgument(0));
-        when(expenseRepository.save(any(Expense.class))).thenReturn(changesRequestedExpense);
+        when(approvalWorkflowService.requestChanges(eq(expenseId), eq(approverId), any(String.class)))
+                .thenReturn(changesRequestedExpense);
 
         // When/Then
         mockMvc.perform(post("/api/v1/expenses/workflow/{expenseId}/request-changes", expenseId)
@@ -271,30 +252,18 @@ public class ApprovalWorkflowControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(expenseId.toString())))
                 .andExpect(jsonPath("$.status", is("CHANGES_REQUESTED")))
-                .andExpect(jsonPath("$.reviewComments", is("Please add itemized receipts")));
+                .andExpect(jsonPath("$.reviewComments", is("Please add receipts")));
     }
-
+    
     @Test
     void processAutoApprovals_ShouldReturnCount() throws Exception {
         // Given
-        when(expenseRepository.findByStatusAndAmountLessThanEqual(
-                eq(ExpenseStatus.SUBMITTED), any(BigDecimal.class)))
-                .thenReturn(Arrays.asList(
-                        Expense.builder().id(UUID.randomUUID()).amount(new BigDecimal("45.00")).build(),
-                        Expense.builder().id(UUID.randomUUID()).amount(new BigDecimal("25.00")).build()
-                ));
+        when(approvalWorkflowService.processLowValueExpensesForAutoApproval()).thenReturn(5);
         
-        when(approvalStepRepository.save(any(ApprovalStep.class))).thenAnswer(i -> i.getArgument(0));
-        when(expenseRepository.save(any(Expense.class))).thenAnswer(i -> i.getArgument(0));
-        
-        // When
-        MvcResult result = mockMvc.perform(post("/api/v1/expenses/workflow/auto-approve/process"))
+        // When/Then
+        mockMvc.perform(post("/api/v1/expenses/workflow/process-auto-approvals"))
                 .andExpect(status().isOk())
-                .andReturn();
-                
-        // Then
-        String resultContent = result.getResponse().getContentAsString();
-        int count = Integer.parseInt(resultContent);
-        assertEquals(2, count);
+                .andExpect(jsonPath("$.count", is(5)))
+                .andExpect(jsonPath("$.message", containsString("auto-approved")));
     }
 } 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import {
@@ -41,11 +41,20 @@ const Login: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { isLoading, error } = useSelector((state: RootState) => state.auth);
+  const { isLoading, error, isAuthenticated, user } = useSelector((state: RootState) => state.auth);
   const [rememberMe, setRememberMe] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
 
   const locationState = location.state as LocationState;
-  const from = locationState?.from?.pathname || '/';
+  const from = locationState?.from?.pathname || '/dashboard';
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      console.log('User is authenticated, redirecting to', from);
+      navigate(from, { replace: true });
+    }
+  }, [isAuthenticated, user, navigate, from]);
 
   const initialValues: LoginRequest = {
     email: '',
@@ -57,10 +66,22 @@ const Login: React.FC = () => {
     { setSubmitting }: FormikHelpers<LoginRequest>
   ) => {
     try {
-      await dispatch(login(values) as any);
-      setSubmitting(false);
-      navigate(from, { replace: true });
+      setLoginError(null);
+      console.log('Submitting login with values:', values);
+      const resultAction = await dispatch(login(values) as any);
+      console.log('Login result:', resultAction);
+      
+      if (login.fulfilled.match(resultAction)) {
+        console.log('Login successful, redirecting to', from);
+        navigate(from, { replace: true });
+      } else if (login.rejected.match(resultAction)) {
+        console.error('Login failed:', resultAction.payload || resultAction.error);
+        setLoginError(resultAction.payload as string || 'Login failed. Please try again.');
+      }
     } catch (error) {
+      console.error('Login error:', error);
+      setLoginError('An unexpected error occurred. Please try again.');
+    } finally {
       setSubmitting(false);
     }
   };
@@ -68,14 +89,24 @@ const Login: React.FC = () => {
   // For demo purposes
   const loginAsDemoUser = async () => {
     try {
+      setLoginError(null);
       const demoUser = {
-        email: 'demo@example.com',
-        password: 'password123',
+        email: 'test2@example.com', // Updated to use the test user we created
+        password: 'Password123!',
       };
-      await dispatch(login(demoUser) as any);
-      navigate(from, { replace: true });
+      console.log('Attempting demo login with:', demoUser);
+      const resultAction = await dispatch(login(demoUser) as any);
+      
+      if (login.fulfilled.match(resultAction)) {
+        console.log('Demo login successful');
+        navigate(from, { replace: true });
+      } else {
+        console.error('Demo login failed:', resultAction.payload || resultAction.error);
+        setLoginError('Demo login failed. Please try registering first.');
+      }
     } catch (error) {
-      console.error('Demo login failed', error);
+      console.error('Demo login error:', error);
+      setLoginError('An unexpected error occurred during demo login.');
     }
   };
 
@@ -169,7 +200,7 @@ const Login: React.FC = () => {
             Sign in to SEMS
           </Typography>
           <Box sx={{ width: '100%', mb: 2 }}>
-            {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+            {loginError && <Alert severity="error" sx={{ mb: 2 }}>{loginError}</Alert>}
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}

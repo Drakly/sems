@@ -32,7 +32,7 @@ echo -e "${GREEN}Discovery Server is running.${NC}"
 
 echo -e "${YELLOW}Starting Config Server...${NC}"
 cd config-server
-mvn spring-boot:run -Dspring-boot.run.profiles=local &
+mvn spring-boot:run -Dspring-boot.run.profiles=composite &
 CONFIG_PID=$!
 cd ..
 

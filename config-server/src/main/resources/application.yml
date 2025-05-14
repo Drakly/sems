@@ -11,6 +11,11 @@ spring:
       server:
         native:
           search-locations: file:./config-repo
+          add-label-locations: false
+        git:
+          enabled: false
+        default-label: master
+      enabled: true
 
 eureka:
   client:

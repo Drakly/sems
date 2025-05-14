@@ -26,7 +26,7 @@ public class DocumentService {
     private final DocumentRepository documentRepository;
     private final StorageService storageService;
     private final SearchService searchService;
-    private final DocumentMapper documentMapper;
+    private final DocumentResponseMapper documentMapper;
     
     @Transactional
     public DocumentResponse uploadDocument(MultipartFile file, DocumentUploadRequest request) {

@@ -307,8 +307,17 @@ public class ApprovalWorkflowService implements ApprovalWorkflowUseCase {
         Set<UUID> approverRoles = getUserRoles(approverId);
         
         // Find levels this approver can approve
-        List<ApprovalLevel> approverLevels = approvalLevelRepository.findAll().stream()
-            .filter(level -> level.isActive() && approverRoles.contains(level.getRoleId()))
+        List<ApprovalLevel> approverLevels = new ArrayList<>();
+        
+        // For each role, get the approval levels
+        for (UUID roleId : approverRoles) {
+            List<ApprovalLevel> roleLevels = approvalLevelRepository.findByRoleId(roleId);
+            approverLevels.addAll(roleLevels);
+        }
+        
+        // Filter for active levels
+        approverLevels = approverLevels.stream()
+            .filter(ApprovalLevel::isActive)
             .collect(Collectors.toList());
         
         if (approverLevels.isEmpty()) {

@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: composite
+  cloud:
+    config:
+      server:
+        bootstrap: true
+        composite:
+          - type: native
+            search-locations: file:./config-repo 

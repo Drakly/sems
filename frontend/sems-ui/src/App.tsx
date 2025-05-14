@@ -13,6 +13,12 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
+// Dashboard component
+import Dashboard from './components/dashboard/Dashboard';
+
+// Layout component
+import MainLayout from './layout/MainLayout';
+
 // Redux
 import { RootState } from './store';
 import { getCurrentUser } from './store/slices/authSlice';
@@ -34,16 +40,8 @@ interface UIState {
   };
 }
 
-// Create placeholder components for dashboard and other sections
-// MainLayout that renders Outlet for nested routes
-const MainLayout: React.FC = () => (
-  <Box sx={{ width: '100%' }}>
-    <Outlet />
-  </Box>
-);
-
-const Dashboard = () => <div>Dashboard</div>;
-const ExpenseList = () => <div>Expense List</div>;
+// Placeholder components for other sections
+const ExpenseList = () => <div>Expenses List</div>;
 const ExpenseDetail = () => <div>Expense Detail</div>;
 const ExpenseForm = () => <div>Expense Form</div>;
 const ApprovalList = () => <div>Approval List</div>;
