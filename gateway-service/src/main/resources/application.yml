@@ -35,12 +35,14 @@ spring:
           uri: lb://user-service
           predicates:
             - Path=/auth/**
+        - id: expense-service-v1
+          uri: lb://expense-service
+          predicates:
+            - Path=/api/v1/expenses/**,/api/v1/budgets/**
         - id: expense-service
           uri: lb://expense-service
           predicates:
             - Path=/api/expenses/**
-          filters:
-            - RewritePath=/api/(?<segment>.*), /${segment}
         - id: expense-service-direct
           uri: lb://expense-service
           predicates:

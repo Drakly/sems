@@ -40,3 +40,6 @@ npm start
 - If services fail to start, check console output for errors
 - For database issues: `./init-databases.sh`
 - For Kafka topics: `docker exec -it $(docker ps -q -f name=kafka) kafka-topics --list --bootstrap-server localhost:9092` 
+
+
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd 'C:\Users\darkl\Documents\SEMS\sems\expense-service'; Write-Host 'Starting Expense Service...' -ForegroundColor Cyan; Start-Sleep 25; mvn spring-boot:run"

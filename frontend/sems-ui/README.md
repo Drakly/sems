@@ -56,8 +56,11 @@ The application will be available at http://localhost:3000.
 Create a `.env` file in the root directory with the following variables:
 
 ```
-REACT_APP_API_URL=http://localhost:8080/api/v1
+REACT_APP_API_URL=http://localhost:8080
+REACT_APP_ENVIRONMENT=development
 ```
+
+**Important**: The API URL should point to the SEMS Gateway service which routes requests to the appropriate microservices.
 
 ## Project Structure
 
@@ -81,13 +84,32 @@ src/
 
 ## API Integration
 
-The frontend integrates with the SEMS backend API endpoints for:
+The frontend integrates with the SEMS backend API through the Gateway service (port 8080) which routes requests to the appropriate microservices:
 
-- User authentication
-- Expense management
-- Approval workflow
-- Budget management
-- Reporting
+### Backend Services
+- **User Service**: Authentication and user management (`/auth/*`, `/api/users/*`)
+- **Expense Service**: Expense CRUD operations (`/api/expenses/*`)
+- **Workflow Service**: Approval workflow management (`/api/v1/expenses/workflow/*`)
+- **Budget Service**: Budget management (`/api/v1/budgets/*`)
+- **Document Service**: File upload/download (`/api/documents/*`)
+- **Reporting Service**: Report generation (`/api/v1/reports/*`)
+
+### Key Changes Made
+- **Removed Mock Data**: All mock data fallbacks have been removed from services
+- **Fixed API Endpoints**: Updated all service methods to use correct backend endpoints
+- **Proper Error Handling**: Removed fallback to mock data, now shows proper error messages
+- **Type Safety**: Updated frontend types to match backend DTOs
+- **Document Service**: Added new service for file upload/download functionality
+
+### Backend Requirements
+For the frontend to work properly, ensure the following backend services are running:
+1. Gateway Service (port 8080)
+2. User Service (port 8081)  
+3. Expense Service (port 8082)
+4. Document Service (port 8084)
+5. Reporting Service (dynamic port)
+6. Discovery Server (port 8761)
+7. Config Server (port 8888)
 
 ## Available Scripts
 

@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { Expense, ExpenseStatus, ApprovalHistory, ApprovalAction, WorkflowStatistics } from '../../types';
+import { Expense, ApprovalHistory, WorkflowStatistics } from '../../types';
 import expenseService from '../../services/expenseService';
 
 interface ExpenseState {
   userExpenses: Expense[];
   pendingApprovals: Expense[];
-  workflowStats: WorkflowStatistics | null;
+  workflowStats: WorkflowStatistics[] | null;
   currentExpense: Expense | null;
   approvalHistory: ApprovalHistory | null;
   isLoading: boolean;

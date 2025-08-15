@@ -59,52 +59,46 @@ export enum ReportStatus {
   FAILED = 'FAILED'
 }
 
+const baseUrl = '/api/v1/reports';
+
 const reportService = {
   createReport: async (reportData: ReportRequest): Promise<Report> => {
-    const response = await api.post<Report>('/reports', reportData);
+    const response = await api.post<Report>(baseUrl, reportData);
     return response.data;
   },
 
   getReportById: async (id: string): Promise<Report> => {
-    const response = await api.get<Report>(`/reports/${id}`);
+    const response = await api.get<Report>(`${baseUrl}/${id}`);
     return response.data;
   },
 
   getAllReports: async (params?: { page?: number, size?: number }): Promise<PaginatedResponse<Report>> => {
-    const response = await api.get<PaginatedResponse<Report>>('/reports', { params });
+    const response = await api.get<PaginatedResponse<Report>>(baseUrl, { params });
     return response.data;
   },
 
   updateReport: async (id: string, reportData: Partial<ReportRequest>): Promise<Report> => {
-    const response = await api.put<Report>(`/reports/${id}`, reportData);
+    const response = await api.put<Report>(`${baseUrl}/${id}`, reportData);
     return response.data;
   },
 
   deleteReport: async (id: string): Promise<void> => {
-    await api.delete(`/reports/${id}`);
+    await api.delete(`${baseUrl}/${id}`);
   },
 
-  generateReport: async (id: string, parameters?: Record<string, any>): Promise<Blob> => {
-    const response = await api.post(`/reports/${id}/generate`, parameters, {
-      responseType: 'blob'
+  generateReport: async (id: string, parameters?: Record<string, any>): Promise<void> => {
+    await api.post(`${baseUrl}/${id}/generate`, parameters);
+  },
+
+  getUserReports: async (userId: string): Promise<Report[]> => {
+    const response = await api.get<Report[]>(`${baseUrl}/user/${userId}`);
+    return response.data;
+  },
+
+  getReportsByDateRange: async (startDate: string, endDate: string): Promise<Report[]> => {
+    const response = await api.get<Report[]>(baseUrl, {
+      params: { startDate, endDate }
     });
-    return response.data;
-  },
-
-  downloadReportFile: async (id: string, fileId: string): Promise<Blob> => {
-    const response = await api.get(`/reports/${id}/files/${fileId}`, {
-      responseType: 'blob'
-    });
-    return response.data;
-  },
-
-  getScheduledReports: async (): Promise<Report[]> => {
-    const response = await api.get<Report[]>('/reports/scheduled');
-    return response.data;
-  },
-
-  getReportFiles: async (id: string): Promise<any[]> => {
-    const response = await api.get(`/reports/${id}/files`);
     return response.data;
   }
 };

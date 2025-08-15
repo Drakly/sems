@@ -54,7 +54,7 @@ const authService = {
   getCurrentUser: async (): Promise<User> => {
     try {
       console.log('Fetching current user');
-      const response = await api.get<User>('/users/me');
+      const response = await api.get<User>('/auth/me');
       console.log('Current user response:', response.data);
       // Store user ID in localStorage
       if (response.data && response.data.id) {

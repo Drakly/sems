@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -13,7 +13,6 @@ import {
   Alert,
   Stack,
   Divider,
-  Grid,
 } from '@mui/material';
 import {
   AddCircleOutline as AddIcon,
@@ -29,57 +28,12 @@ import { getUserExpenses, getPendingApprovalsForUser, getWorkflowStatistics } fr
 import { getBudgetUtilization } from '../../store/slices/budgetSlice';
 import { Expense } from '../../types';
 
-// Demo data in case the API calls fail
-const DEMO_EXPENSES = [
-  {
-    id: '1',
-    title: 'Business Lunch',
-    amount: 75.50,
-    currency: 'USD',
-    status: 'APPROVED',
-    expenseDate: new Date().toISOString(),
-    description: 'Lunch with clients',
-    category: { name: 'Meals' }
-  },
-  {
-    id: '2',
-    title: 'Office Supplies',
-    amount: 120.75,
-    currency: 'USD',
-    status: 'SUBMITTED',
-    expenseDate: new Date().toISOString(),
-    description: 'Paper, pens, and notebooks',
-    category: { name: 'Office Supplies' }
-  },
-  {
-    id: '3',
-    title: 'Travel to Conference',
-    amount: 550.00,
-    currency: 'USD',
-    status: 'UNDER_REVIEW',
-    expenseDate: new Date().toISOString(),
-    description: 'Flight tickets to industry conference',
-    category: { name: 'Travel' }
-  }
-];
 
-const DEMO_STATS = {
-  pendingCount: 3,
-  approvedCount: 5,
-  rejectedCount: 1,
-  changesRequestedCount: 2,
-  averageApprovalTime: 48,
-  byDepartment: {
-    'IT': { pendingCount: 1, approvedCount: 2, rejectedCount: 0 },
-    'Marketing': { pendingCount: 2, approvedCount: 1, rejectedCount: 1 },
-    'Finance': { pendingCount: 0, approvedCount: 2, rejectedCount: 0 }
-  }
-};
 
 interface ExpensesState {
   userExpenses: Expense[];
   pendingApprovals: Expense[];
-  workflowStats: any;
+  workflowStats: any[] | null;
   isLoading: boolean;
   error: string | null;
 }
@@ -101,38 +55,37 @@ const Dashboard: React.FC = () => {
     error 
   } = useSelector((state: RootState) => state.expenses) as ExpensesState;
   
-  const { utilizationData, isLoading: budgetLoading } = useSelector((state: RootState) => state.budgets) as BudgetsState;
+  const { isLoading: budgetLoading } = useSelector((state: RootState) => state.budgets) as BudgetsState;
   
-  const [loadingFailed, setLoadingFailed] = useState(false);
-  const [userExpenses, setUserExpenses] = useState<Expense[]>([]);
-
-  useEffect(() => {
+    useEffect(() => {
     const fetchData = async () => {
       try {
         console.log("Fetching dashboard data...");
+        console.log("User:", user);
+        console.log("Auth token:", localStorage.getItem('token'));
+        console.log("User ID:", localStorage.getItem('userId'));
+        console.log("API Base URL:", process.env.REACT_APP_API_URL || 'http://localhost:8080');
+        
+        // Only fetch data if user is authenticated
+        if (!user && !localStorage.getItem('token')) {
+          console.warn("User not authenticated, skipping data fetch");
+          return;
+        }
+        
+        // Debug info
+        console.log("Fetching dashboard data with authentication...");
+        
         await dispatch(getUserExpenses({}) as any);
         await dispatch(getPendingApprovalsForUser({}) as any);
         await dispatch(getWorkflowStatistics() as any);
         await dispatch(getBudgetUtilization({}) as any);
-        setLoadingFailed(false);
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
-        setLoadingFailed(true);
       }
     };
-    
-    fetchData();
-  }, [dispatch]);
 
-  // Use API data if available, otherwise use demo data
-  useEffect(() => {
-    if (apiExpenses && apiExpenses.length > 0) {
-      setUserExpenses(apiExpenses);
-    } else if (loadingFailed || error) {
-      console.log("Using demo expenses data");
-      setUserExpenses(DEMO_EXPENSES as any);
-    }
-  }, [apiExpenses, loadingFailed, error]);
+    fetchData();
+  }, [dispatch, user]);
 
   // Sample data for charts
   const expensesByCategoryData = [
@@ -155,8 +108,40 @@ const Dashboard: React.FC = () => {
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
   const countExpensesByStatus = (status: string) => {
-    return userExpenses?.filter((expense: Expense) => expense.status === status).length || 0;
+    return apiExpenses?.filter((expense: Expense) => expense.status === status).length || 0;
   };
+
+  // Aggregate workflow stats from array
+  const getAggregatedStats = () => {
+    if (!workflowStats || !Array.isArray(workflowStats)) {
+      return { pendingCount: 0, approvedCount: 0, rejectedCount: 0 };
+    }
+    
+    return workflowStats.reduce((acc, stat) => ({
+      pendingCount: acc.pendingCount + (stat.pendingCount || 0),
+      approvedCount: acc.approvedCount + (stat.approvedCount || 0),
+      rejectedCount: acc.rejectedCount + (stat.rejectedCount || 0)
+    }), { pendingCount: 0, approvedCount: 0, rejectedCount: 0 });
+  };
+
+  const aggregatedStats = getAggregatedStats();
+
+  // Show authentication status for debugging
+  if (!user && !localStorage.getItem('token')) {
+    return (
+      <Box sx={{ flexGrow: 1, p: 3 }}>
+        <Alert severity="warning" sx={{ mb: 2 }}>
+          <Typography variant="h6">Authentication Required</Typography>
+          <Typography>
+            You need to be logged in to view the dashboard. Please log in first.
+          </Typography>
+          <Typography variant="body2" sx={{ mt: 1 }}>
+            Debug info: User: {user ? 'Exists' : 'Null'}, Token: {localStorage.getItem('token') ? 'Exists' : 'Missing'}
+          </Typography>
+        </Alert>
+      </Box>
+    );
+  }
 
   if (isLoading || budgetLoading) {
     return (
@@ -168,9 +153,9 @@ const Dashboard: React.FC = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {loadingFailed && (
-        <Alert severity="warning" sx={{ mb: 2 }}>
-          Could not connect to expense services. Showing demo data for preview purposes.
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          Error loading expense data: {error}
         </Alert>
       )}
       
@@ -205,7 +190,7 @@ const Dashboard: React.FC = () => {
                     Pending Approvals
                   </Typography>
                   <Typography variant="h5" color="text.secondary">
-                    {pendingApprovals?.length || workflowStats?.pendingCount || 0}
+                    {pendingApprovals?.length || aggregatedStats.pendingCount || 0}
                   </Typography>
                 </CardContent>
               </CardActionArea>
@@ -220,7 +205,7 @@ const Dashboard: React.FC = () => {
                     My Expenses
                   </Typography>
                   <Typography variant="h5" color="text.secondary">
-                    {userExpenses?.length || 0}
+                    {apiExpenses?.length || 0}
                   </Typography>
                 </CardContent>
               </CardActionArea>
@@ -253,30 +238,30 @@ const Dashboard: React.FC = () => {
                 <PendingIcon color="warning" sx={{ mr: 1 }} />
                 <Typography variant="h6">Pending</Typography>
               </Box>
-              <Typography variant="h3">
-                {countExpensesByStatus('SUBMITTED') + countExpensesByStatus('UNDER_REVIEW') || 
-                 workflowStats?.pendingCount || DEMO_STATS.pendingCount}
-              </Typography>
+                                                 <Typography variant="h3">
+                       {countExpensesByStatus('SUBMITTED') + countExpensesByStatus('UNDER_REVIEW') ||
+                        aggregatedStats.pendingCount || 0}
+                     </Typography>
             </Box>
             <Box sx={{ flex: '1 1 30%', minWidth: 200, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                 <ApprovalIcon color="success" sx={{ mr: 1 }} />
                 <Typography variant="h6">Approved</Typography>
               </Box>
-              <Typography variant="h3">
-                {countExpensesByStatus('APPROVED') || 
-                 workflowStats?.approvedCount || DEMO_STATS.approvedCount}
-              </Typography>
+                                                 <Typography variant="h3">
+                       {countExpensesByStatus('APPROVED') ||
+                        aggregatedStats.approvedCount || 0}
+                     </Typography>
             </Box>
             <Box sx={{ flex: '1 1 30%', minWidth: 200, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                 <ErrorIcon color="error" sx={{ mr: 1 }} />
                 <Typography variant="h6">Rejected</Typography>
               </Box>
-              <Typography variant="h3">
-                {countExpensesByStatus('REJECTED') || 
-                 workflowStats?.rejectedCount || DEMO_STATS.rejectedCount}
-              </Typography>
+                                                 <Typography variant="h3">
+                       {countExpensesByStatus('REJECTED') ||
+                        aggregatedStats.rejectedCount || 0}
+                     </Typography>
             </Box>
           </Box>
         </Paper>
@@ -341,9 +326,9 @@ const Dashboard: React.FC = () => {
           Recent Activity
         </Typography>
         <Paper sx={{ p: 2 }}>
-          {userExpenses && userExpenses.length > 0 ? (
+          {apiExpenses && apiExpenses.length > 0 ? (
             <Stack spacing={2} divider={<Divider flexItem />}>
-              {userExpenses.slice(0, 5).map((expense: Expense) => (
+              {apiExpenses.slice(0, 5).map((expense: Expense) => (
                 <Box key={expense.id} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <Box>
                     <Typography variant="subtitle1">{expense.title}</Typography>
@@ -371,7 +356,7 @@ const Dashboard: React.FC = () => {
               No recent expenses found. Create your first expense to get started!
             </Typography>
           )}
-          {userExpenses && userExpenses.length > 5 && (
+          {apiExpenses && apiExpenses.length > 5 && (
             <Box sx={{ mt: 2, textAlign: 'center' }}>
               <Button component={Link} to="/expenses" variant="outlined">View All</Button>
             </Box>

@@ -6,6 +6,7 @@ export interface User {
   lastName: string;
   department: string;
   role: string;
+  active: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -78,18 +79,13 @@ export enum ApprovalAction {
 }
 
 export interface WorkflowStatistics {
+  approvalLevel: number;
+  levelName: string;
   pendingCount: number;
   approvedCount: number;
   rejectedCount: number;
-  changesRequestedCount: number;
-  averageApprovalTime: number;
-  byDepartment?: {
-    [department: string]: {
-      pendingCount: number;
-      approvedCount: number;
-      rejectedCount: number;
-    }
-  };
+  totalPendingAmount: number;
+  averageProcessingTimeInHours: number;
 }
 
 export interface Budget {
@@ -126,4 +122,20 @@ export interface PaginatedResponse<T> {
 export interface ApiError {
   status: number;
   message: string;
+}
+
+export interface Document {
+  id: string;
+  fileName: string;
+  originalFileName: string;
+  contentType: string;
+  fileSize: number;
+  s3Url: string;
+  expenseId: string;
+  uploadedBy: string;
+  documentType: string;
+  description?: string;
+  tags?: string;
+  uploadedAt: string;
+  updatedAt: string;
 } 
