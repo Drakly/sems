@@ -30,6 +30,18 @@ export interface ExpenseFilterParams {
 }
 
 const expenseService = {
+  // Test API connectivity
+  testConnection: async (): Promise<boolean> => {
+    try {
+      console.log('Testing API connection to expense service...');
+      const response = await api.get(`${baseUrl}`);
+      console.log('API connection test successful:', response.status);
+      return true;
+    } catch (error) {
+      console.error('API connection test failed:', error);
+      return false;
+    }
+  },
   // Basic expense CRUD operations
   createExpense: async (expenseData: ExpenseRequest): Promise<Expense> => {
     // Convert frontend data to backend format
@@ -56,9 +68,15 @@ const expenseService = {
   getUserExpenses: async (params: any = {}): Promise<Expense[]> => {
     const userId = localStorage.getItem('userId');
     if (!userId) {
-      throw new Error('User ID not found. Please log in again.');
+      console.warn('No userId found in localStorage, attempting to get all expenses instead');
+      // Fallback to getting all expenses if userId is not available
+      try {
+        return await expenseService.getAllExpenses(params);
+      } catch (error) {
+        throw new Error('User ID not found and unable to fetch expenses. Please log in again.');
+      }
     }
-    console.log('Getting user expenses with params:', params);
+    console.log('Getting user expenses for userId:', userId, 'with params:', params);
     const response = await api.get(`${baseUrl}/user/${userId}`, { params });
     console.log('User expenses response:', response.data);
     return response.data;
@@ -140,8 +158,16 @@ const expenseService = {
 
   // Get workflow statistics
   getWorkflowStatistics: async (): Promise<WorkflowStatistics[]> => {
-    const response = await api.get<WorkflowStatistics[]>(`${workflowBaseUrl}/stats`);
-    return response.data;
+    console.log('Fetching workflow statistics from:', `${workflowBaseUrl}/stats`);
+    try {
+      const response = await api.get<WorkflowStatistics[]>(`${workflowBaseUrl}/stats`);
+      console.log('Workflow statistics response:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching workflow statistics:', error);
+      // Return empty array as fallback to prevent UI from breaking
+      return [];
+    }
   },
 
   // Approval workflow steps
