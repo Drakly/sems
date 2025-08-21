@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
@@ -11,7 +11,6 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Alert,
   Grid,
   Card,
   CardContent,
@@ -22,9 +21,6 @@ import {
   FormControlLabel,
   Checkbox,
   Switch,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   List,
   ListItem,
   ListItemText,
@@ -38,21 +34,14 @@ import {
   Download as DownloadIcon,
   Email as EmailIcon,
   Schedule as ScheduleIcon,
-  FilterList as FilterIcon,
-  ExpandMore as ExpandMoreIcon,
   BarChart as BarChartIcon,
   PieChart as PieChartIcon,
   ShowChart as LineChartIcon,
   TableChart as TableIcon,
-  Category as CategoryIcon,
   Business as DepartmentIcon,
   Person as PersonIcon,
-  DateRange as DateRangeIcon,
   AttachMoney as MoneyIcon,
 } from '@mui/icons-material';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { RootState } from '../../store';
 
 const REPORT_TYPES = [
@@ -118,7 +107,6 @@ interface ReportFormData {
 
 const ReportForm: React.FC = () => {
   const navigate = useNavigate();
-  const { user } = useSelector((state: RootState) => state.auth);
 
   const [formData, setFormData] = useState<ReportFormData>({
     name: '',
@@ -244,538 +232,518 @@ const ReportForm: React.FC = () => {
   const selectedChartType = CHART_TYPES.find(chart => chart.id === formData.chartType);
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Box sx={{ p: 3, maxWidth: 1400, mx: 'auto' }}>
-        <Typography variant="h4" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <ReportIcon />
-          Generate Report
-        </Typography>
+    <Box sx={{ p: 3, maxWidth: 1400, mx: 'auto' }}>
+      <Typography variant="h4" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <ReportIcon />
+        Generate Report
+      </Typography>
 
-        <Grid container spacing={3}>
-          {/* Main Form */}
-          <Grid item xs={12} md={8}>
-            <Stack spacing={3}>
-              {/* Basic Information */}
-              <Paper sx={{ p: 3 }}>
-                <Typography variant="h6" gutterBottom>
-                  Report Configuration
-                </Typography>
-                <Stack spacing={3}>
+      <Grid container spacing={3}>
+        {/* Main Form */}
+        <Grid xs={12} md={8}>
+          <Stack spacing={3}>
+            {/* Basic Information */}
+            <Paper sx={{ p: 3 }}>
+              <Typography variant="h6" gutterBottom>
+                Report Configuration
+              </Typography>
+              <Stack spacing={3}>
+                <TextField
+                  fullWidth
+                  label="Report Name"
+                  value={formData.name}
+                  onChange={(e) => handleInputChange('name', e.target.value)}
+                  error={!!formErrors.name}
+                  helperText={formErrors.name}
+                  placeholder="e.g., Monthly Expense Summary - January 2024"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <ReportIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+
+                <TextField
+                  fullWidth
+                  label="Description (Optional)"
+                  multiline
+                  rows={2}
+                  value={formData.description}
+                  onChange={(e) => handleInputChange('description', e.target.value)}
+                  placeholder="Describe the purpose and scope of this report..."
+                />
+
+                <FormControl fullWidth error={!!formErrors.reportType}>
+                  <InputLabel>Report Type</InputLabel>
+                  <Select
+                    value={formData.reportType}
+                    label="Report Type"
+                    onChange={(e) => handleInputChange('reportType', e.target.value)}
+                  >
+                    {REPORT_TYPES.map((type) => (
+                      <MenuItem key={type.id} value={type.id}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          {type.icon}
+                          <Box>
+                            <Typography variant="body1">{type.name}</Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              {type.description}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+                <FormControl fullWidth>
+                  <InputLabel>Chart Type</InputLabel>
+                  <Select
+                    value={formData.chartType}
+                    label="Chart Type"
+                    onChange={(e) => handleInputChange('chartType', e.target.value)}
+                  >
+                    {CHART_TYPES.map((chart) => (
+                      <MenuItem key={chart.id} value={chart.id}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          {chart.icon}
+                          {chart.name}
+                        </Box>
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Stack>
+            </Paper>
+
+            {/* Date Range */}
+            <Paper sx={{ p: 3 }}>
+              <Typography variant="h6" gutterBottom>
+                Date Range
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid xs={6}>
                   <TextField
                     fullWidth
-                    label="Report Name"
-                    value={formData.name}
-                    onChange={(e) => handleInputChange('name', e.target.value)}
-                    error={!!formErrors.name}
-                    helperText={formErrors.name}
-                    placeholder="e.g., Monthly Expense Summary - January 2024"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <ReportIcon />
-                        </InputAdornment>
-                      ),
-                    }}
+                    label="Start Date"
+                    type="date"
+                    value={formData.startDate}
+                    onChange={(e) => handleInputChange('startDate', e.target.value)}
+                    error={!!formErrors.startDate}
+                    helperText={formErrors.startDate}
+                    InputLabelProps={{ shrink: true }}
                   />
-
-                  <TextField
-                    fullWidth
-                    label="Description (Optional)"
-                    multiline
-                    rows={2}
-                    value={formData.description}
-                    onChange={(e) => handleInputChange('description', e.target.value)}
-                    placeholder="Describe the purpose and scope of this report..."
-                  />
-
-                  <FormControl fullWidth error={!!formErrors.reportType}>
-                    <InputLabel>Report Type</InputLabel>
-                    <Select
-                      value={formData.reportType}
-                      label="Report Type"
-                      onChange={(e) => handleInputChange('reportType', e.target.value)}
-                    >
-                      {REPORT_TYPES.map((type) => (
-                        <MenuItem key={type.id} value={type.id}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            {type.icon}
-                            <Box>
-                              <Typography variant="body1">{type.name}</Typography>
-                              <Typography variant="caption" color="text.secondary">
-                                {type.description}
-                              </Typography>
-                            </Box>
-                          </Box>
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-
-                  <FormControl fullWidth>
-                    <InputLabel>Chart Type</InputLabel>
-                    <Select
-                      value={formData.chartType}
-                      label="Chart Type"
-                      onChange={(e) => handleInputChange('chartType', e.target.value)}
-                    >
-                      {CHART_TYPES.map((chart) => (
-                        <MenuItem key={chart.id} value={chart.id}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            {chart.icon}
-                            {chart.name}
-                          </Box>
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Stack>
-              </Paper>
-
-              {/* Date Range */}
-              <Paper sx={{ p: 3 }}>
-                <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <DateRangeIcon />
-                  Date Range
-                </Typography>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <DatePicker
-                      label="Start Date"
-                      value={new Date(formData.startDate)}
-                      onChange={(date) => handleInputChange('startDate', date?.toISOString().split('T')[0] || '')}
-                      slots={{
-                        textField: (params) => (
-                          <TextField
-                            {...params}
-                            fullWidth
-                            error={!!formErrors.startDate}
-                            helperText={formErrors.startDate}
-                          />
-                        ),
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <DatePicker
-                      label="End Date"
-                      value={new Date(formData.endDate)}
-                      onChange={(date) => handleInputChange('endDate', date?.toISOString().split('T')[0] || '')}
-                      slots={{
-                        textField: (params) => (
-                          <TextField
-                            {...params}
-                            fullWidth
-                            error={!!formErrors.endDate}
-                            helperText={formErrors.endDate}
-                          />
-                        ),
-                      }}
-                    />
-                  </Grid>
                 </Grid>
+                <Grid xs={6}>
+                  <TextField
+                    fullWidth
+                    label="End Date"
+                    type="date"
+                    value={formData.endDate}
+                    onChange={(e) => handleInputChange('endDate', e.target.value)}
+                    error={!!formErrors.endDate}
+                    helperText={formErrors.endDate}
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </Grid>
+              </Grid>
 
-                {/* Quick Date Ranges */}
-                <Box sx={{ mt: 2 }}>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Quick ranges:
+              {/* Quick Date Ranges */}
+              <Box sx={{ mt: 2 }}>
+                <Typography variant="body2" color="text.secondary" gutterBottom>
+                  Quick ranges:
+                </Typography>
+                <Stack direction="row" spacing={1} flexWrap="wrap">
+                  {[
+                    { label: 'Last 7 days', days: 7 },
+                    { label: 'Last 30 days', days: 30 },
+                    { label: 'Last 90 days', days: 90 },
+                    { label: 'This year', days: null, isYear: true },
+                  ].map((range) => (
+                    <Chip
+                      key={range.label}
+                      label={range.label}
+                      variant="outlined"
+                      size="small"
+                      onClick={() => {
+                        const endDate = new Date();
+                        let startDate: Date;
+                        
+                        if (range.isYear) {
+                          startDate = new Date(endDate.getFullYear(), 0, 1);
+                        } else {
+                          startDate = new Date(Date.now() - range.days! * 24 * 60 * 60 * 1000);
+                        }
+                        
+                        handleInputChange('startDate', startDate.toISOString().split('T')[0]);
+                        handleInputChange('endDate', endDate.toISOString().split('T')[0]);
+                      }}
+                    />
+                  ))}
+                </Stack>
+              </Box>
+            </Paper>
+
+            {/* Filters */}
+            <Paper sx={{ p: 3 }}>
+              <Typography variant="h6" gutterBottom>
+                Filters
+              </Typography>
+              <Stack spacing={3}>
+                {/* Categories Filter */}
+                <Box>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Categories
                   </Typography>
-                  <Stack direction="row" spacing={1} flexWrap="wrap">
-                    {[
-                      { label: 'Last 7 days', days: 7 },
-                      { label: 'Last 30 days', days: 30 },
-                      { label: 'Last 90 days', days: 90 },
-                      { label: 'This year', days: null, isYear: true },
-                    ].map((range) => (
-                      <Chip
-                        key={range.label}
-                        label={range.label}
-                        variant="outlined"
-                        size="small"
-                        onClick={() => {
-                          const endDate = new Date();
-                          let startDate: Date;
-                          
-                          if (range.isYear) {
-                            startDate = new Date(endDate.getFullYear(), 0, 1);
-                          } else {
-                            startDate = new Date(Date.now() - range.days! * 24 * 60 * 60 * 1000);
-                          }
-                          
-                          handleInputChange('startDate', startDate.toISOString().split('T')[0]);
-                          handleInputChange('endDate', endDate.toISOString().split('T')[0]);
-                        }}
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                    {CATEGORIES.map((category) => (
+                      <FormControlLabel
+                        key={category}
+                        control={
+                          <Checkbox
+                            checked={formData.categories.includes(category)}
+                            onChange={(e) => handleMultiSelectChange('categories', category, e.target.checked)}
+                          />
+                        }
+                        label={category.replace('_', ' ')}
                       />
                     ))}
-                  </Stack>
+                  </Box>
                 </Box>
-              </Paper>
 
-              {/* Filters */}
-              <Paper sx={{ p: 3 }}>
-                <Accordion>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <FilterIcon />
-                      Advanced Filters
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Stack spacing={3}>
-                      {/* Categories Filter */}
-                      <Box>
-                        <Typography variant="subtitle1" gutterBottom>
-                          Categories
-                        </Typography>
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                          {CATEGORIES.map((category) => (
-                            <FormControlLabel
-                              key={category}
-                              control={
-                                <Checkbox
-                                  checked={formData.categories.includes(category)}
-                                  onChange={(e) => handleMultiSelectChange('categories', category, e.target.checked)}
-                                />
-                              }
-                              label={category.replace('_', ' ')}
-                            />
-                          ))}
-                        </Box>
-                      </Box>
-
-                      {/* Departments Filter */}
-                      <Box>
-                        <Typography variant="subtitle1" gutterBottom>
-                          Departments
-                        </Typography>
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                          {DEPARTMENTS.map((department) => (
-                            <FormControlLabel
-                              key={department}
-                              control={
-                                <Checkbox
-                                  checked={formData.departments.includes(department)}
-                                  onChange={(e) => handleMultiSelectChange('departments', department, e.target.checked)}
-                                />
-                              }
-                              label={department}
-                            />
-                          ))}
-                        </Box>
-                      </Box>
-
-                      {/* Amount Range */}
-                      <Box>
-                        <Typography variant="subtitle1" gutterBottom>
-                          Amount Range
-                        </Typography>
-                        <Grid container spacing={2}>
-                          <Grid item xs={6}>
-                            <TextField
-                              fullWidth
-                              label="Minimum Amount"
-                              type="number"
-                              value={formData.minAmount}
-                              onChange={(e) => handleInputChange('minAmount', parseFloat(e.target.value) || 0)}
-                              InputProps={{
-                                startAdornment: (
-                                  <InputAdornment position="start">
-                                    <MoneyIcon />
-                                  </InputAdornment>
-                                ),
-                              }}
-                            />
-                          </Grid>
-                          <Grid item xs={6}>
-                            <TextField
-                              fullWidth
-                              label="Maximum Amount"
-                              type="number"
-                              value={formData.maxAmount}
-                              onChange={(e) => handleInputChange('maxAmount', parseFloat(e.target.value) || 0)}
-                              InputProps={{
-                                startAdornment: (
-                                  <InputAdornment position="start">
-                                    <MoneyIcon />
-                                  </InputAdornment>
-                                ),
-                              }}
-                            />
-                          </Grid>
-                        </Grid>
-                      </Box>
-                    </Stack>
-                  </AccordionDetails>
-                </Accordion>
-              </Paper>
-
-              {/* Report Options */}
-              <Paper sx={{ p: 3 }}>
-                <Typography variant="h6" gutterBottom>
-                  Report Options
-                </Typography>
-                <Stack spacing={2}>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={formData.includeCharts}
-                        onChange={(e) => handleInputChange('includeCharts', e.target.checked)}
+                {/* Departments Filter */}
+                <Box>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Departments
+                  </Typography>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                    {DEPARTMENTS.map((department) => (
+                      <FormControlLabel
+                        key={department}
+                        control={
+                          <Checkbox
+                            checked={formData.departments.includes(department)}
+                            onChange={(e) => handleMultiSelectChange('departments', department, e.target.checked)}
+                          />
+                        }
+                        label={department}
                       />
-                    }
-                    label="Include Charts and Visualizations"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={formData.includeSummary}
-                        onChange={(e) => handleInputChange('includeSummary', e.target.checked)}
-                      />
-                    }
-                    label="Include Executive Summary"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={formData.includeDetails}
-                        onChange={(e) => handleInputChange('includeDetails', e.target.checked)}
-                      />
-                    }
-                    label="Include Detailed Transaction List"
-                  />
-                </Stack>
-              </Paper>
+                    ))}
+                  </Box>
+                </Box>
 
-              {/* Scheduling */}
-              <Paper sx={{ p: 3 }}>
-                <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <ScheduleIcon />
-                  Scheduling & Delivery
-                </Typography>
-                <Stack spacing={3}>
-                  <FormControl fullWidth>
-                    <InputLabel>Schedule</InputLabel>
-                    <Select
-                      value={formData.schedule}
-                      label="Schedule"
-                      onChange={(e) => handleInputChange('schedule', e.target.value)}
-                    >
-                      {SCHEDULE_OPTIONS.map((option) => (
-                        <MenuItem key={option.id} value={option.id}>
-                          {option.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-
-                  <FormControl fullWidth>
-                    <InputLabel>Export Format</InputLabel>
-                    <Select
-                      value={formData.exportFormat}
-                      label="Export Format"
-                      onChange={(e) => handleInputChange('exportFormat', e.target.value)}
-                    >
-                      {EXPORT_FORMATS.map((format) => (
-                        <MenuItem key={format.id} value={format.id}>
-                          {format.name} ({format.extension})
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-
-                  {/* Email Recipients */}
-                  <Box>
-                    <Typography variant="subtitle1" gutterBottom>
-                      Email Recipients {formData.schedule !== 'none' && '(Required)'}
-                    </Typography>
-                    <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+                {/* Amount Range */}
+                <Box>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Amount Range
+                  </Typography>
+                  <Grid container spacing={2}>
+                    <Grid xs={6}>
                       <TextField
                         fullWidth
-                        label="Email Address"
-                        value={emailInput}
-                        onChange={(e) => setEmailInput(e.target.value)}
-                        onKeyPress={(e) => e.key === 'Enter' && addEmailRecipient()}
-                        error={!!formErrors.emailRecipients}
-                        helperText={formErrors.emailRecipients}
+                        label="Minimum Amount"
+                        type="number"
+                        value={formData.minAmount}
+                        onChange={(e) => handleInputChange('minAmount', parseFloat(e.target.value) || 0)}
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
-                              <EmailIcon />
+                              <MoneyIcon />
                             </InputAdornment>
                           ),
                         }}
                       />
-                      <Button variant="outlined" onClick={addEmailRecipient}>
-                        Add
-                      </Button>
-                    </Box>
-                    <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                      {formData.emailRecipients.map((email) => (
-                        <Chip
-                          key={email}
-                          label={email}
-                          onDelete={() => removeEmailRecipient(email)}
-                          variant="outlined"
-                        />
-                      ))}
-                    </Box>
+                    </Grid>
+                    <Grid xs={6}>
+                      <TextField
+                        fullWidth
+                        label="Maximum Amount"
+                        type="number"
+                        value={formData.maxAmount}
+                        onChange={(e) => handleInputChange('maxAmount', parseFloat(e.target.value) || 0)}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <MoneyIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Stack>
+            </Paper>
+
+            {/* Report Options */}
+            <Paper sx={{ p: 3 }}>
+              <Typography variant="h6" gutterBottom>
+                Report Options
+              </Typography>
+              <Stack spacing={2}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={formData.includeCharts}
+                      onChange={(e) => handleInputChange('includeCharts', e.target.checked)}
+                    />
+                  }
+                  label="Include Charts and Visualizations"
+                />
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={formData.includeSummary}
+                      onChange={(e) => handleInputChange('includeSummary', e.target.checked)}
+                    />
+                  }
+                  label="Include Executive Summary"
+                />
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={formData.includeDetails}
+                      onChange={(e) => handleInputChange('includeDetails', e.target.checked)}
+                    />
+                  }
+                  label="Include Detailed Transaction List"
+                />
+              </Stack>
+            </Paper>
+
+            {/* Scheduling */}
+            <Paper sx={{ p: 3 }}>
+              <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <ScheduleIcon />
+                Scheduling & Delivery
+              </Typography>
+              <Stack spacing={3}>
+                <FormControl fullWidth>
+                  <InputLabel>Schedule</InputLabel>
+                  <Select
+                    value={formData.schedule}
+                    label="Schedule"
+                    onChange={(e) => handleInputChange('schedule', e.target.value)}
+                  >
+                    {SCHEDULE_OPTIONS.map((option) => (
+                      <MenuItem key={option.id} value={option.id}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+                <FormControl fullWidth>
+                  <InputLabel>Export Format</InputLabel>
+                  <Select
+                    value={formData.exportFormat}
+                    label="Export Format"
+                    onChange={(e) => handleInputChange('exportFormat', e.target.value)}
+                  >
+                    {EXPORT_FORMATS.map((format) => (
+                      <MenuItem key={format.id} value={format.id}>
+                        {format.name} ({format.extension})
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+                {/* Email Recipients */}
+                <Box>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Email Recipients {formData.schedule !== 'none' && '(Required)'}
+                  </Typography>
+                  <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+                    <TextField
+                      fullWidth
+                      label="Email Address"
+                      value={emailInput}
+                      onChange={(e) => setEmailInput(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && addEmailRecipient()}
+                      error={!!formErrors.emailRecipients}
+                      helperText={formErrors.emailRecipients}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <EmailIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                    <Button variant="outlined" onClick={addEmailRecipient}>
+                      Add
+                    </Button>
                   </Box>
-                </Stack>
-              </Paper>
-            </Stack>
-          </Grid>
-
-          {/* Sidebar */}
-          <Grid item xs={12} md={4}>
-            <Stack spacing={3}>
-              {/* Report Preview */}
-              <Card>
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    Report Preview
-                  </Typography>
-                  <Divider sx={{ mb: 2 }} />
-                  <Stack spacing={2}>
-                    <Box>
-                      <Typography variant="body2" color="text.secondary">Type:</Typography>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        {selectedReportType?.icon}
-                        <Typography variant="body1">
-                          {selectedReportType?.name || 'Not selected'}
-                        </Typography>
-                      </Box>
-                    </Box>
-                    <Box>
-                      <Typography variant="body2" color="text.secondary">Chart:</Typography>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        {selectedChartType?.icon}
-                        <Typography variant="body1">{selectedChartType?.name}</Typography>
-                      </Box>
-                    </Box>
-                    <Box>
-                      <Typography variant="body2" color="text.secondary">Period:</Typography>
-                      <Typography variant="body1">
-                        {new Date(formData.startDate).toLocaleDateString()} - {new Date(formData.endDate).toLocaleDateString()}
-                      </Typography>
-                    </Box>
-                    <Box>
-                      <Typography variant="body2" color="text.secondary">Format:</Typography>
-                      <Typography variant="body1">
-                        {EXPORT_FORMATS.find(f => f.id === formData.exportFormat)?.name}
-                      </Typography>
-                    </Box>
-                  </Stack>
-                </CardContent>
-              </Card>
-
-              {/* Applied Filters */}
-              <Card>
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    Applied Filters
-                  </Typography>
-                  <Divider sx={{ mb: 2 }} />
-                  <Stack spacing={1}>
-                    {formData.categories.length > 0 && (
-                      <Box>
-                        <Typography variant="body2" color="text.secondary">Categories:</Typography>
-                        <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
-                          {formData.categories.map(cat => (
-                            <Chip key={cat} label={cat} size="small" />
-                          ))}
-                        </Box>
-                      </Box>
-                    )}
-                    {formData.departments.length > 0 && (
-                      <Box>
-                        <Typography variant="body2" color="text.secondary">Departments:</Typography>
-                        <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
-                          {formData.departments.map(dept => (
-                            <Chip key={dept} label={dept} size="small" />
-                          ))}
-                        </Box>
-                      </Box>
-                    )}
-                    {(formData.minAmount > 0 || formData.maxAmount > 0) && (
-                      <Box>
-                        <Typography variant="body2" color="text.secondary">Amount Range:</Typography>
-                        <Typography variant="body1">
-                          ${formData.minAmount} - ${formData.maxAmount || '∞'}
-                        </Typography>
-                      </Box>
-                    )}
-                  </Stack>
-                </CardContent>
-              </Card>
-
-              {/* Report Tips */}
-              <Card>
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    Report Tips
-                  </Typography>
-                  <Divider sx={{ mb: 2 }} />
-                  <List dense>
-                    <ListItem>
-                      <ListItemIcon>
-                        <BarChartIcon fontSize="small" />
-                      </ListItemIcon>
-                      <ListItemText 
-                        primary="Use bar charts for category comparisons"
-                        secondary="Best for showing differences between groups"
+                  <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                    {formData.emailRecipients.map((email) => (
+                      <Chip
+                        key={email}
+                        label={email}
+                        onDelete={() => removeEmailRecipient(email)}
+                        variant="outlined"
                       />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemIcon>
-                        <PieChartIcon fontSize="small" />
-                      </ListItemIcon>
-                      <ListItemText 
-                        primary="Pie charts show proportions well"
-                        secondary="Ideal for budget allocation views"
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemIcon>
-                        <ScheduleIcon fontSize="small" />
-                      </ListItemIcon>
-                      <ListItemText 
-                        primary="Schedule regular reports"
-                        secondary="Stay informed with automated delivery"
-                      />
-                    </ListItem>
-                  </List>
-                </CardContent>
-              </Card>
-            </Stack>
-          </Grid>
+                    ))}
+                  </Box>
+                </Box>
+              </Stack>
+            </Paper>
+          </Stack>
         </Grid>
 
-        {/* Action Buttons */}
-        <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
-          <Button
-            variant="outlined"
-            startIcon={<CancelIcon />}
-            onClick={() => navigate('/reports')}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="outlined"
-            startIcon={<DownloadIcon />}
-            onClick={handleGenerateReport}
-            disabled={isGenerating || !formData.reportType}
-          >
-            Preview Report
-          </Button>
-          <Button
-            variant="contained"
-            startIcon={<SaveIcon />}
-            onClick={handleGenerateReport}
-            disabled={isGenerating || !formData.reportType}
-          >
-            {isGenerating ? 'Generating...' : 'Generate Report'}
-          </Button>
-        </Box>
+        {/* Sidebar */}
+        <Grid xs={12} md={4}>
+          <Stack spacing={3}>
+            {/* Report Preview */}
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  Report Preview
+                </Typography>
+                <Divider sx={{ mb: 2 }} />
+                <Stack spacing={2}>
+                  <Box>
+                    <Typography variant="body2" color="text.secondary">Type:</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      {selectedReportType?.icon}
+                      <Typography variant="body1">
+                        {selectedReportType?.name || 'Not selected'}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box>
+                    <Typography variant="body2" color="text.secondary">Chart:</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      {selectedChartType?.icon}
+                      <Typography variant="body1">{selectedChartType?.name}</Typography>
+                    </Box>
+                  </Box>
+                  <Box>
+                    <Typography variant="body2" color="text.secondary">Period:</Typography>
+                    <Typography variant="body1">
+                      {new Date(formData.startDate).toLocaleDateString()} - {new Date(formData.endDate).toLocaleDateString()}
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography variant="body2" color="text.secondary">Format:</Typography>
+                    <Typography variant="body1">
+                      {EXPORT_FORMATS.find(f => f.id === formData.exportFormat)?.name}
+                    </Typography>
+                  </Box>
+                </Stack>
+              </CardContent>
+            </Card>
+
+            {/* Applied Filters */}
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  Applied Filters
+                </Typography>
+                <Divider sx={{ mb: 2 }} />
+                <Stack spacing={1}>
+                  {formData.categories.length > 0 && (
+                    <Box>
+                      <Typography variant="body2" color="text.secondary">Categories:</Typography>
+                      <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
+                        {formData.categories.map(cat => (
+                          <Chip key={cat} label={cat} size="small" />
+                        ))}
+                      </Box>
+                    </Box>
+                  )}
+                  {formData.departments.length > 0 && (
+                    <Box>
+                      <Typography variant="body2" color="text.secondary">Departments:</Typography>
+                      <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
+                        {formData.departments.map(dept => (
+                          <Chip key={dept} label={dept} size="small" />
+                        ))}
+                      </Box>
+                    </Box>
+                  )}
+                  {(formData.minAmount > 0 || formData.maxAmount > 0) && (
+                    <Box>
+                      <Typography variant="body2" color="text.secondary">Amount Range:</Typography>
+                      <Typography variant="body1">
+                        ${formData.minAmount} - ${formData.maxAmount || '∞'}
+                      </Typography>
+                    </Box>
+                  )}
+                </Stack>
+              </CardContent>
+            </Card>
+
+            {/* Report Tips */}
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  Report Tips
+                </Typography>
+                <Divider sx={{ mb: 2 }} />
+                <List dense>
+                  <ListItem>
+                    <ListItemIcon>
+                      <BarChartIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText 
+                      primary="Use bar charts for category comparisons"
+                      secondary="Best for showing differences between groups"
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemIcon>
+                      <PieChartIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText 
+                      primary="Pie charts show proportions well"
+                      secondary="Ideal for budget allocation views"
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemIcon>
+                      <ScheduleIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText 
+                      primary="Schedule regular reports"
+                      secondary="Stay informed with automated delivery"
+                    />
+                  </ListItem>
+                </List>
+              </CardContent>
+            </Card>
+          </Stack>
+        </Grid>
+      </Grid>
+
+      {/* Action Buttons */}
+      <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
+        <Button
+          variant="outlined"
+          startIcon={<CancelIcon />}
+          onClick={() => navigate('/reports')}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="outlined"
+          startIcon={<DownloadIcon />}
+          onClick={handleGenerateReport}
+          disabled={isGenerating || !formData.reportType}
+        >
+          Preview Report
+        </Button>
+        <Button
+          variant="contained"
+          startIcon={<SaveIcon />}
+          onClick={handleGenerateReport}
+          disabled={isGenerating || !formData.reportType}
+        >
+          {isGenerating ? 'Generating...' : 'Generate Report'}
+        </Button>
       </Box>
-    </LocalizationProvider>
+    </Box>
   );
 };
 

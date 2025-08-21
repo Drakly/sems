@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,6 +18,19 @@ import Dashboard from './components/dashboard/Dashboard';
 
 // Layout component
 import MainLayout from './layout/MainLayout';
+
+// Import actual components
+import ExpenseForm from './components/expense/ExpenseForm';
+import ExpenseList from './components/expense/ExpenseList';
+import ExpenseDetail from './components/expense/ExpenseDetail';
+import BudgetForm from './components/budget/BudgetForm';
+import BudgetList from './components/budget/BudgetList';
+import BudgetDetail from './components/budget/BudgetDetail';
+import ReportForm from './components/reports/ReportForm';
+import ReportList from './components/reports/ReportList';
+import ReportDetail from './components/reports/ReportDetail';
+import ApprovalList from './components/approval/ApprovalList';
+import ApprovalDetail from './components/approval/ApprovalDetail';
 
 // Redux
 import { RootState } from './store';

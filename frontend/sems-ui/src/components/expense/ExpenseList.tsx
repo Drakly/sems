@@ -269,7 +269,7 @@ const ExpenseList: React.FC = () => {
 
       {/* Statistics Cards */}
       <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={3}>
           <Card>
             <CardContent sx={{ textAlign: 'center' }}>
               <Typography variant="h4" color="primary">
@@ -281,7 +281,7 @@ const ExpenseList: React.FC = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={3}>
           <Card>
             <CardContent sx={{ textAlign: 'center' }}>
               <Typography variant="h4" color="info.main">
@@ -293,7 +293,7 @@ const ExpenseList: React.FC = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={3}>
           <Card>
             <CardContent sx={{ textAlign: 'center' }}>
               <Typography variant="h4" color="warning.main">
@@ -305,7 +305,7 @@ const ExpenseList: React.FC = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={3}>
           <Card>
             <CardContent sx={{ textAlign: 'center' }}>
               <Typography variant="h4" color="success.main">
@@ -322,7 +322,7 @@ const ExpenseList: React.FC = () => {
       {/* Filters */}
       <Paper sx={{ p: 2, mb: 3 }}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} md={4}>
+          <Grid xs={12} md={4}>
             <TextField
               fullWidth
               placeholder="Search expenses..."
@@ -337,7 +337,7 @@ const ExpenseList: React.FC = () => {
               }}
             />
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid xs={12} md={3}>
             <FormControl fullWidth>
               <InputLabel>Status</InputLabel>
               <Select
@@ -354,7 +354,7 @@ const ExpenseList: React.FC = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid xs={12} md={3}>
             <FormControl fullWidth>
               <InputLabel>Category</InputLabel>
               <Select
@@ -371,7 +371,7 @@ const ExpenseList: React.FC = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} md={2}>
+          <Grid xs={12} md={2}>
             <Button
               variant="outlined"
               startIcon={<ExportIcon />}

@@ -34,9 +34,6 @@ import {
   Send as SubmitIcon,
   Cancel as CancelIcon,
 } from '@mui/icons-material';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { RootState } from '../../store';
 import { createExpense, updateExpense, getExpenseById } from '../../store/slices/expenseSlice';
 import { ExpenseRequest } from '../../services/expenseService';
@@ -132,7 +129,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
     );
 
     if (suggestedCategory && !formData.categoryId) {
-      setAiSuggestions(prev => ({
+      setAiSuggestions((prev: any) => ({
         ...prev,
         category: suggestedCategory,
       }));
@@ -144,7 +141,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
       const isReasonable = suggestions.some(suggested => Math.abs(amount - suggested) / suggested < 0.5);
       
       if (!isReasonable) {
-        setAiSuggestions(prev => ({
+        setAiSuggestions((prev: any) => ({
           ...prev,
           amountWarning: `This amount seems unusual for ${suggestedCategory.name}. Typical amounts: ${suggestions.join(', ')}`,
         }));
@@ -188,7 +185,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
     if (type === 'category') {
       handleInputChange('categoryId', value.id);
     }
-    setAiSuggestions(prev => ({ ...prev, [type]: null }));
+    setAiSuggestions((prev: any) => ({ ...prev, [type]: null }));
   };
 
   const validateForm = (): boolean => {
@@ -230,352 +227,339 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
   }
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Box sx={{ p: 3, maxWidth: 1200, mx: 'auto' }}>
-        {error && (
-          <Alert severity="error" sx={{ mb: 3 }}>
-            {error}
-          </Alert>
-        )}
+    <Box sx={{ p: 3, maxWidth: 1200, mx: 'auto' }}>
+      {error && (
+        <Alert severity="error" sx={{ mb: 3 }}>
+          {error}
+        </Alert>
+      )}
 
-        <Typography variant="h4" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <ReceiptIcon />
-          {mode === 'edit' ? 'Edit Expense' : 'New Expense'}
-        </Typography>
+      <Typography variant="h4" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <ReceiptIcon />
+        {mode === 'edit' ? 'Edit Expense' : 'New Expense'}
+      </Typography>
 
-        <Grid container spacing={3}>
-          {/* Main Form */}
-          <Grid item xs={12} md={8}>
-            <Paper sx={{ p: 3 }}>
-              <Stack spacing={3}>
-                {/* AI Toggle */}
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Typography variant="h6">Expense Details</Typography>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={autoSuggest}
-                        onChange={(e) => setAutoSuggest(e.target.checked)}
-                        color="primary"
-                      />
-                    }
-                    label={
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                        <AIIcon fontSize="small" />
-                        Smart Suggestions
-                      </Box>
-                    }
-                  />
-                </Box>
-
-                {/* Title */}
-                <TextField
-                  fullWidth
-                  label="Expense Title"
-                  value={formData.title}
-                  onChange={(e) => handleInputChange('title', e.target.value)}
-                  error={!!formErrors.title}
-                  helperText={formErrors.title}
-                  placeholder="e.g., Business lunch with client, Flight to conference"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <ReceiptIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-
-                {/* AI Category Suggestion */}
-                {aiSuggestions.category && (
-                  <Alert
-                    severity="info"
-                    action={
-                      <Button
-                        color="inherit"
-                        size="small"
-                        onClick={() => applySuggestion('category', aiSuggestions.category)}
-                      >
-                        Apply
-                      </Button>
-                    }
-                  >
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <AIIcon fontSize="small" />
-                      Suggested category: {aiSuggestions.category.icon} {aiSuggestions.category.name}
-                    </Box>
-                  </Alert>
-                )}
-
-                {/* Amount and Currency */}
-                <Grid container spacing={2}>
-                  <Grid item xs={8}>
-                    <TextField
-                      fullWidth
-                      label="Amount"
-                      type="number"
-                      value={formData.amount}
-                      onChange={(e) => handleInputChange('amount', parseFloat(e.target.value) || 0)}
-                      error={!!formErrors.amount}
-                      helperText={formErrors.amount}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <MoneyIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <FormControl fullWidth>
-                      <InputLabel>Currency</InputLabel>
-                      <Select
-                        value={formData.currency}
-                        label="Currency"
-                        onChange={(e) => handleInputChange('currency', e.target.value)}
-                      >
-                        {CURRENCIES.map((currency) => (
-                          <MenuItem key={currency} value={currency}>
-                            {currency}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                </Grid>
-
-                {/* Amount Warning */}
-                {aiSuggestions.amountWarning && (
-                  <Alert severity="warning">
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <AIIcon fontSize="small" />
-                      {aiSuggestions.amountWarning}
-                    </Box>
-                  </Alert>
-                )}
-
-                {/* Quick Amount Suggestions */}
-                {selectedCategory && AMOUNT_SUGGESTIONS[selectedCategory.id as keyof typeof AMOUNT_SUGGESTIONS] && (
-                  <Box>
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                      Quick amounts for {selectedCategory.name}:
-                    </Typography>
-                    <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                      {AMOUNT_SUGGESTIONS[selectedCategory.id as keyof typeof AMOUNT_SUGGESTIONS].map((amount) => (
-                        <Chip
-                          key={amount}
-                          label={`${formData.currency} ${amount}`}
-                          onClick={() => handleInputChange('amount', amount)}
-                          variant="outlined"
-                          size="small"
-                        />
-                      ))}
-                    </Box>
-                  </Box>
-                )}
-
-                {/* Category */}
-                <FormControl fullWidth error={!!formErrors.categoryId}>
-                  <InputLabel>Category</InputLabel>
-                  <Select
-                    value={formData.categoryId}
-                    label="Category"
-                    onChange={(e) => handleInputChange('categoryId', e.target.value)}
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <CategoryIcon />
-                      </InputAdornment>
-                    }
-                  >
-                    {EXPENSE_CATEGORIES.map((category) => (
-                      <MenuItem key={category.id} value={category.id}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <span>{category.icon}</span>
-                          {category.name}
-                        </Box>
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {formErrors.categoryId && (
-                    <Typography variant="caption" color="error" sx={{ mt: 0.5, ml: 2 }}>
-                      {formErrors.categoryId}
-                    </Typography>
-                  )}
-                </FormControl>
-
-                {/* Date */}
-                <DatePicker
-                  label="Expense Date"
-                  value={new Date(formData.expenseDate)}
-                  onChange={(date) => handleInputChange('expenseDate', date?.toISOString().split('T')[0] || '')}
-                  slots={{
-                    textField: (params) => (
-                      <TextField
-                        {...params}
-                        fullWidth
-                        error={!!formErrors.expenseDate}
-                        helperText={formErrors.expenseDate}
-                        InputProps={{
-                          ...params.InputProps,
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <CalendarIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    ),
-                  }}
-                />
-
-                {/* Description */}
-                <TextField
-                  fullWidth
-                  label="Description (Optional)"
-                  multiline
-                  rows={3}
-                  value={formData.description}
-                  onChange={(e) => handleInputChange('description', e.target.value)}
-                  placeholder="Additional details about this expense..."
-                />
-
-                {/* Receipt Upload */}
-                <Box>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Receipt Attachment
-                  </Typography>
-                  <input
-                    accept="image/*,.pdf"
-                    style={{ display: 'none' }}
-                    id="receipt-upload"
-                    type="file"
-                    onChange={handleFileChange}
-                  />
-                  <label htmlFor="receipt-upload">
-                    <Button
-                      variant="outlined"
-                      component="span"
-                      startIcon={<UploadIcon />}
-                      fullWidth
-                    >
-                      Upload Receipt
-                    </Button>
-                  </label>
-                  {selectedFile && (
-                    <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                      Selected: {selectedFile.name}
-                    </Typography>
-                  )}
-                </Box>
-
-                {/* Preview */}
-                {previewUrl && (
-                  <Box sx={{ textAlign: 'center' }}>
-                    <img
-                      src={previewUrl}
-                      alt="Receipt preview"
-                      style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'contain' }}
-                    />
-                  </Box>
-                )}
-              </Stack>
-            </Paper>
-          </Grid>
-
-          {/* Sidebar */}
-          <Grid item xs={12} md={4}>
+      <Grid container spacing={3}>
+        {/* Main Form */}
+        <Grid xs={12} md={8}>
+          <Paper sx={{ p: 3 }}>
             <Stack spacing={3}>
-              {/* Expense Summary */}
+              {/* AI Toggle */}
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant="h6">Expense Details</Typography>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={autoSuggest}
+                      onChange={(e) => setAutoSuggest(e.target.checked)}
+                      color="primary"
+                    />
+                  }
+                  label={
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                      <AIIcon fontSize="small" />
+                      Smart Suggestions
+                    </Box>
+                  }
+                />
+              </Box>
+
+              {/* Title */}
+              <TextField
+                fullWidth
+                label="Expense Title"
+                value={formData.title}
+                onChange={(e) => handleInputChange('title', e.target.value)}
+                error={!!formErrors.title}
+                helperText={formErrors.title}
+                placeholder="e.g., Business lunch with client, Flight to conference"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <ReceiptIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              {/* AI Category Suggestion */}
+              {aiSuggestions.category && (
+                <Alert
+                  severity="info"
+                  action={
+                    <Button
+                      color="inherit"
+                      size="small"
+                      onClick={() => applySuggestion('category', aiSuggestions.category)}
+                    >
+                      Apply
+                    </Button>
+                  }
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <AIIcon fontSize="small" />
+                    Suggested category: {aiSuggestions.category.icon} {aiSuggestions.category.name}
+                  </Box>
+                </Alert>
+              )}
+
+              {/* Amount and Currency */}
+              <Grid container spacing={2}>
+                <Grid xs={8}>
+                  <TextField
+                    fullWidth
+                    label="Amount"
+                    type="number"
+                    value={formData.amount}
+                    onChange={(e) => handleInputChange('amount', parseFloat(e.target.value) || 0)}
+                    error={!!formErrors.amount}
+                    helperText={formErrors.amount}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <MoneyIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
+                <Grid xs={4}>
+                  <FormControl fullWidth>
+                    <InputLabel>Currency</InputLabel>
+                    <Select
+                      value={formData.currency}
+                      label="Currency"
+                      onChange={(e) => handleInputChange('currency', e.target.value)}
+                    >
+                      {CURRENCIES.map((currency) => (
+                        <MenuItem key={currency} value={currency}>
+                          {currency}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+
+              {/* Amount Warning */}
+              {aiSuggestions.amountWarning && (
+                <Alert severity="warning">
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <AIIcon fontSize="small" />
+                    {aiSuggestions.amountWarning}
+                  </Box>
+                </Alert>
+              )}
+
+              {/* Quick Amount Suggestions */}
+              {selectedCategory && AMOUNT_SUGGESTIONS[selectedCategory.id as keyof typeof AMOUNT_SUGGESTIONS] && (
+                <Box>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    Quick amounts for {selectedCategory.name}:
+                  </Typography>
+                  <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                    {AMOUNT_SUGGESTIONS[selectedCategory.id as keyof typeof AMOUNT_SUGGESTIONS].map((amount) => (
+                      <Chip
+                        key={amount}
+                        label={`${formData.currency} ${amount}`}
+                        onClick={() => handleInputChange('amount', amount)}
+                        variant="outlined"
+                        size="small"
+                      />
+                    ))}
+                  </Box>
+                </Box>
+              )}
+
+              {/* Category */}
+              <FormControl fullWidth error={!!formErrors.categoryId}>
+                <InputLabel>Category</InputLabel>
+                <Select
+                  value={formData.categoryId}
+                  label="Category"
+                  onChange={(e) => handleInputChange('categoryId', e.target.value)}
+                >
+                  {EXPENSE_CATEGORIES.map((category) => (
+                    <MenuItem key={category.id} value={category.id}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <span>{category.icon}</span>
+                        {category.name}
+                      </Box>
+                    </MenuItem>
+                  ))}
+                </Select>
+                {formErrors.categoryId && (
+                  <Typography variant="caption" color="error" sx={{ mt: 0.5, ml: 2 }}>
+                    {formErrors.categoryId}
+                  </Typography>
+                )}
+              </FormControl>
+
+              {/* Date - Using regular input field */}
+              <TextField
+                fullWidth
+                label="Expense Date"
+                type="date"
+                value={formData.expenseDate}
+                onChange={(e) => handleInputChange('expenseDate', e.target.value)}
+                error={!!formErrors.expenseDate}
+                helperText={formErrors.expenseDate}
+                InputLabelProps={{ shrink: true }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <CalendarIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              {/* Description */}
+              <TextField
+                fullWidth
+                label="Description (Optional)"
+                multiline
+                rows={3}
+                value={formData.description}
+                onChange={(e) => handleInputChange('description', e.target.value)}
+                placeholder="Additional details about this expense..."
+              />
+
+              {/* Receipt Upload */}
+              <Box>
+                <Typography variant="subtitle1" gutterBottom>
+                  Receipt Attachment
+                </Typography>
+                <input
+                  accept="image/*,.pdf"
+                  style={{ display: 'none' }}
+                  id="receipt-upload"
+                  type="file"
+                  onChange={handleFileChange}
+                />
+                <label htmlFor="receipt-upload">
+                  <Button
+                    variant="outlined"
+                    component="span"
+                    startIcon={<UploadIcon />}
+                    fullWidth
+                  >
+                    Upload Receipt
+                  </Button>
+                </label>
+                {selectedFile && (
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                    Selected: {selectedFile.name}
+                  </Typography>
+                )}
+              </Box>
+
+              {/* Preview */}
+              {previewUrl && (
+                <Box sx={{ textAlign: 'center' }}>
+                  <img
+                    src={previewUrl}
+                    alt="Receipt preview"
+                    style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'contain' }}
+                  />
+                </Box>
+              )}
+            </Stack>
+          </Paper>
+        </Grid>
+
+        {/* Sidebar */}
+        <Grid xs={12} md={4}>
+          <Stack spacing={3}>
+            {/* Expense Summary */}
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  Expense Summary
+                </Typography>
+                <Divider sx={{ mb: 2 }} />
+                <Stack spacing={2}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Typography variant="body2">Amount:</Typography>
+                    <Typography variant="h6" color="primary">
+                      {formData.currency} {formData.amount.toFixed(2)}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Typography variant="body2">Category:</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                      {selectedCategory && <span>{selectedCategory.icon}</span>}
+                      <Typography variant="body2">
+                        {selectedCategory?.name || 'Not selected'}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Typography variant="body2">Date:</Typography>
+                    <Typography variant="body2">
+                      {new Date(formData.expenseDate).toLocaleDateString()}
+                    </Typography>
+                  </Box>
+                </Stack>
+              </CardContent>
+            </Card>
+
+            {/* Smart Insights */}
+            {autoSuggest && (
               <Card>
                 <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    Expense Summary
+                  <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <AIIcon />
+                    Smart Insights
                   </Typography>
                   <Divider sx={{ mb: 2 }} />
-                  <Stack spacing={2}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Typography variant="body2">Amount:</Typography>
-                      <Typography variant="h6" color="primary">
-                        {formData.currency} {formData.amount.toFixed(2)}
-                      </Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Typography variant="body2">Category:</Typography>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                        {selectedCategory && <span>{selectedCategory.icon}</span>}
-                        <Typography variant="body2">
-                          {selectedCategory?.name || 'Not selected'}
-                        </Typography>
-                      </Box>
-                    </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Typography variant="body2">Date:</Typography>
-                      <Typography variant="body2">
-                        {new Date(formData.expenseDate).toLocaleDateString()}
-                      </Typography>
-                    </Box>
+                  <Stack spacing={1}>
+                    <Typography variant="body2" color="text.secondary">
+                      • Receipt recommended for amounts over $25
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      • {selectedCategory?.name || 'This category'} expenses average $
+                      {selectedCategory ? AMOUNT_SUGGESTIONS[selectedCategory.id as keyof typeof AMOUNT_SUGGESTIONS]?.[1] : 50} in your company
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      • Consider adding project code for better tracking
+                    </Typography>
                   </Stack>
                 </CardContent>
               </Card>
-
-              {/* Smart Insights */}
-              {autoSuggest && (
-                <Card>
-                  <CardContent>
-                    <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <AIIcon />
-                      Smart Insights
-                    </Typography>
-                    <Divider sx={{ mb: 2 }} />
-                    <Stack spacing={1}>
-                      <Typography variant="body2" color="text.secondary">
-                        • Receipt recommended for amounts over $25
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        • {selectedCategory?.name || 'This category'} expenses average $
-                        {selectedCategory ? AMOUNT_SUGGESTIONS[selectedCategory.id as keyof typeof AMOUNT_SUGGESTIONS]?.[1] : 50} in your company
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        • Consider adding project code for better tracking
-                      </Typography>
-                    </Stack>
-                  </CardContent>
-                </Card>
-              )}
-            </Stack>
-          </Grid>
+            )}
+          </Stack>
         </Grid>
+      </Grid>
 
-        {/* Action Buttons */}
-        <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
-          <Button
-            variant="outlined"
-            startIcon={<CancelIcon />}
-            onClick={() => navigate('/expenses')}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            startIcon={<SaveIcon />}
-            onClick={() => handleSubmit(false)}
-            disabled={isLoading}
-          >
-            Save as Draft
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<SubmitIcon />}
-            onClick={() => handleSubmit(true)}
-            disabled={isLoading}
-          >
-            Save & Submit
-          </Button>
-        </Box>
+      {/* Action Buttons */}
+      <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
+        <Button
+          variant="outlined"
+          startIcon={<CancelIcon />}
+          onClick={() => navigate('/expenses')}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="contained"
+          startIcon={<SaveIcon />}
+          onClick={() => handleSubmit(false)}
+          disabled={isLoading}
+        >
+          Save as Draft
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<SubmitIcon />}
+          onClick={() => handleSubmit(true)}
+          disabled={isLoading}
+        >
+          Save & Submit
+        </Button>
       </Box>
-    </LocalizationProvider>
+    </Box>
   );
 };
 

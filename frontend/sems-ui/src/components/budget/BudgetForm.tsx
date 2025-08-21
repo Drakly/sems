@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {
   Box,
   Paper,
@@ -17,7 +17,6 @@ import {
   CardContent,
   Divider,
   Stack,
-  CircularProgress,
   InputAdornment,
   Chip,
   LinearProgress,
@@ -36,9 +35,6 @@ import {
   Category as CategoryIcon,
   Business as DepartmentIcon,
 } from '@mui/icons-material';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { RootState } from '../../store';
 import { BudgetRequest } from '../../services/budgetService';
 
@@ -83,9 +79,6 @@ interface BudgetFormProps {
 
 const BudgetForm: React.FC<BudgetFormProps> = ({ mode = 'create' }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { id } = useParams<{ id: string }>();
-  
   const { user } = useSelector((state: RootState) => state.auth);
 
   // Form state
@@ -102,7 +95,6 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ mode = 'create' }) => {
 
   const [formErrors, setFormErrors] = useState<any>({});
   const [smartSuggestions, setSmartSuggestions] = useState(true);
-  const [budgetPeriod, setBudgetPeriod] = useState<'monthly' | 'quarterly' | 'yearly'>('yearly');
 
   const handleInputChange = (field: keyof BudgetRequest, value: any) => {
     const newFormData = { ...formData, [field]: value };
@@ -165,7 +157,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ mode = 'create' }) => {
   
   const getSuggestedAmount = () => {
     if (!selectedCategory) return null;
-    return BUDGET_SUGGESTIONS[selectedCategory.id as keyof typeof BUDGET_SUGGESTIONS]?.[currentPeriod];
+    return BUDGET_SUGGESTIONS[selectedCategory.id as keyof typeof BUDGET_SUGGESTIONS]?.[currentPeriod as keyof typeof BUDGET_SUGGESTIONS.TRAVEL];
   };
 
   const suggestedAmount = getSuggestedAmount();
@@ -182,359 +174,335 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ mode = 'create' }) => {
   const healthStatus = getBudgetHealthStatus();
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Box sx={{ p: 3, maxWidth: 1200, mx: 'auto' }}>
-        <Typography variant="h4" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <BudgetIcon />
-          {mode === 'edit' ? 'Edit Budget' : 'Create New Budget'}
-        </Typography>
+    <Box sx={{ p: 3, maxWidth: 1200, mx: 'auto' }}>
+      <Typography variant="h4" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <BudgetIcon />
+        {mode === 'edit' ? 'Edit Budget' : 'Create New Budget'}
+      </Typography>
 
-        <Grid container spacing={3}>
-          {/* Main Form */}
-          <Grid item xs={12} md={8}>
-            <Paper sx={{ p: 3 }}>
-              <Stack spacing={3}>
-                {/* Smart Suggestions Toggle */}
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Typography variant="h6">Budget Details</Typography>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={smartSuggestions}
-                        onChange={(e) => setSmartSuggestions(e.target.checked)}
-                        color="primary"
-                      />
-                    }
-                    label="Smart Suggestions"
-                  />
-                </Box>
-
-                {/* Budget Name */}
-                <TextField
-                  fullWidth
-                  label="Budget Name"
-                  value={formData.name}
-                  onChange={(e) => handleInputChange('name', e.target.value)}
-                  error={!!formErrors.name}
-                  helperText={formErrors.name}
-                  placeholder="e.g., Q1 2024 Marketing Budget, Annual IT Equipment Budget"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <BudgetIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-
-                {/* Amount and Currency */}
-                <Grid container spacing={2}>
-                  <Grid item xs={8}>
-                    <TextField
-                      fullWidth
-                      label="Budget Amount"
-                      type="number"
-                      value={formData.amount}
-                      onChange={(e) => handleInputChange('amount', parseFloat(e.target.value) || 0)}
-                      error={!!formErrors.amount}
-                      helperText={formErrors.amount}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <MoneyIcon />
-                          </InputAdornment>
-                        ),
-                      }}
+      <Grid container spacing={3}>
+        {/* Main Form */}
+        <Grid xs={12} md={8}>
+          <Paper sx={{ p: 3 }}>
+            <Stack spacing={3}>
+              {/* Smart Suggestions Toggle */}
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant="h6">Budget Details</Typography>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={smartSuggestions}
+                      onChange={(e) => setSmartSuggestions(e.target.checked)}
+                      color="primary"
                     />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <FormControl fullWidth>
-                      <InputLabel>Currency</InputLabel>
-                      <Select
-                        value={formData.currency}
-                        label="Currency"
-                        onChange={(e) => handleInputChange('currency', e.target.value)}
-                      >
-                        {CURRENCIES.map((currency) => (
-                          <MenuItem key={currency} value={currency}>
-                            {currency}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
+                  }
+                  label="Smart Suggestions"
+                />
+              </Box>
+
+              {/* Budget Name */}
+              <TextField
+                fullWidth
+                label="Budget Name"
+                value={formData.name}
+                onChange={(e) => handleInputChange('name', e.target.value)}
+                error={!!formErrors.name}
+                helperText={formErrors.name}
+                placeholder="e.g., Q1 2024 Marketing Budget, Annual IT Equipment Budget"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <BudgetIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              {/* Amount and Currency */}
+              <Grid container spacing={2}>
+                <Grid xs={8}>
+                  <TextField
+                    fullWidth
+                    label="Budget Amount"
+                    type="number"
+                    value={formData.amount}
+                    onChange={(e) => handleInputChange('amount', parseFloat(e.target.value) || 0)}
+                    error={!!formErrors.amount}
+                    helperText={formErrors.amount}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <MoneyIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
                 </Grid>
+                <Grid xs={4}>
+                  <FormControl fullWidth>
+                    <InputLabel>Currency</InputLabel>
+                    <Select
+                      value={formData.currency}
+                      label="Currency"
+                      onChange={(e) => handleInputChange('currency', e.target.value)}
+                    >
+                      {CURRENCIES.map((currency) => (
+                        <MenuItem key={currency} value={currency}>
+                          {currency}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
 
-                {/* Smart Amount Suggestions */}
-                {smartSuggestions && selectedCategory && suggestedAmount && (
-                  <Alert severity="info">
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <Box>
-                        <Typography variant="body2">
-                          Suggested amount for {selectedCategory.name} ({currentPeriod}): {formData.currency} {suggestedAmount.toLocaleString()}
-                        </Typography>
-                      </Box>
-                      <Button
-                        size="small"
-                        onClick={() => applySuggestion(suggestedAmount)}
-                      >
-                        Apply
-                      </Button>
-                    </Box>
-                  </Alert>
-                )}
-
-                {/* Budget Health Indicator */}
-                {healthStatus && (
-                  <Alert severity={healthStatus.color as any}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      {healthStatus.icon}
+              {/* Smart Amount Suggestions */}
+              {smartSuggestions && selectedCategory && suggestedAmount && (
+                <Alert severity="info">
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Box>
                       <Typography variant="body2">
-                        {healthStatus.status === 'low' && 'This budget amount is below typical range for this category.'}
-                        {healthStatus.status === 'high' && 'This budget amount is significantly above typical range.'}
-                        {healthStatus.status === 'good' && 'This budget amount is within the recommended range.'}
+                        Suggested amount for {selectedCategory.name} ({currentPeriod}): {formData.currency} {suggestedAmount.toLocaleString()}
                       </Typography>
                     </Box>
-                  </Alert>
-                )}
+                    <Button
+                      size="small"
+                      onClick={() => applySuggestion(suggestedAmount)}
+                    >
+                      Apply
+                    </Button>
+                  </Box>
+                </Alert>
+              )}
 
-                {/* Category */}
-                <FormControl fullWidth>
-                  <InputLabel>Category</InputLabel>
-                  <Select
-                    value={formData.categoryId}
-                    label="Category"
-                    onChange={(e) => handleInputChange('categoryId', e.target.value)}
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <CategoryIcon />
-                      </InputAdornment>
-                    }
-                  >
-                    {BUDGET_CATEGORIES.map((category) => (
-                      <MenuItem key={category.id} value={category.id}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <span>{category.icon}</span>
-                          {category.name}
-                        </Box>
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+              {/* Budget Health Indicator */}
+              {healthStatus && (
+                <Alert severity={healthStatus.color as any}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    {healthStatus.icon}
+                    <Typography variant="body2">
+                      {healthStatus.status === 'low' && 'This budget amount is below typical range for this category.'}
+                      {healthStatus.status === 'high' && 'This budget amount is significantly above typical range.'}
+                      {healthStatus.status === 'good' && 'This budget amount is within the recommended range.'}
+                    </Typography>
+                  </Box>
+                </Alert>
+              )}
 
-                {/* Department */}
-                <FormControl fullWidth>
-                  <InputLabel>Department</InputLabel>
-                  <Select
-                    value={formData.departmentId}
-                    label="Department"
-                    onChange={(e) => handleInputChange('departmentId', e.target.value)}
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <DepartmentIcon />
-                      </InputAdornment>
-                    }
-                  >
-                    {DEPARTMENTS.map((department) => (
-                      <MenuItem key={department.id} value={department.id}>
-                        {department.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+              {/* Category */}
+              <FormControl fullWidth>
+                <InputLabel>Category</InputLabel>
+                <Select
+                  value={formData.categoryId}
+                  label="Category"
+                  onChange={(e) => handleInputChange('categoryId', e.target.value)}
+                >
+                  {BUDGET_CATEGORIES.map((category) => (
+                    <MenuItem key={category.id} value={category.id}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <span>{category.icon}</span>
+                        {category.name}
+                      </Box>
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
 
-                {/* Date Range */}
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <DatePicker
-                      label="Start Date"
-                      value={new Date(formData.startDate)}
-                      onChange={(date) => handleInputChange('startDate', date?.toISOString().split('T')[0] || '')}
-                      slots={{
-                        textField: (params) => (
-                          <TextField
-                            {...params}
-                            fullWidth
-                            error={!!formErrors.startDate}
-                            helperText={formErrors.startDate}
-                            InputProps={{
-                              ...params.InputProps,
-                              startAdornment: (
-                                <InputAdornment position="start">
-                                  <CalendarIcon />
-                                </InputAdornment>
-                              ),
-                            }}
-                          />
-                        ),
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <DatePicker
-                      label="End Date"
-                      value={new Date(formData.endDate)}
-                      onChange={(date) => handleInputChange('endDate', date?.toISOString().split('T')[0] || '')}
-                      slots={{
-                        textField: (params) => (
-                          <TextField
-                            {...params}
-                            fullWidth
-                            error={!!formErrors.endDate}
-                            helperText={formErrors.endDate}
-                            InputProps={{
-                              ...params.InputProps,
-                              startAdornment: (
-                                <InputAdornment position="start">
-                                  <CalendarIcon />
-                                </InputAdornment>
-                              ),
-                            }}
-                          />
-                        ),
-                      }}
-                    />
-                  </Grid>
+              {/* Department */}
+              <FormControl fullWidth>
+                <InputLabel>Department</InputLabel>
+                <Select
+                  value={formData.departmentId}
+                  label="Department"
+                  onChange={(e) => handleInputChange('departmentId', e.target.value)}
+                >
+                  {DEPARTMENTS.map((department) => (
+                    <MenuItem key={department.id} value={department.id}>
+                      {department.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              {/* Date Range - Using regular input fields */}
+              <Grid container spacing={2}>
+                <Grid xs={6}>
+                  <TextField
+                    fullWidth
+                    label="Start Date"
+                    type="date"
+                    value={formData.startDate}
+                    onChange={(e) => handleInputChange('startDate', e.target.value)}
+                    error={!!formErrors.startDate}
+                    helperText={formErrors.startDate}
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <CalendarIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
                 </Grid>
+                <Grid xs={6}>
+                  <TextField
+                    fullWidth
+                    label="End Date"
+                    type="date"
+                    value={formData.endDate}
+                    onChange={(e) => handleInputChange('endDate', e.target.value)}
+                    error={!!formErrors.endDate}
+                    helperText={formErrors.endDate}
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <CalendarIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
+              </Grid>
 
-                {/* Description */}
-                <TextField
-                  fullWidth
-                  label="Description (Optional)"
-                  multiline
-                  rows={3}
-                  value={formData.description}
-                  onChange={(e) => handleInputChange('description', e.target.value)}
-                  placeholder="Describe the purpose and scope of this budget..."
-                />
-              </Stack>
-            </Paper>
-          </Grid>
+              {/* Description */}
+              <TextField
+                fullWidth
+                label="Description (Optional)"
+                multiline
+                rows={3}
+                value={formData.description}
+                onChange={(e) => handleInputChange('description', e.target.value)}
+                placeholder="Describe the purpose and scope of this budget..."
+              />
+            </Stack>
+          </Paper>
+        </Grid>
 
-          {/* Sidebar */}
-          <Grid item xs={12} md={4}>
-            <Stack spacing={3}>
-              {/* Budget Summary */}
+        {/* Sidebar */}
+        <Grid xs={12} md={4}>
+          <Stack spacing={3}>
+            {/* Budget Summary */}
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  Budget Summary
+                </Typography>
+                <Divider sx={{ mb: 2 }} />
+                <Stack spacing={2}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Typography variant="body2">Total Amount:</Typography>
+                    <Typography variant="h6" color="primary">
+                      {formData.currency} {formData.amount.toLocaleString()}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Typography variant="body2">Period:</Typography>
+                    <Chip
+                      label={currentPeriod}
+                      size="small"
+                      color="primary"
+                      variant="outlined"
+                    />
+                  </Box>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Typography variant="body2">Category:</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                      {selectedCategory && <span>{selectedCategory.icon}</span>}
+                      <Typography variant="body2">
+                        {selectedCategory?.name || 'Not selected'}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Typography variant="body2">Department:</Typography>
+                    <Typography variant="body2">
+                      {selectedDepartment?.name || 'Not selected'}
+                    </Typography>
+                  </Box>
+                </Stack>
+              </CardContent>
+            </Card>
+
+            {/* Budget Analytics Preview */}
+            {formData.amount > 0 && (
               <Card>
                 <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    Budget Summary
+                  <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <TrendingIcon />
+                    Budget Breakdown
                   </Typography>
                   <Divider sx={{ mb: 2 }} />
                   <Stack spacing={2}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Typography variant="body2">Total Amount:</Typography>
-                      <Typography variant="h6" color="primary">
-                        {formData.currency} {formData.amount.toLocaleString()}
-                      </Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Typography variant="body2">Period:</Typography>
-                      <Chip
-                        label={currentPeriod}
-                        size="small"
-                        color="primary"
-                        variant="outlined"
-                      />
-                    </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Typography variant="body2">Category:</Typography>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                        {selectedCategory && <span>{selectedCategory.icon}</span>}
+                    <Box>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                        <Typography variant="body2">Monthly allocation</Typography>
                         <Typography variant="body2">
-                          {selectedCategory?.name || 'Not selected'}
+                          {formData.currency} {Math.round(formData.amount / 12).toLocaleString()}
                         </Typography>
                       </Box>
+                      <LinearProgress variant="determinate" value={100} />
                     </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Typography variant="body2">Department:</Typography>
-                      <Typography variant="body2">
-                        {selectedDepartment?.name || 'Not selected'}
-                      </Typography>
+                    <Box>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                        <Typography variant="body2">Weekly allocation</Typography>
+                        <Typography variant="body2">
+                          {formData.currency} {Math.round(formData.amount / 52).toLocaleString()}
+                        </Typography>
+                      </Box>
+                      <LinearProgress variant="determinate" value={100} />
                     </Box>
                   </Stack>
                 </CardContent>
               </Card>
+            )}
 
-              {/* Budget Analytics Preview */}
-              {formData.amount > 0 && (
-                <Card>
-                  <CardContent>
-                    <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <TrendingIcon />
-                      Budget Breakdown
-                    </Typography>
-                    <Divider sx={{ mb: 2 }} />
-                    <Stack spacing={2}>
-                      <Box>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                          <Typography variant="body2">Monthly allocation</Typography>
-                          <Typography variant="body2">
-                            {formData.currency} {Math.round(formData.amount / 12).toLocaleString()}
-                          </Typography>
-                        </Box>
-                        <LinearProgress variant="determinate" value={100} />
-                      </Box>
-                      <Box>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                          <Typography variant="body2">Weekly allocation</Typography>
-                          <Typography variant="body2">
-                            {formData.currency} {Math.round(formData.amount / 52).toLocaleString()}
-                          </Typography>
-                        </Box>
-                        <LinearProgress variant="determinate" value={100} />
-                      </Box>
-                    </Stack>
-                  </CardContent>
-                </Card>
-              )}
-
-              {/* Quick Tips */}
-              <Card>
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    Budget Tips
+            {/* Quick Tips */}
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  Budget Tips
+                </Typography>
+                <Divider sx={{ mb: 2 }} />
+                <Stack spacing={1}>
+                  <Typography variant="body2" color="text.secondary">
+                    • Include a 10-15% buffer for unexpected expenses
                   </Typography>
-                  <Divider sx={{ mb: 2 }} />
-                  <Stack spacing={1}>
-                    <Typography variant="body2" color="text.secondary">
-                      • Include a 10-15% buffer for unexpected expenses
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      • Review and adjust budgets quarterly
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      • Set up alerts when 80% of budget is spent
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      • Consider seasonal variations in spending
-                    </Typography>
-                  </Stack>
-                </CardContent>
-              </Card>
-            </Stack>
-          </Grid>
+                  <Typography variant="body2" color="text.secondary">
+                    • Review and adjust budgets quarterly
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    • Set up alerts when 80% of budget is spent
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    • Consider seasonal variations in spending
+                  </Typography>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Stack>
         </Grid>
+      </Grid>
 
-        {/* Action Buttons */}
-        <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
-          <Button
-            variant="outlined"
-            startIcon={<CancelIcon />}
-            onClick={() => navigate('/budgets')}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            startIcon={<SaveIcon />}
-            onClick={handleSubmit}
-          >
-            {mode === 'edit' ? 'Update Budget' : 'Create Budget'}
-          </Button>
-        </Box>
+      {/* Action Buttons */}
+      <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
+        <Button
+          variant="outlined"
+          startIcon={<CancelIcon />}
+          onClick={() => navigate('/budgets')}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="contained"
+          startIcon={<SaveIcon />}
+          onClick={handleSubmit}
+        >
+          {mode === 'edit' ? 'Update Budget' : 'Create Budget'}
+        </Button>
       </Box>
-    </LocalizationProvider>
+    </Box>
   );
 };
 
