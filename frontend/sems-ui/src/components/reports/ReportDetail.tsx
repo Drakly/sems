@@ -6,14 +6,14 @@ const ReportDetail: React.FC = () => {
     <Box sx={{ p: 3 }}>
       <Paper sx={{ p: 4 }}>
         <Typography variant="h4" gutterBottom>
-          Report Detail
+          Report Details
         </Typography>
         <Typography variant="body1">
-          This is a placeholder for the report detail view. The full implementation is coming soon.
+          Report detail view with interactive charts and data visualization coming soon.
         </Typography>
       </Paper>
     </Box>
   );
 };
 
-export default ReportDetail; 
+export default ReportDetail;

@@ -1,7 +1,7 @@
 import api from './api';
 import { Expense, ExpenseStatus, ApprovalStep, PaginatedResponse, ApprovalAction, ApprovalHistory, WorkflowStatistics } from '../types';
 
-const baseUrl = '/api/expenses';  // This will work through the gateway on port 8080
+const baseUrl = '/api/v1/expenses';  // This will work through the gateway on port 8080
 const workflowBaseUrl = '/api/v1/expenses/workflow';
 
 export interface ExpenseRequest {

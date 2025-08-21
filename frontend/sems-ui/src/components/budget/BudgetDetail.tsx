@@ -6,14 +6,14 @@ const BudgetDetail: React.FC = () => {
     <Box sx={{ p: 3 }}>
       <Paper sx={{ p: 4 }}>
         <Typography variant="h4" gutterBottom>
-          Budget Detail
+          Budget Details
         </Typography>
         <Typography variant="body1">
-          This is a placeholder for the budget detail view. The full implementation is coming soon.
+          Budget detail view is coming soon with comprehensive analytics and tracking.
         </Typography>
       </Paper>
     </Box>
   );
 };
 
-export default BudgetDetail; 
+export default BudgetDetail;

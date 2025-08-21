@@ -40,18 +40,18 @@ interface UIState {
   };
 }
 
-// Placeholder components for other sections
-const ExpenseList = () => <div>Expenses List</div>;
-const ExpenseDetail = () => <div>Expense Detail</div>;
-const ExpenseForm = () => <div>Expense Form</div>;
-const ApprovalList = () => <div>Approval List</div>;
-const ApprovalDetail = () => <div>Approval Detail</div>;
-const BudgetList = () => <div>Budget List</div>;
-const BudgetDetail = () => <div>Budget Detail</div>;
-const BudgetForm = () => <div>Budget Form</div>;
-const ReportList = () => <div>Report List</div>;
-const ReportDetail = () => <div>Report Detail</div>;
-const ReportForm = () => <div>Report Form</div>;
+// Import actual components
+import ExpenseForm from './components/expense/ExpenseForm';
+import ExpenseList from './components/expense/ExpenseList';
+import ExpenseDetail from './components/expense/ExpenseDetail';
+import BudgetForm from './components/budget/BudgetForm';
+import BudgetList from './components/budget/BudgetList';
+import BudgetDetail from './components/budget/BudgetDetail';
+import ReportForm from './components/reports/ReportForm';
+import ReportList from './components/reports/ReportList';
+import ReportDetail from './components/reports/ReportDetail';
+import ApprovalList from './components/approval/ApprovalList';
+import ApprovalDetail from './components/approval/ApprovalDetail';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();

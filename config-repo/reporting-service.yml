@@ -6,8 +6,8 @@ spring:
     name: reporting-service
   datasource:
     url: jdbc:mysql://localhost:3307/sems_reporting
-    username: sems
-    password: sems
+    username: root
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:

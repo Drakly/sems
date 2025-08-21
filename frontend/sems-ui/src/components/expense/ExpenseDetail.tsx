@@ -1,155 +1,79 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
-  Typography,
   Paper,
+  Typography,
   Button,
   Chip,
-  Divider,
-  CircularProgress,
-  Alert,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
+  Grid,
   Card,
   CardContent,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
+  Divider,
+  Stack,
+  IconButton,
+  Alert,
+  CircularProgress,
 } from '@mui/material';
 import {
-  Receipt as ReceiptIcon,
-  CheckCircle as ApproveIcon,
-  Cancel as RejectIcon,
+  ArrowBack as BackIcon,
   Edit as EditIcon,
+  Delete as DeleteIcon,
+  Receipt as ReceiptIcon,
   Send as SubmitIcon,
-  Comment as CommentIcon,
-  History as HistoryIcon,
+  Download as DownloadIcon,
+  Person as PersonIcon,
+  CalendarToday as CalendarIcon,
+  Category as CategoryIcon,
+  AttachMoney as MoneyIcon,
 } from '@mui/icons-material';
-import { 
-  getExpenseById, 
-  submitExpenseForApproval, 
-  getApprovalHistory,
-  approveExpense,
-  rejectExpense,
-  requestExpenseChanges
-} from '../../store/slices/expenseSlice';
 import { RootState } from '../../store';
-import { ApprovalStep, Expense, ExpenseStatus, ApprovalAction } from '../../types';
+import { getExpenseById, deleteExpense, submitExpenseForApproval } from '../../store/slices/expenseSlice';
+
+const STATUS_COLORS = {
+  DRAFT: 'default',
+  SUBMITTED: 'info',
+  UNDER_REVIEW: 'warning',
+  APPROVED: 'success',
+  REJECTED: 'error',
+  CHANGES_REQUESTED: 'warning',
+  CANCELLED: 'default',
+} as const;
 
 const ExpenseDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { currentExpense: selectedExpense, approvalHistory, isLoading, error } = useSelector(
-    (state: RootState) => state.expenses
-  );
-  const { user } = useSelector((state: RootState) => state.auth);
-
-  const [commentDialogOpen, setCommentDialogOpen] = useState(false);
-  const [actionType, setActionType] = useState<'approve' | 'reject' | 'requestChanges' | null>(null);
-  const [comment, setComment] = useState('');
+  const dispatch = useDispatch();
+  
+  const { currentExpense, isLoading, error } = useSelector((state: RootState) => state.expenses);
 
   useEffect(() => {
     if (id) {
       dispatch(getExpenseById(id) as any);
-      dispatch(getApprovalHistory(id) as any);
     }
   }, [dispatch, id]);
 
-  const handleSubmitForApproval = () => {
-    if (id) {
-      dispatch(submitExpenseForApproval(id) as any);
-    }
-  };
-
-  const handleEditExpense = () => {
+  const handleEdit = () => {
     navigate(`/expenses/${id}/edit`);
   };
 
-  const openActionDialog = (type: 'approve' | 'reject' | 'requestChanges') => {
-    setActionType(type);
-    setCommentDialogOpen(true);
-  };
-
-  const closeActionDialog = () => {
-    setActionType(null);
-    setCommentDialogOpen(false);
-    setComment('');
-  };
-
-  const handleActionSubmit = () => {
-    if (!id || !actionType) return;
-
-    switch (actionType) {
-      case 'approve':
-        dispatch(approveExpense({ id, comments: comment }) as any);
-        break;
-      case 'reject':
-        dispatch(rejectExpense({ id, reason: comment }) as any);
-        break;
-      case 'requestChanges':
-        dispatch(requestExpenseChanges({ id, comments: comment }) as any);
-        break;
+  const handleDelete = async () => {
+    if (id && window.confirm('Are you sure you want to delete this expense?')) {
+      await dispatch(deleteExpense(id) as any);
+      navigate('/expenses');
     }
-    closeActionDialog();
   };
 
-  const getStatusChip = (status: ExpenseStatus) => {
-    let color:
-      | 'default'
-      | 'primary'
-      | 'secondary'
-      | 'error'
-      | 'info'
-      | 'success'
-      | 'warning';
-    switch (status) {
-      case ExpenseStatus.DRAFT:
-        color = 'default';
-        break;
-      case ExpenseStatus.SUBMITTED:
-        color = 'info';
-        break;
-      case ExpenseStatus.UNDER_REVIEW:
-        color = 'warning';
-        break;
-      case ExpenseStatus.APPROVED:
-        color = 'success';
-        break;
-      case ExpenseStatus.REJECTED:
-        color = 'error';
-        break;
-      case ExpenseStatus.CHANGES_REQUESTED:
-        color = 'secondary';
-        break;
-      case ExpenseStatus.CANCELLED:
-        color = 'default';
-        break;
-      default:
-        color = 'default';
+  const handleSubmitForApproval = async () => {
+    if (id) {
+      await dispatch(submitExpenseForApproval(id) as any);
     }
-    return <Chip label={status} color={color} />;
   };
 
-  const canSubmitForApproval = selectedExpense && selectedExpense.status === ExpenseStatus.DRAFT;
-  const canApprove = selectedExpense && 
-    (selectedExpense.status === ExpenseStatus.SUBMITTED || 
-    selectedExpense.status === ExpenseStatus.UNDER_REVIEW) && 
-    user?.role !== 'USER';
-  const isOwnExpense = selectedExpense && selectedExpense.userId === user?.id;
-
-  if (isLoading && !selectedExpense) {
+  if (isLoading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
         <CircularProgress />
       </Box>
     );
@@ -163,250 +87,328 @@ const ExpenseDetail: React.FC = () => {
     );
   }
 
-  if (!selectedExpense) {
+  if (!currentExpense) {
     return (
       <Box sx={{ p: 3 }}>
-        <Alert severity="warning">Expense not found</Alert>
+        <Alert severity="info">Expense not found</Alert>
       </Box>
     );
   }
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
-        <Typography variant="h4">Expense Details</Typography>
-        <Box>
-          {canSubmitForApproval && isOwnExpense && (
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<SubmitIcon />}
-              onClick={handleSubmitForApproval}
-              sx={{ mr: 1 }}
-            >
-              Submit for Approval
-            </Button>
+    <Box sx={{ p: 3, maxWidth: 1200, mx: 'auto' }}>
+      {/* Header */}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <IconButton onClick={() => navigate('/expenses')}>
+            <BackIcon />
+          </IconButton>
+          <Typography variant="h4">
+            Expense Details
+          </Typography>
+        </Box>
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          {currentExpense.status === 'DRAFT' && (
+            <>
+              <Button
+                variant="outlined"
+                startIcon={<EditIcon />}
+                onClick={handleEdit}
+              >
+                Edit
+              </Button>
+              <Button
+                variant="contained"
+                startIcon={<SubmitIcon />}
+                onClick={handleSubmitForApproval}
+              >
+                Submit for Approval
+              </Button>
+            </>
           )}
-          {selectedExpense.status === ExpenseStatus.DRAFT && isOwnExpense && (
+          {['DRAFT', 'CHANGES_REQUESTED'].includes(currentExpense.status) && (
             <Button
               variant="outlined"
-              startIcon={<EditIcon />}
-              onClick={handleEditExpense}
+              color="error"
+              startIcon={<DeleteIcon />}
+              onClick={handleDelete}
             >
-              Edit
+              Delete
             </Button>
           )}
         </Box>
       </Box>
 
-      {/* Expense Info */}
-      <Paper sx={{ p: 3, mb: 3 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
-            <Box sx={{ flex: '1 1 45%', minWidth: '250px' }}>
-              <Typography variant="body2" color="text.secondary">
-                Title
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {selectedExpense.title}
-              </Typography>
-            </Box>
-            <Box sx={{ flex: '1 1 45%', minWidth: '250px' }}>
-              <Typography variant="body2" color="text.secondary">
-                Status
-              </Typography>
-              {getStatusChip(selectedExpense.status as ExpenseStatus)}
-            </Box>
-            <Box sx={{ flex: '1 1 45%', minWidth: '250px' }}>
-              <Typography variant="body2" color="text.secondary">
-                Amount
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {selectedExpense.currency} {selectedExpense.amount.toFixed(2)}
-              </Typography>
-            </Box>
-            <Box sx={{ flex: '1 1 45%', minWidth: '250px' }}>
-              <Typography variant="body2" color="text.secondary">
-                Category
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {selectedExpense.category?.name || 'N/A'}
-              </Typography>
-            </Box>
-            <Box sx={{ flex: '1 1 45%', minWidth: '250px' }}>
-              <Typography variant="body2" color="text.secondary">
-                Date
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {new Date(selectedExpense.expenseDate).toLocaleDateString()}
-              </Typography>
-            </Box>
-            <Box sx={{ flex: '1 1 45%', minWidth: '250px' }}>
-              <Typography variant="body2" color="text.secondary">
-                Created At
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {new Date(selectedExpense.createdAt).toLocaleString()}
-              </Typography>
-            </Box>
-          </Box>
-          <Box sx={{ width: '100%' }}>
-            <Typography variant="body2" color="text.secondary">
-              Description
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              {selectedExpense.description || 'No description provided'}
-            </Typography>
-          </Box>
-        </Box>
+      <Grid container spacing={3}>
+        {/* Main Details */}
+        <Grid item xs={12} md={8}>
+          <Paper sx={{ p: 3 }}>
+            <Stack spacing={3}>
+              {/* Title and Status */}
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <Box>
+                  <Typography variant="h5" gutterBottom>
+                    {currentExpense.title}
+                  </Typography>
+                  {currentExpense.description && (
+                    <Typography variant="body1" color="text.secondary">
+                      {currentExpense.description}
+                    </Typography>
+                  )}
+                </Box>
+                <Chip
+                  label={currentExpense.status}
+                  color={STATUS_COLORS[currentExpense.status as keyof typeof STATUS_COLORS] as any}
+                  size="large"
+                />
+              </Box>
 
-        {selectedExpense.receipt && (
-          <Box sx={{ mt: 2 }}>
-            <Button
-              variant="outlined"
-              color="primary"
-              startIcon={<ReceiptIcon />}
-              href={selectedExpense.receipt}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View Receipt
-            </Button>
-          </Box>
-        )}
-      </Paper>
+              <Divider />
 
-      {/* Approval actions for approvers */}
-      {canApprove && !isOwnExpense && (
-        <Card sx={{ mb: 3 }}>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
-              Approval Actions
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 2 }}>
-              <Button
-                variant="contained"
-                color="success"
-                startIcon={<ApproveIcon />}
-                onClick={() => openActionDialog('approve')}
-              >
-                Approve
-              </Button>
-              <Button
-                variant="contained"
-                color="error"
-                startIcon={<RejectIcon />}
-                onClick={() => openActionDialog('reject')}
-              >
-                Reject
-              </Button>
-              <Button
-                variant="contained"
-                color="warning"
-                startIcon={<CommentIcon />}
-                onClick={() => openActionDialog('requestChanges')}
-              >
-                Request Changes
-              </Button>
-            </Box>
-          </CardContent>
-        </Card>
-      )}
+              {/* Amount */}
+              <Box>
+                <Typography variant="h3" color="primary" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <MoneyIcon fontSize="large" />
+                  {currentExpense.currency} {currentExpense.amount.toLocaleString()}
+                </Typography>
+              </Box>
 
-      {/* Approval History */}
-      {approvalHistory && approvalHistory.length > 0 && (
-        <Box sx={{ mt: 4 }}>
-          <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-            <HistoryIcon sx={{ mr: 1 }} />
-            Approval History
-          </Typography>
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Action</TableCell>
-                  <TableCell>By</TableCell>
-                  <TableCell>Level</TableCell>
-                  <TableCell>Comments</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {approvalHistory.map((step: ApprovalStep) => (
-                  <TableRow key={step.id}>
-                    <TableCell>
-                      {new Date(step.actionDate).toLocaleString()}
-                    </TableCell>
-                    <TableCell>
-                      <Chip
-                        label={step.action}
-                        color={
-                          step.action === ApprovalAction.APPROVED
-                            ? 'success'
-                            : step.action === ApprovalAction.REJECTED
-                            ? 'error'
-                            : 'warning'
-                        }
-                        size="small"
+              <Divider />
+
+              {/* Details Grid */}
+              <Grid container spacing={3}>
+                <Grid item xs={12} sm={6}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                    <CategoryIcon />
+                    <Typography variant="subtitle2" color="text.secondary">
+                      Category
+                    </Typography>
+                  </Box>
+                  <Typography variant="body1">
+                    {currentExpense.category?.name || 'Not specified'}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                    <CalendarIcon />
+                    <Typography variant="subtitle2" color="text.secondary">
+                      Expense Date
+                    </Typography>
+                  </Box>
+                  <Typography variant="body1">
+                    {new Date(currentExpense.expenseDate).toLocaleDateString()}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                    <PersonIcon />
+                    <Typography variant="subtitle2" color="text.secondary">
+                      Created By
+                    </Typography>
+                  </Box>
+                  <Typography variant="body1">
+                    {currentExpense.createdBy?.firstName} {currentExpense.createdBy?.lastName}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                    <CalendarIcon />
+                    <Typography variant="subtitle2" color="text.secondary">
+                      Created On
+                    </Typography>
+                  </Box>
+                  <Typography variant="body1">
+                    {new Date(currentExpense.createdAt).toLocaleDateString()}
+                  </Typography>
+                </Grid>
+              </Grid>
+
+              {/* Receipt Section */}
+              {currentExpense.receipt && (
+                <>
+                  <Divider />
+                  <Box>
+                    <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <ReceiptIcon />
+                      Receipt
+                    </Typography>
+                    <Button
+                      variant="outlined"
+                      startIcon={<DownloadIcon />}
+                      href={currentExpense.receipt}
+                      target="_blank"
+                    >
+                      View Receipt
+                    </Button>
+                  </Box>
+                </>
+              )}
+
+              {/* Comments Section */}
+              {currentExpense.comments && (
+                <>
+                  <Divider />
+                  <Box>
+                    <Typography variant="h6" gutterBottom>
+                      Comments
+                    </Typography>
+                    <Typography variant="body1">
+                      {currentExpense.comments}
+                    </Typography>
+                  </Box>
+                </>
+              )}
+            </Stack>
+          </Paper>
+        </Grid>
+
+        {/* Sidebar */}
+        <Grid item xs={12} md={4}>
+          <Stack spacing={3}>
+            {/* Status Timeline */}
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  Status Timeline
+                </Typography>
+                <Divider sx={{ mb: 2 }} />
+                <Stack spacing={2}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <Box
+                      sx={{
+                        width: 12,
+                        height: 12,
+                        borderRadius: '50%',
+                        bgcolor: 'success.main',
+                      }}
+                    />
+                    <Box>
+                      <Typography variant="body2" fontWeight="bold">
+                        Created
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {new Date(currentExpense.createdAt).toLocaleString()}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  
+                  {currentExpense.status !== 'DRAFT' && (
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      <Box
+                        sx={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          bgcolor: 'info.main',
+                        }}
                       />
-                    </TableCell>
-                    <TableCell>{step.approverName || 'System'}</TableCell>
-                    <TableCell>{step.level}</TableCell>
-                    <TableCell>{step.comments || '-'}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
-      )}
+                      <Box>
+                        <Typography variant="body2" fontWeight="bold">
+                          Submitted
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          {new Date(currentExpense.updatedAt).toLocaleString()}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  )}
 
-      {/* Action Dialog */}
-      <Dialog open={commentDialogOpen} onClose={closeActionDialog}>
-        <DialogTitle>
-          {actionType === 'approve'
-            ? 'Approve Expense'
-            : actionType === 'reject'
-            ? 'Reject Expense'
-            : 'Request Changes'}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            {actionType === 'approve'
-              ? 'Add optional comments for this approval:'
-              : actionType === 'reject'
-              ? 'Please explain why this expense is being rejected:'
-              : 'Please describe the changes needed for this expense:'}
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="comment"
-            label="Comments"
-            type="text"
-            fullWidth
-            multiline
-            rows={4}
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            required={actionType !== 'approve'}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeActionDialog} color="primary">
-            Cancel
-          </Button>
-          <Button 
-            onClick={handleActionSubmit} 
-            color="primary"
-            disabled={(actionType !== 'approve' && !comment.trim())}
-          >
-            Submit
-          </Button>
-        </DialogActions>
-      </Dialog>
+                  {['APPROVED', 'REJECTED'].includes(currentExpense.status) && (
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      <Box
+                        sx={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          bgcolor: currentExpense.status === 'APPROVED' ? 'success.main' : 'error.main',
+                        }}
+                      />
+                      <Box>
+                        <Typography variant="body2" fontWeight="bold">
+                          {currentExpense.status === 'APPROVED' ? 'Approved' : 'Rejected'}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          {new Date(currentExpense.updatedAt).toLocaleString()}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  )}
+                </Stack>
+              </CardContent>
+            </Card>
+
+            {/* Expense Flags */}
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  Expense Flags
+                </Typography>
+                <Divider sx={{ mb: 2 }} />
+                <Stack spacing={1}>
+                  {currentExpense.requiresReceipt && (
+                    <Chip
+                      label="Receipt Required"
+                      size="small"
+                      color={currentExpense.receipt ? 'success' : 'warning'}
+                      variant="outlined"
+                    />
+                  )}
+                  {currentExpense.flaggedForReview && (
+                    <Chip
+                      label="Flagged for Review"
+                      size="small"
+                      color="warning"
+                      variant="outlined"
+                    />
+                  )}
+                  {currentExpense.amount > 1000 && (
+                    <Chip
+                      label="High Value"
+                      size="small"
+                      color="info"
+                      variant="outlined"
+                    />
+                  )}
+                </Stack>
+              </CardContent>
+            </Card>
+
+            {/* Quick Actions */}
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  Quick Actions
+                </Typography>
+                <Divider sx={{ mb: 2 }} />
+                <Stack spacing={1}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    startIcon={<DownloadIcon />}
+                    fullWidth
+                  >
+                    Export PDF
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    startIcon={<ReceiptIcon />}
+                    fullWidth
+                    onClick={() => navigate('/expenses/new')}
+                  >
+                    Create Similar
+                  </Button>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Stack>
+        </Grid>
+      </Grid>
     </Box>
   );
 };
 
-export default ExpenseDetail; 
+export default ExpenseDetail;

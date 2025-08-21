@@ -87,23 +87,65 @@ const Dashboard: React.FC = () => {
     fetchData();
   }, [dispatch, user]);
 
-  // Sample data for charts
-  const expensesByCategoryData = [
-    { name: 'Travel', value: 4000 },
-    { name: 'Meals', value: 3000 },
-    { name: 'Office Supplies', value: 2000 },
-    { name: 'Equipment', value: 2780 },
-    { name: 'Other', value: 1890 },
-  ];
+  // Generate real data from API expenses
+  const expensesByCategoryData = React.useMemo(() => {
+    if (!apiExpenses || apiExpenses.length === 0) return [];
+    
+    const categoryTotals = apiExpenses.reduce((acc, expense) => {
+      const categoryName = expense.category?.name || 'Other';
+      acc[categoryName] = (acc[categoryName] || 0) + expense.amount;
+      return acc;
+    }, {} as Record<string, number>);
+    
+    return Object.entries(categoryTotals).map(([name, value]) => ({ name, value }));
+  }, [apiExpenses]);
 
-  const expensesByMonthData = [
-    { name: 'Jan', amount: 4000 },
-    { name: 'Feb', amount: 3000 },
-    { name: 'Mar', amount: 2000 },
-    { name: 'Apr', amount: 2780 },
-    { name: 'May', amount: 1890 },
-    { name: 'Jun', amount: 2390 },
-  ];
+  const expensesByMonthData = React.useMemo(() => {
+    if (!apiExpenses || apiExpenses.length === 0) return [];
+    
+    const monthTotals = apiExpenses.reduce((acc, expense) => {
+      const monthName = new Date(expense.expenseDate).toLocaleDateString('en-US', { month: 'short' });
+      acc[monthName] = (acc[monthName] || 0) + expense.amount;
+      return acc;
+    }, {} as Record<string, number>);
+    
+    return Object.entries(monthTotals).map(([name, amount]) => ({ name, amount }));
+  }, [apiExpenses]);
+
+  // Smart insights and analytics
+  const smartInsights = React.useMemo(() => {
+    if (!apiExpenses || apiExpenses.length === 0) return [];
+    
+    const insights = [];
+    const totalSpent = apiExpenses.reduce((sum, expense) => sum + expense.amount, 0);
+    const avgExpense = totalSpent / apiExpenses.length;
+    
+    // High spending alert
+    const highExpenses = apiExpenses.filter(e => e.amount > avgExpense * 2);
+    if (highExpenses.length > 0) {
+      insights.push({
+        type: 'warning',
+        title: 'High-Value Expenses Detected',
+        description: `${highExpenses.length} expenses are significantly above average ($${avgExpense.toFixed(2)})`,
+        action: 'Review high-value expenses',
+      });
+    }
+    
+    // Spending trend
+    const recentExpenses = apiExpenses.filter(e => 
+      new Date(e.expenseDate) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+    );
+    if (recentExpenses.length > apiExpenses.length * 0.7) {
+      insights.push({
+        type: 'info',
+        title: 'Increased Spending Activity',
+        description: `70% of expenses occurred in the last 30 days`,
+        action: 'Monitor spending patterns',
+      });
+    }
+    
+    return insights;
+  }, [apiExpenses]);
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
@@ -170,21 +212,24 @@ const Dashboard: React.FC = () => {
         </Typography>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
           <Box sx={{ flex: '1 1 23%', minWidth: 250 }}>
-            <Card>
-              <CardActionArea component={Link} to="/expenses/new">
-                <CardContent sx={{ textAlign: 'center' }}>
+            <Card sx={{ height: '100%' }}>
+              <CardActionArea component={Link} to="/expenses/new" sx={{ height: '100%' }}>
+                <CardContent sx={{ textAlign: 'center', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <AddIcon color="primary" sx={{ fontSize: 40 }} />
                   <Typography variant="h6" component="div">
                     New Expense
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Quick expense entry with AI suggestions
                   </Typography>
                 </CardContent>
               </CardActionArea>
             </Card>
           </Box>
           <Box sx={{ flex: '1 1 23%', minWidth: 250 }}>
-            <Card>
-              <CardActionArea component={Link} to="/approvals">
-                <CardContent sx={{ textAlign: 'center' }}>
+            <Card sx={{ height: '100%' }}>
+              <CardActionArea component={Link} to="/approvals" sx={{ height: '100%' }}>
+                <CardContent sx={{ textAlign: 'center', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <ApprovalIcon color="secondary" sx={{ fontSize: 40 }} />
                   <Typography variant="h6" component="div">
                     Pending Approvals
@@ -192,14 +237,17 @@ const Dashboard: React.FC = () => {
                   <Typography variant="h5" color="text.secondary">
                     {pendingApprovals?.length || aggregatedStats.pendingCount || 0}
                   </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Awaiting your review
+                  </Typography>
                 </CardContent>
               </CardActionArea>
             </Card>
           </Box>
           <Box sx={{ flex: '1 1 23%', minWidth: 250 }}>
-            <Card>
-              <CardActionArea component={Link} to="/expenses">
-                <CardContent sx={{ textAlign: 'center' }}>
+            <Card sx={{ height: '100%' }}>
+              <CardActionArea component={Link} to="/expenses" sx={{ height: '100%' }}>
+                <CardContent sx={{ textAlign: 'center', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <ReceiptIcon color="info" sx={{ fontSize: 40 }} />
                   <Typography variant="h6" component="div">
                     My Expenses
@@ -207,17 +255,23 @@ const Dashboard: React.FC = () => {
                   <Typography variant="h5" color="text.secondary">
                     {apiExpenses?.length || 0}
                   </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Total: ${apiExpenses?.reduce((sum, exp) => sum + exp.amount, 0).toLocaleString() || '0'}
+                  </Typography>
                 </CardContent>
               </CardActionArea>
             </Card>
           </Box>
           <Box sx={{ flex: '1 1 23%', minWidth: 250 }}>
-            <Card>
-              <CardActionArea component={Link} to="/reports/new">
-                <CardContent sx={{ textAlign: 'center' }}>
+            <Card sx={{ height: '100%' }}>
+              <CardActionArea component={Link} to="/reports/new" sx={{ height: '100%' }}>
+                <CardContent sx={{ textAlign: 'center', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <TrendingUpIcon color="success" sx={{ fontSize: 40 }} />
                   <Typography variant="h6" component="div">
-                    Generate Report
+                    Smart Reports
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    AI-powered insights & analytics
                   </Typography>
                 </CardContent>
               </CardActionArea>
@@ -267,6 +321,31 @@ const Dashboard: React.FC = () => {
         </Paper>
       </Box>
       
+      {/* Smart Insights */}
+      {smartInsights.length > 0 && (
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h6" gutterBottom>
+            Smart Insights
+          </Typography>
+          <Stack spacing={2}>
+            {smartInsights.map((insight, index) => (
+              <Alert 
+                key={index} 
+                severity={insight.type as any}
+                action={
+                  <Button color="inherit" size="small">
+                    {insight.action}
+                  </Button>
+                }
+              >
+                <Typography variant="subtitle2">{insight.title}</Typography>
+                <Typography variant="body2">{insight.description}</Typography>
+              </Alert>
+            ))}
+          </Stack>
+        </Box>
+      )}
+      
       {/* Charts */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="h6" gutterBottom>
@@ -278,26 +357,34 @@ const Dashboard: React.FC = () => {
               <Typography variant="subtitle1" gutterBottom>
                 Expenses by Category
               </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={expensesByCategoryData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {expensesByCategoryData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
+              {expensesByCategoryData.length > 0 ? (
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                    <Pie
+                      data={expensesByCategoryData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                      outerRadius={80}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
+                      {expensesByCategoryData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip formatter={(value: any) => [`$${value.toLocaleString()}`, 'Amount']} />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
+              ) : (
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 300 }}>
+                  <Typography variant="body2" color="text.secondary">
+                    No expense data available
+                  </Typography>
+                </Box>
+              )}
             </Paper>
           </Box>
           <Box sx={{ flex: '1 1 45%', minWidth: 300 }}>
@@ -305,16 +392,24 @@ const Dashboard: React.FC = () => {
               <Typography variant="subtitle1" gutterBottom>
                 Expenses by Month
               </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={expensesByMonthData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="amount" fill="#8884d8" />
-                </BarChart>
-              </ResponsiveContainer>
+              {expensesByMonthData.length > 0 ? (
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={expensesByMonthData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip formatter={(value: any) => [`$${value.toLocaleString()}`, 'Amount']} />
+                    <Legend />
+                    <Bar dataKey="amount" fill="#8884d8" />
+                  </BarChart>
+                </ResponsiveContainer>
+              ) : (
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 300 }}>
+                  <Typography variant="body2" color="text.secondary">
+                    No expense data available
+                  </Typography>
+                </Box>
+              )}
             </Paper>
           </Box>
         </Box>
