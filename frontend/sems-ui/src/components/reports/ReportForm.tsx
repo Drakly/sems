@@ -11,7 +11,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Grid,
+
   Card,
   CardContent,
   Divider,
@@ -26,6 +26,7 @@ import {
   ListItemText,
   ListItemIcon,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import {
   Assessment as ReportIcon,
   CalendarToday as CalendarIcon,
@@ -240,7 +241,7 @@ const ReportForm: React.FC = () => {
 
       <Grid container spacing={3}>
         {/* Main Form */}
-        <Grid item xs={12} md={8}>
+        <Grid xs={12} md={8}>
           <Stack spacing={3}>
             {/* Basic Information */}
             <Paper sx={{ p: 3 }}>
@@ -324,7 +325,7 @@ const ReportForm: React.FC = () => {
                 Date Range
               </Typography>
               <Grid container spacing={2}>
-                <Grid item xs={6}>
+                <Grid xs={6}>
                   <TextField
                     fullWidth
                     label="Start Date"
@@ -336,7 +337,7 @@ const ReportForm: React.FC = () => {
                     InputLabelProps={{ shrink: true }}
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid xs={6}>
                   <TextField
                     fullWidth
                     label="End Date"
@@ -440,7 +441,7 @@ const ReportForm: React.FC = () => {
                     Amount Range
                   </Typography>
                   <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                    <Grid xs={6}>
                       <TextField
                         fullWidth
                         label="Minimum Amount"
@@ -456,7 +457,7 @@ const ReportForm: React.FC = () => {
                         }}
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid xs={6}>
                       <TextField
                         fullWidth
                         label="Maximum Amount"
@@ -593,7 +594,7 @@ const ReportForm: React.FC = () => {
         </Grid>
 
         {/* Sidebar */}
-        <Grid item xs={12} md={4}>
+        <Grid xs={12} md={4}>
           <Stack spacing={3}>
             {/* Report Preview */}
             <Card>
