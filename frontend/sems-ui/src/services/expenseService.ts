@@ -152,19 +152,39 @@ const expenseService = {
 
   // Get pending approvals for current user
   getPendingApprovalsForUser: async (params: any = {}): Promise<Expense[]> => {
-    const response = await api.get<Expense[]>(`${workflowBaseUrl}/pending-approvals`, { params });
-    return response.data;
+    console.log('Fetching pending approvals from:', `${workflowBaseUrl}/pending-approvals`);
+    const token = localStorage.getItem('token');
+    console.log('Using token for pending approvals:', token ? 'Present' : 'Missing');
+    
+    try {
+      const response = await api.get<Expense[]>(`${workflowBaseUrl}/pending-approvals`, { params });
+      console.log('Pending approvals response:', response.data);
+      return response.data;
+    } catch (error: any) {
+      console.error('Error fetching pending approvals:', error);
+      if (error.response?.status === 403) {
+        console.warn('Pending approvals requires authentication - user may need to log in');
+      }
+      // Return empty array as fallback to prevent UI from breaking
+      return [];
+    }
   },
 
   // Get workflow statistics
   getWorkflowStatistics: async (): Promise<WorkflowStatistics[]> => {
     console.log('Fetching workflow statistics from:', `${workflowBaseUrl}/stats`);
+    const token = localStorage.getItem('token');
+    console.log('Using token for workflow stats:', token ? 'Present' : 'Missing');
+    
     try {
       const response = await api.get<WorkflowStatistics[]>(`${workflowBaseUrl}/stats`);
       console.log('Workflow statistics response:', response.data);
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching workflow statistics:', error);
+      if (error.response?.status === 403) {
+        console.warn('Workflow statistics requires authentication - user may need to log in');
+      }
       // Return empty array as fallback to prevent UI from breaking
       return [];
     }
