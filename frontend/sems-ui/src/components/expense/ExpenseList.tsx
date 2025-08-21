@@ -281,7 +281,7 @@ const ExpenseList: React.FC = () => {
               </Typography>
             </CardContent>
           </Card>
-        </Grid>
+        </Box>
         <Box sx={{ flex: 1, minWidth: 200 }}>
           <Card>
             <CardContent sx={{ textAlign: 'center' }}>
@@ -293,7 +293,7 @@ const ExpenseList: React.FC = () => {
               </Typography>
             </CardContent>
           </Card>
-        </Grid>
+        </Box>
         <Box sx={{ flex: 1, minWidth: 200 }}>
           <Card>
             <CardContent sx={{ textAlign: 'center' }}>
@@ -305,7 +305,7 @@ const ExpenseList: React.FC = () => {
               </Typography>
             </CardContent>
           </Card>
-        </Grid>
+        </Box>
         <Box sx={{ flex: 1, minWidth: 200 }}>
           <Card>
             <CardContent sx={{ textAlign: 'center' }}>
