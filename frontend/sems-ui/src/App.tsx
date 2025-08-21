@@ -19,19 +19,6 @@ import Dashboard from './components/dashboard/Dashboard';
 // Layout component
 import MainLayout from './layout/MainLayout';
 
-// Import actual components
-import ExpenseForm from './components/expense/ExpenseForm';
-import ExpenseList from './components/expense/ExpenseList';
-import ExpenseDetail from './components/expense/ExpenseDetail';
-import BudgetForm from './components/budget/BudgetForm';
-import BudgetList from './components/budget/BudgetList';
-import BudgetDetail from './components/budget/BudgetDetail';
-import ReportForm from './components/reports/ReportForm';
-import ReportList from './components/reports/ReportList';
-import ReportDetail from './components/reports/ReportDetail';
-import ApprovalList from './components/approval/ApprovalList';
-import ApprovalDetail from './components/approval/ApprovalDetail';
-
 // Redux
 import { RootState } from './store';
 import { getCurrentUser } from './store/slices/authSlice';
@@ -52,19 +39,6 @@ interface UIState {
     data: any | null;
   };
 }
-
-// Import actual components
-import ExpenseForm from './components/expense/ExpenseForm';
-import ExpenseList from './components/expense/ExpenseList';
-import ExpenseDetail from './components/expense/ExpenseDetail';
-import BudgetForm from './components/budget/BudgetForm';
-import BudgetList from './components/budget/BudgetList';
-import BudgetDetail from './components/budget/BudgetDetail';
-import ReportForm from './components/reports/ReportForm';
-import ReportList from './components/reports/ReportList';
-import ReportDetail from './components/reports/ReportDetail';
-import ApprovalList from './components/approval/ApprovalList';
-import ApprovalDetail from './components/approval/ApprovalDetail';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();

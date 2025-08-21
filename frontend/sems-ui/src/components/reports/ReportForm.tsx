@@ -240,7 +240,7 @@ const ReportForm: React.FC = () => {
 
       <Grid container spacing={3}>
         {/* Main Form */}
-        <Grid xs={12} md={8}>
+        <Grid item xs={12} md={8}>
           <Stack spacing={3}>
             {/* Basic Information */}
             <Paper sx={{ p: 3 }}>
@@ -324,7 +324,7 @@ const ReportForm: React.FC = () => {
                 Date Range
               </Typography>
               <Grid container spacing={2}>
-                <Grid xs={6}>
+                <Grid item xs={6}>
                   <TextField
                     fullWidth
                     label="Start Date"
@@ -336,7 +336,7 @@ const ReportForm: React.FC = () => {
                     InputLabelProps={{ shrink: true }}
                   />
                 </Grid>
-                <Grid xs={6}>
+                <Grid item xs={6}>
                   <TextField
                     fullWidth
                     label="End Date"
@@ -440,7 +440,7 @@ const ReportForm: React.FC = () => {
                     Amount Range
                   </Typography>
                   <Grid container spacing={2}>
-                    <Grid xs={6}>
+                    <Grid item xs={6}>
                       <TextField
                         fullWidth
                         label="Minimum Amount"
@@ -456,7 +456,7 @@ const ReportForm: React.FC = () => {
                         }}
                       />
                     </Grid>
-                    <Grid xs={6}>
+                    <Grid item xs={6}>
                       <TextField
                         fullWidth
                         label="Maximum Amount"
@@ -593,7 +593,7 @@ const ReportForm: React.FC = () => {
         </Grid>
 
         {/* Sidebar */}
-        <Grid xs={12} md={4}>
+        <Grid item xs={12} md={4}>
           <Stack spacing={3}>
             {/* Report Preview */}
             <Card>

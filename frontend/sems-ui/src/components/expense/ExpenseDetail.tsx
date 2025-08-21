@@ -141,7 +141,7 @@ const ExpenseDetail: React.FC = () => {
 
       <Grid container spacing={3}>
         {/* Main Details */}
-        <Grid xs={12} md={8}>
+        <Grid item xs={12} md={8}>
           <Paper sx={{ p: 3 }}>
             <Stack spacing={3}>
               {/* Title and Status */}
@@ -176,7 +176,7 @@ const ExpenseDetail: React.FC = () => {
 
               {/* Details Grid */}
               <Grid container spacing={3}>
-                <Grid xs={12} sm={6}>
+                <Grid item xs={12} sm={6}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                     <CategoryIcon />
                     <Typography variant="subtitle2" color="text.secondary">
@@ -188,7 +188,7 @@ const ExpenseDetail: React.FC = () => {
                   </Typography>
                 </Grid>
 
-                <Grid xs={12} sm={6}>
+                <Grid item xs={12} sm={6}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                     <CalendarIcon />
                     <Typography variant="subtitle2" color="text.secondary">
@@ -200,7 +200,7 @@ const ExpenseDetail: React.FC = () => {
                   </Typography>
                 </Grid>
 
-                <Grid xs={12} sm={6}>
+                <Grid item xs={12} sm={6}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                     <PersonIcon />
                     <Typography variant="subtitle2" color="text.secondary">
@@ -212,7 +212,7 @@ const ExpenseDetail: React.FC = () => {
                   </Typography>
                 </Grid>
 
-                <Grid xs={12} sm={6}>
+                <Grid item xs={12} sm={6}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                     <CalendarIcon />
                     <Typography variant="subtitle2" color="text.secondary">
@@ -265,7 +265,7 @@ const ExpenseDetail: React.FC = () => {
         </Grid>
 
         {/* Sidebar */}
-        <Grid xs={12} md={4}>
+        <Grid item xs={12} md={4}>
           <Stack spacing={3}>
             {/* Status Timeline */}
             <Card>

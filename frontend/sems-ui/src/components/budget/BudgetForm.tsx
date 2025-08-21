@@ -182,7 +182,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ mode = 'create' }) => {
 
       <Grid container spacing={3}>
         {/* Main Form */}
-        <Grid xs={12} md={8}>
+        <Grid item xs={12} md={8}>
           <Paper sx={{ p: 3 }}>
             <Stack spacing={3}>
               {/* Smart Suggestions Toggle */}
@@ -220,7 +220,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ mode = 'create' }) => {
 
               {/* Amount and Currency */}
               <Grid container spacing={2}>
-                <Grid xs={8}>
+                <Grid item xs={8}>
                   <TextField
                     fullWidth
                     label="Budget Amount"
@@ -238,7 +238,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ mode = 'create' }) => {
                     }}
                   />
                 </Grid>
-                <Grid xs={4}>
+                <Grid item xs={4}>
                   <FormControl fullWidth>
                     <InputLabel>Currency</InputLabel>
                     <Select
@@ -326,7 +326,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ mode = 'create' }) => {
 
               {/* Date Range - Using regular input fields */}
               <Grid container spacing={2}>
-                <Grid xs={6}>
+                <Grid item xs={6}>
                   <TextField
                     fullWidth
                     label="Start Date"
@@ -345,7 +345,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ mode = 'create' }) => {
                     }}
                   />
                 </Grid>
-                <Grid xs={6}>
+                <Grid item xs={6}>
                   <TextField
                     fullWidth
                     label="End Date"
@@ -381,7 +381,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ mode = 'create' }) => {
         </Grid>
 
         {/* Sidebar */}
-        <Grid xs={12} md={4}>
+        <Grid item xs={12} md={4}>
           <Stack spacing={3}>
             {/* Budget Summary */}
             <Card>

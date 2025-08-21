@@ -241,7 +241,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
 
       <Grid container spacing={3}>
         {/* Main Form */}
-        <Grid xs={12} md={8}>
+        <Grid item xs={12} md={8}>
           <Paper sx={{ p: 3 }}>
             <Stack spacing={3}>
               {/* AI Toggle */}
@@ -305,7 +305,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
 
               {/* Amount and Currency */}
               <Grid container spacing={2}>
-                <Grid xs={8}>
+                <Grid item xs={8}>
                   <TextField
                     fullWidth
                     label="Amount"
@@ -323,7 +323,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
                     }}
                   />
                 </Grid>
-                <Grid xs={4}>
+                <Grid item xs={4}>
                   <FormControl fullWidth>
                     <InputLabel>Currency</InputLabel>
                     <Select
@@ -469,7 +469,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
         </Grid>
 
         {/* Sidebar */}
-        <Grid xs={12} md={4}>
+        <Grid item xs={12} md={4}>
           <Stack spacing={3}>
             {/* Expense Summary */}
             <Card>
