@@ -35,7 +35,7 @@ import {
   DialogContent,
   DialogActions,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+
 import {
   Add as AddIcon,
   Search as SearchIcon,
@@ -269,8 +269,8 @@ const ExpenseList: React.FC = () => {
       </Box>
 
       {/* Statistics Cards */}
-      <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid xs={12} sm={6} md={3}>
+      <Box sx={{ display: 'flex', gap: 2, mb: 3, flexWrap: 'wrap' }}>
+        <Box sx={{ flex: 1, minWidth: 200 }}>
           <Card>
             <CardContent sx={{ textAlign: 'center' }}>
               <Typography variant="h4" color="primary">
@@ -282,7 +282,7 @@ const ExpenseList: React.FC = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid xs={12} sm={6} md={3}>
+        <Box sx={{ flex: 1, minWidth: 200 }}>
           <Card>
             <CardContent sx={{ textAlign: 'center' }}>
               <Typography variant="h4" color="info.main">
@@ -294,7 +294,7 @@ const ExpenseList: React.FC = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid xs={12} sm={6} md={3}>
+        <Box sx={{ flex: 1, minWidth: 200 }}>
           <Card>
             <CardContent sx={{ textAlign: 'center' }}>
               <Typography variant="h4" color="warning.main">
@@ -306,7 +306,7 @@ const ExpenseList: React.FC = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid xs={12} sm={6} md={3}>
+        <Box sx={{ flex: 1, minWidth: 200 }}>
           <Card>
             <CardContent sx={{ textAlign: 'center' }}>
               <Typography variant="h4" color="success.main">
@@ -317,13 +317,13 @@ const ExpenseList: React.FC = () => {
               </Typography>
             </CardContent>
           </Card>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
       {/* Filters */}
       <Paper sx={{ p: 2, mb: 3 }}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid xs={12} md={4}>
+        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
+          <Box sx={{ flex: 2, minWidth: 200 }}>
             <TextField
               fullWidth
               placeholder="Search expenses..."
@@ -337,8 +337,8 @@ const ExpenseList: React.FC = () => {
                 ),
               }}
             />
-          </Grid>
-          <Grid xs={12} md={3}>
+          </Box>
+          <Box sx={{ flex: 1, minWidth: 150 }}>
             <FormControl fullWidth>
               <InputLabel>Status</InputLabel>
               <Select
@@ -354,8 +354,8 @@ const ExpenseList: React.FC = () => {
                 ))}
               </Select>
             </FormControl>
-          </Grid>
-          <Grid xs={12} md={3}>
+          </Box>
+          <Box sx={{ flex: 1, minWidth: 150 }}>
             <FormControl fullWidth>
               <InputLabel>Category</InputLabel>
               <Select
@@ -371,8 +371,8 @@ const ExpenseList: React.FC = () => {
                 ))}
               </Select>
             </FormControl>
-          </Grid>
-          <Grid xs={12} md={2}>
+          </Box>
+          <Box sx={{ minWidth: 120 }}>
             <Button
               variant="outlined"
               startIcon={<ExportIcon />}
@@ -380,8 +380,8 @@ const ExpenseList: React.FC = () => {
             >
               Export
             </Button>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Paper>
 
       {/* Expenses Table */}

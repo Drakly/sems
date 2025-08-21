@@ -16,7 +16,7 @@ import {
   Alert,
   CircularProgress,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+
 import {
   ArrowBack as BackIcon,
   Edit as EditIcon,
@@ -140,9 +140,9 @@ const ExpenseDetail: React.FC = () => {
         </Box>
       </Box>
 
-      <Grid container spacing={3}>
+      <Box sx={{ display: 'flex', gap: 3, flexDirection: { xs: 'column', md: 'row' } }}>
         {/* Main Details */}
-        <Grid xs={12} md={8}>
+        <Box sx={{ flex: 2 }}>
           <Paper sx={{ p: 3 }}>
             <Stack spacing={3}>
               {/* Title and Status */}
@@ -176,8 +176,8 @@ const ExpenseDetail: React.FC = () => {
               <Divider />
 
               {/* Details Grid */}
-              <Grid container spacing={3}>
-                <Grid xs={12} sm={6}>
+              <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
+                <Box sx={{ flex: 1, minWidth: 200 }}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                     <CategoryIcon />
                     <Typography variant="subtitle2" color="text.secondary">
@@ -187,9 +187,9 @@ const ExpenseDetail: React.FC = () => {
                   <Typography variant="body1">
                     {currentExpense.category?.name || 'Not specified'}
                   </Typography>
-                </Grid>
+                </Box>
 
-                <Grid xs={12} sm={6}>
+                <Box sx={{ flex: 1, minWidth: 200 }}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                     <CalendarIcon />
                     <Typography variant="subtitle2" color="text.secondary">
@@ -199,9 +199,9 @@ const ExpenseDetail: React.FC = () => {
                   <Typography variant="body1">
                     {new Date(currentExpense.expenseDate).toLocaleDateString()}
                   </Typography>
-                </Grid>
+                </Box>
 
-                <Grid xs={12} sm={6}>
+                <Box sx={{ flex: 1, minWidth: 200 }}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                     <PersonIcon />
                     <Typography variant="subtitle2" color="text.secondary">
@@ -211,9 +211,9 @@ const ExpenseDetail: React.FC = () => {
                   <Typography variant="body1">
                     {currentExpense.createdBy?.firstName} {currentExpense.createdBy?.lastName}
                   </Typography>
-                </Grid>
+                </Box>
 
-                <Grid xs={12} sm={6}>
+                <Box sx={{ flex: 1, minWidth: 200 }}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                     <CalendarIcon />
                     <Typography variant="subtitle2" color="text.secondary">
@@ -223,8 +223,8 @@ const ExpenseDetail: React.FC = () => {
                   <Typography variant="body1">
                     {new Date(currentExpense.createdAt).toLocaleDateString()}
                   </Typography>
-                </Grid>
-              </Grid>
+                </Box>
+              </Box>
 
               {/* Receipt Section */}
               {currentExpense.receipt && (
@@ -263,10 +263,10 @@ const ExpenseDetail: React.FC = () => {
               )}
             </Stack>
           </Paper>
-        </Grid>
+        </Box>
 
         {/* Sidebar */}
-        <Grid xs={12} md={4}>
+        <Box sx={{ flex: 1 }}>
           <Stack spacing={3}>
             {/* Status Timeline */}
             <Card>
@@ -405,8 +405,8 @@ const ExpenseDetail: React.FC = () => {
               </CardContent>
             </Card>
           </Stack>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Box>
   );
 };

@@ -22,7 +22,7 @@ import {
   Switch,
   FormControlLabel,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+
 import {
   AccountBalance as BudgetIcon,
   AttachMoney as MoneyIcon,
@@ -180,9 +180,9 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ mode = 'create' }) => {
         {mode === 'edit' ? 'Edit Budget' : 'Create New Budget'}
       </Typography>
 
-      <Grid container spacing={3}>
+      <Box sx={{ display: 'flex', gap: 3, flexDirection: { xs: 'column', md: 'row' } }}>
         {/* Main Form */}
-        <Grid xs={12} md={8}>
+        <Box sx={{ flex: 2 }}>
           <Paper sx={{ p: 3 }}>
             <Stack spacing={3}>
               {/* Smart Suggestions Toggle */}
@@ -219,42 +219,38 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ mode = 'create' }) => {
               />
 
               {/* Amount and Currency */}
-              <Grid container spacing={2}>
-                <Grid xs={8}>
-                  <TextField
-                    fullWidth
-                    label="Budget Amount"
-                    type="number"
-                    value={formData.amount}
-                    onChange={(e) => handleInputChange('amount', parseFloat(e.target.value) || 0)}
-                    error={!!formErrors.amount}
-                    helperText={formErrors.amount}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <MoneyIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-                <Grid xs={4}>
-                  <FormControl fullWidth>
-                    <InputLabel>Currency</InputLabel>
-                    <Select
-                      value={formData.currency}
-                      label="Currency"
-                      onChange={(e) => handleInputChange('currency', e.target.value)}
-                    >
-                      {CURRENCIES.map((currency) => (
-                        <MenuItem key={currency} value={currency}>
-                          {currency}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-              </Grid>
+              <Box sx={{ display: 'flex', gap: 2 }}>
+                <TextField
+                  sx={{ flex: 2 }}
+                  label="Budget Amount"
+                  type="number"
+                  value={formData.amount}
+                  onChange={(e) => handleInputChange('amount', parseFloat(e.target.value) || 0)}
+                  error={!!formErrors.amount}
+                  helperText={formErrors.amount}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <MoneyIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <FormControl sx={{ flex: 1 }}>
+                  <InputLabel>Currency</InputLabel>
+                  <Select
+                    value={formData.currency}
+                    label="Currency"
+                    onChange={(e) => handleInputChange('currency', e.target.value)}
+                  >
+                    {CURRENCIES.map((currency) => (
+                      <MenuItem key={currency} value={currency}>
+                        {currency}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
 
               {/* Smart Amount Suggestions */}
               {smartSuggestions && selectedCategory && suggestedAmount && (
@@ -325,46 +321,42 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ mode = 'create' }) => {
               </FormControl>
 
               {/* Date Range - Using regular input fields */}
-              <Grid container spacing={2}>
-                <Grid xs={6}>
-                  <TextField
-                    fullWidth
-                    label="Start Date"
-                    type="date"
-                    value={formData.startDate}
-                    onChange={(e) => handleInputChange('startDate', e.target.value)}
-                    error={!!formErrors.startDate}
-                    helperText={formErrors.startDate}
-                    InputLabelProps={{ shrink: true }}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <CalendarIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-                <Grid xs={6}>
-                  <TextField
-                    fullWidth
-                    label="End Date"
-                    type="date"
-                    value={formData.endDate}
-                    onChange={(e) => handleInputChange('endDate', e.target.value)}
-                    error={!!formErrors.endDate}
-                    helperText={formErrors.endDate}
-                    InputLabelProps={{ shrink: true }}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <CalendarIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-              </Grid>
+              <Box sx={{ display: 'flex', gap: 2 }}>
+                <TextField
+                  sx={{ flex: 1 }}
+                  label="Start Date"
+                  type="date"
+                  value={formData.startDate}
+                  onChange={(e) => handleInputChange('startDate', e.target.value)}
+                  error={!!formErrors.startDate}
+                  helperText={formErrors.startDate}
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <CalendarIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <TextField
+                  sx={{ flex: 1 }}
+                  label="End Date"
+                  type="date"
+                  value={formData.endDate}
+                  onChange={(e) => handleInputChange('endDate', e.target.value)}
+                  error={!!formErrors.endDate}
+                  helperText={formErrors.endDate}
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <CalendarIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Box>
 
               {/* Description */}
               <TextField
@@ -378,10 +370,10 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ mode = 'create' }) => {
               />
             </Stack>
           </Paper>
-        </Grid>
+        </Box>
 
         {/* Sidebar */}
-        <Grid xs={12} md={4}>
+        <Box sx={{ flex: 1 }}>
           <Stack spacing={3}>
             {/* Budget Summary */}
             <Card>
@@ -482,8 +474,8 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ mode = 'create' }) => {
               </CardContent>
             </Card>
           </Stack>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
       {/* Action Buttons */}
       <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'flex-end' }}>

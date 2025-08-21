@@ -22,7 +22,7 @@ import {
   Switch,
   FormControlLabel,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+
 import {
   CloudUpload as UploadIcon,
   Receipt as ReceiptIcon,
@@ -239,9 +239,9 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
         {mode === 'edit' ? 'Edit Expense' : 'New Expense'}
       </Typography>
 
-      <Grid container spacing={3}>
+      <Box sx={{ display: 'flex', gap: 3, flexDirection: { xs: 'column', md: 'row' } }}>
         {/* Main Form */}
-        <Grid xs={12} md={8}>
+        <Box sx={{ flex: 2 }}>
           <Paper sx={{ p: 3 }}>
             <Stack spacing={3}>
               {/* AI Toggle */}
@@ -304,42 +304,38 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
               )}
 
               {/* Amount and Currency */}
-              <Grid container spacing={2}>
-                <Grid xs={8}>
-                  <TextField
-                    fullWidth
-                    label="Amount"
-                    type="number"
-                    value={formData.amount}
-                    onChange={(e) => handleInputChange('amount', parseFloat(e.target.value) || 0)}
-                    error={!!formErrors.amount}
-                    helperText={formErrors.amount}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <MoneyIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-                <Grid xs={4}>
-                  <FormControl fullWidth>
-                    <InputLabel>Currency</InputLabel>
-                    <Select
-                      value={formData.currency}
-                      label="Currency"
-                      onChange={(e) => handleInputChange('currency', e.target.value)}
-                    >
-                      {CURRENCIES.map((currency) => (
-                        <MenuItem key={currency} value={currency}>
-                          {currency}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-              </Grid>
+              <Box sx={{ display: 'flex', gap: 2 }}>
+                <TextField
+                  sx={{ flex: 2 }}
+                  label="Amount"
+                  type="number"
+                  value={formData.amount}
+                  onChange={(e) => handleInputChange('amount', parseFloat(e.target.value) || 0)}
+                  error={!!formErrors.amount}
+                  helperText={formErrors.amount}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <MoneyIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <FormControl sx={{ flex: 1 }}>
+                  <InputLabel>Currency</InputLabel>
+                  <Select
+                    value={formData.currency}
+                    label="Currency"
+                    onChange={(e) => handleInputChange('currency', e.target.value)}
+                  >
+                    {CURRENCIES.map((currency) => (
+                      <MenuItem key={currency} value={currency}>
+                        {currency}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
 
               {/* Amount Warning */}
               {aiSuggestions.amountWarning && (
@@ -466,10 +462,10 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
               )}
             </Stack>
           </Paper>
-        </Grid>
+        </Box>
 
         {/* Sidebar */}
-        <Grid xs={12} md={4}>
+        <Box sx={{ flex: 1 }}>
           <Stack spacing={3}>
             {/* Expense Summary */}
             <Card>
@@ -529,8 +525,8 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
               </Card>
             )}
           </Stack>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
       {/* Action Buttons */}
       <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'flex-end' }}>

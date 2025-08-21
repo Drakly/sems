@@ -26,7 +26,7 @@ import {
   ListItemText,
   ListItemIcon,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+
 import {
   Assessment as ReportIcon,
   CalendarToday as CalendarIcon,
@@ -239,9 +239,9 @@ const ReportForm: React.FC = () => {
         Generate Report
       </Typography>
 
-      <Grid container spacing={3}>
+      <Box sx={{ display: 'flex', gap: 3, flexDirection: { xs: 'column', md: 'row' } }}>
         {/* Main Form */}
-        <Grid xs={12} md={8}>
+        <Box sx={{ flex: 2 }}>
           <Stack spacing={3}>
             {/* Basic Information */}
             <Paper sx={{ p: 3 }}>
@@ -324,32 +324,28 @@ const ReportForm: React.FC = () => {
               <Typography variant="h6" gutterBottom>
                 Date Range
               </Typography>
-              <Grid container spacing={2}>
-                <Grid xs={6}>
-                  <TextField
-                    fullWidth
-                    label="Start Date"
-                    type="date"
-                    value={formData.startDate}
-                    onChange={(e) => handleInputChange('startDate', e.target.value)}
-                    error={!!formErrors.startDate}
-                    helperText={formErrors.startDate}
-                    InputLabelProps={{ shrink: true }}
-                  />
-                </Grid>
-                <Grid xs={6}>
-                  <TextField
-                    fullWidth
-                    label="End Date"
-                    type="date"
-                    value={formData.endDate}
-                    onChange={(e) => handleInputChange('endDate', e.target.value)}
-                    error={!!formErrors.endDate}
-                    helperText={formErrors.endDate}
-                    InputLabelProps={{ shrink: true }}
-                  />
-                </Grid>
-              </Grid>
+              <Box sx={{ display: 'flex', gap: 2 }}>
+                <TextField
+                  sx={{ flex: 1 }}
+                  label="Start Date"
+                  type="date"
+                  value={formData.startDate}
+                  onChange={(e) => handleInputChange('startDate', e.target.value)}
+                  error={!!formErrors.startDate}
+                  helperText={formErrors.startDate}
+                  InputLabelProps={{ shrink: true }}
+                />
+                <TextField
+                  sx={{ flex: 1 }}
+                  label="End Date"
+                  type="date"
+                  value={formData.endDate}
+                  onChange={(e) => handleInputChange('endDate', e.target.value)}
+                  error={!!formErrors.endDate}
+                  helperText={formErrors.endDate}
+                  InputLabelProps={{ shrink: true }}
+                />
+              </Box>
 
               {/* Quick Date Ranges */}
               <Box sx={{ mt: 2 }}>
@@ -440,40 +436,36 @@ const ReportForm: React.FC = () => {
                   <Typography variant="subtitle1" gutterBottom>
                     Amount Range
                   </Typography>
-                  <Grid container spacing={2}>
-                    <Grid xs={6}>
-                      <TextField
-                        fullWidth
-                        label="Minimum Amount"
-                        type="number"
-                        value={formData.minAmount}
-                        onChange={(e) => handleInputChange('minAmount', parseFloat(e.target.value) || 0)}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <MoneyIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Grid>
-                    <Grid xs={6}>
-                      <TextField
-                        fullWidth
-                        label="Maximum Amount"
-                        type="number"
-                        value={formData.maxAmount}
-                        onChange={(e) => handleInputChange('maxAmount', parseFloat(e.target.value) || 0)}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <MoneyIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
+                  <Box sx={{ display: 'flex', gap: 2 }}>
+                    <TextField
+                      sx={{ flex: 1 }}
+                      label="Minimum Amount"
+                      type="number"
+                      value={formData.minAmount}
+                      onChange={(e) => handleInputChange('minAmount', parseFloat(e.target.value) || 0)}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <MoneyIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                    <TextField
+                      sx={{ flex: 1 }}
+                      label="Maximum Amount"
+                      type="number"
+                      value={formData.maxAmount}
+                      onChange={(e) => handleInputChange('maxAmount', parseFloat(e.target.value) || 0)}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <MoneyIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Box>
                 </Box>
               </Stack>
             </Paper>
@@ -591,10 +583,10 @@ const ReportForm: React.FC = () => {
               </Stack>
             </Paper>
           </Stack>
-        </Grid>
+        </Box>
 
         {/* Sidebar */}
-        <Grid xs={12} md={4}>
+        <Box sx={{ flex: 1 }}>
           <Stack spacing={3}>
             {/* Report Preview */}
             <Card>
@@ -715,8 +707,8 @@ const ReportForm: React.FC = () => {
               </CardContent>
             </Card>
           </Stack>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
       {/* Action Buttons */}
       <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
