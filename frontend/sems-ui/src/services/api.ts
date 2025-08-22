@@ -10,8 +10,10 @@ const api: AxiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
+    'Accept': 'application/json',
   },
   timeout: 15000, // 15 seconds timeout for better reliability
+  withCredentials: false, // Disable credentials for CORS
 });
 
 // Request interceptor to attach auth token

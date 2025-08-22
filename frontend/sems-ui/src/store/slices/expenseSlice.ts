@@ -43,17 +43,25 @@ export const getUserExpenses = createAsyncThunk(
   'expenses/getUserExpenses',
   async (params: any, { rejectWithValue }) => {
     try {
-      console.log('Getting user expenses with params:', params);
+      console.log('Redux getUserExpenses - Getting user expenses with params:', params);
       const response = await expenseService.getUserExpenses(params);
-      console.log('User expenses response:', response);
+      console.log('Redux getUserExpenses - Service response:', response);
+      
+      // Ensure we return an array
+      if (!Array.isArray(response)) {
+        console.warn('Redux getUserExpenses - Response is not an array, converting:', response);
+        return [];
+      }
+      
       return response;
     } catch (error: any) {
-      console.error('Error fetching user expenses:', error);
-      return rejectWithValue(
-        error.response?.data?.message || 
-        error.response?.data?.error || 
-        'Failed to fetch expenses'
-      );
+      console.error('Redux getUserExpenses - Error:', error);
+      const errorMessage = error.message || 
+                          error.response?.data?.message || 
+                          error.response?.data?.error || 
+                          'Failed to fetch expenses';
+      console.error('Redux getUserExpenses - Error message:', errorMessage);
+      return rejectWithValue(errorMessage);
     }
   }
 );

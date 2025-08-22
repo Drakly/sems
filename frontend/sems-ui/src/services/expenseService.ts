@@ -44,20 +44,45 @@ const expenseService = {
   },
   // Basic expense CRUD operations
   createExpense: async (expenseData: ExpenseRequest): Promise<Expense> => {
+    console.log('createExpense - Input data:', expenseData);
+    
     // Convert frontend data to backend format
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      throw new Error('User ID not found. Please log in again.');
+    }
+    
     const backendData = {
-      userId: localStorage.getItem('userId'),
+      userId: userId, // Backend expects UUID string
       title: expenseData.title,
-      description: expenseData.description,
-      amount: expenseData.amount,
-      currency: expenseData.currency.toUpperCase(), // Backend expects enum
-      category: expenseData.categoryId, // Backend expects category enum/ID
-      expenseDate: expenseData.expenseDate,
-      receiptUrl: null // Handle file upload separately if needed
+      description: expenseData.description || '',
+      amount: expenseData.amount, // Backend converts to BigDecimal
+      currency: expenseData.currency.toUpperCase(), // Backend expects Currency enum (USD, EUR, etc.)
+      category: expenseData.categoryId, // Backend expects category string/enum
+      expenseDate: expenseData.expenseDate, // Backend expects LocalDate (YYYY-MM-DD)
+      receiptUrl: null
     };
     
-    const response = await api.post<Expense>(`${baseUrl}`, backendData);
-    return response.data;
+    console.log('createExpense - Backend data:', backendData);
+    console.log('createExpense - Making POST request to:', baseUrl);
+    
+    try {
+      const response = await api.post<Expense>(`${baseUrl}`, backendData);
+      console.log('createExpense - Response status:', response.status);
+      console.log('createExpense - Response data:', response.data);
+      return response.data;
+    } catch (error: any) {
+      console.error('createExpense failed:', error);
+      console.error('Error message:', error.message);
+      console.error('Error status:', error.response?.status);
+      console.error('Error data:', error.response?.data);
+      
+      if (!error.response) {
+        throw new Error('Network error: Unable to connect to server');
+      }
+      
+      throw error;
+    }
   },
 
   getExpenseById: async (id: string): Promise<Expense> => {
@@ -86,12 +111,34 @@ const expenseService = {
       console.log('Getting user expenses for userId:', userId, 'with params:', params);
       console.log('Making request to:', `${baseUrl}/user/${userId}`);
       const response = await api.get(`${baseUrl}/user/${userId}`, { params });
-      console.log('User expenses response:', response.data);
+      console.log('User expenses response status:', response.status);
+      console.log('User expenses response data:', response.data);
+      
+      // Handle empty response or null data
+      if (!response.data) {
+        console.log('getUserExpenses - No data in response, returning empty array');
+        return [];
+      }
+      
+      // Ensure we return an array
+      if (!Array.isArray(response.data)) {
+        console.warn('getUserExpenses - Response data is not an array:', response.data);
+        return [];
+      }
+      
       return response.data;
     } catch (error: any) {
       console.error('getUserExpenses failed:', error);
+      console.error('Error message:', error.message);
       console.error('Error status:', error.response?.status);
       console.error('Error data:', error.response?.data);
+      
+      // Handle network errors
+      if (!error.response) {
+        console.error('Network error - no response received for user expenses');
+        console.warn('Falling back to getAllExpenses due to network error');
+        return await expenseService.getAllExpenses(params);
+      }
       
       if (error.response?.status === 404 || error.response?.status === 400) {
         console.warn('User-specific endpoint failed, falling back to all expenses');
@@ -106,12 +153,34 @@ const expenseService = {
     console.log('getAllExpenses - With params:', params);
     try {
       const response = await api.get(`${baseUrl}`, { params });
-      console.log('getAllExpenses - Response:', response.data);
+      console.log('getAllExpenses - Response status:', response.status);
+      console.log('getAllExpenses - Response data:', response.data);
+      
+      // Handle empty response or null data
+      if (!response.data) {
+        console.log('getAllExpenses - No data in response, returning empty array');
+        return [];
+      }
+      
+      // Ensure we return an array
+      if (!Array.isArray(response.data)) {
+        console.warn('getAllExpenses - Response data is not an array:', response.data);
+        return [];
+      }
+      
       return response.data;
     } catch (error: any) {
       console.error('getAllExpenses failed:', error);
+      console.error('Error message:', error.message);
       console.error('Error status:', error.response?.status);
       console.error('Error data:', error.response?.data);
+      
+      // Handle network errors
+      if (!error.response) {
+        console.error('Network error - no response received');
+        throw new Error('Network error: Unable to connect to server');
+      }
+      
       throw error;
     }
   },
