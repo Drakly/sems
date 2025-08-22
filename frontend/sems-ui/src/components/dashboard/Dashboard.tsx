@@ -111,11 +111,23 @@ const Dashboard: React.FC = () => {
         }
         
         // Dispatch all actions and handle errors individually
+        console.log("About to dispatch getUserExpenses...");
+        const getUserExpensesPromise = dispatch(getUserExpenses({}) as any);
+        
+        console.log("About to dispatch getPendingApprovalsForUser...");
+        const getPendingApprovalsPromise = dispatch(getPendingApprovalsForUser({}) as any);
+        
+        console.log("About to dispatch getWorkflowStatistics...");
+        const getWorkflowStatsPromise = dispatch(getWorkflowStatistics() as any);
+        
+        console.log("About to dispatch getBudgetUtilization...");
+        const getBudgetUtilizationPromise = dispatch(getBudgetUtilization({}) as any);
+        
         const promises = [
-          dispatch(getUserExpenses({}) as any),
-          dispatch(getPendingApprovalsForUser({}) as any),
-          dispatch(getWorkflowStatistics() as any),
-          dispatch(getBudgetUtilization({}) as any)
+          getUserExpensesPromise,
+          getPendingApprovalsPromise,
+          getWorkflowStatsPromise,
+          getBudgetUtilizationPromise
         ];
         
         // Execute all promises but don't fail if some fail
@@ -141,46 +153,57 @@ const Dashboard: React.FC = () => {
   // Generate real data from API expenses
   const expensesByCategoryData = React.useMemo(() => {
     if (!apiExpenses || apiExpenses.length === 0) {
-      // Return sample data when no API data is available
-      console.log("No API expenses data, using sample data for chart");
-      return [
-        { name: 'Travel', value: 1200 },
-        { name: 'Meals', value: 800 },
-        { name: 'Office Supplies', value: 300 },
-        { name: 'Software', value: 500 },
-        { name: 'Other', value: 200 }
-      ];
+      console.log("No API expenses data available");
+      return [];
     }
     
+    console.log("Processing expenses for category chart:", apiExpenses);
     const categoryTotals = apiExpenses.reduce((acc, expense) => {
-      const categoryName = expense.category?.name || 'Other';
+      // Handle different possible category formats
+      let categoryName = 'Other';
+      if (expense.category) {
+        if (typeof expense.category === 'string') {
+          categoryName = expense.category;
+        } else if (expense.category.name) {
+          categoryName = expense.category.name;
+        } else if (expense.category.displayName) {
+          categoryName = expense.category.displayName;
+        }
+      }
+      
       acc[categoryName] = (acc[categoryName] || 0) + expense.amount;
       return acc;
     }, {} as Record<string, number>);
     
+    console.log("Category totals:", categoryTotals);
     return Object.entries(categoryTotals).map(([name, value]) => ({ name, value }));
   }, [apiExpenses]);
 
   const expensesByMonthData = React.useMemo(() => {
     if (!apiExpenses || apiExpenses.length === 0) {
-      // Return sample data when no API data is available
-      console.log("No API expenses data, using sample monthly data");
-      return [
-        { name: 'Jan', amount: 2400 },
-        { name: 'Feb', amount: 1800 },
-        { name: 'Mar', amount: 3200 },
-        { name: 'Apr', amount: 2800 },
-        { name: 'May', amount: 3000 },
-        { name: 'Jun', amount: 2200 }
-      ];
+      console.log("No API expenses data available for monthly chart");
+      return [];
     }
     
+    console.log("Processing expenses for monthly chart:", apiExpenses);
     const monthTotals = apiExpenses.reduce((acc, expense) => {
-      const monthName = new Date(expense.expenseDate).toLocaleDateString('en-US', { month: 'short' });
-      acc[monthName] = (acc[monthName] || 0) + expense.amount;
+      // Handle different possible date formats
+      let expenseDate = expense.expenseDate;
+      if (typeof expenseDate === 'string') {
+        expenseDate = new Date(expenseDate);
+      }
+      
+      if (expenseDate && !isNaN(expenseDate.getTime())) {
+        const monthName = expenseDate.toLocaleDateString('en-US', { month: 'short' });
+        acc[monthName] = (acc[monthName] || 0) + expense.amount;
+      } else {
+        console.warn("Invalid expense date:", expense.expenseDate, "for expense:", expense);
+      }
+      
       return acc;
     }, {} as Record<string, number>);
     
+    console.log("Monthly totals:", monthTotals);
     return Object.entries(monthTotals).map(([name, amount]) => ({ name, amount }));
   }, [apiExpenses]);
 
