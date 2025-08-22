@@ -425,7 +425,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
               <Box>
                 <Typography variant="subtitle1" gutterBottom>
                   Receipt Attachment
-                </Typography>
+        </Typography>
                 <input
                   accept="image/*,.pdf"
                   style={{ display: 'none' }}
@@ -446,7 +446,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
                 {selectedFile && (
                   <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
                     Selected: {selectedFile.name}
-                  </Typography>
+        </Typography>
                 )}
               </Box>
 
@@ -461,7 +461,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
                 </Box>
               )}
             </Stack>
-          </Paper>
+      </Paper>
         </Box>
 
         {/* Sidebar */}
@@ -559,4 +559,4 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
   );
 };
 
-export default ExpenseForm;
+export default ExpenseForm; 

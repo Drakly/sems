@@ -1,6 +1,6 @@
 package com.sems.expense.application.dto;
 
-import com.sems.expense.domain.model.Category;
+import com.sems.expense.domain.model.ExpenseCategory;
 import com.sems.expense.domain.model.Currency;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.PastOrPresent;
@@ -24,7 +24,7 @@ public class UpdateExpenseRequest {
     private BigDecimal amount;
     
     private Currency currency;
-    private Category category;
+    private ExpenseCategory category;
     
     @PastOrPresent(message = "Expense date cannot be in the future")
     private LocalDate expenseDate;

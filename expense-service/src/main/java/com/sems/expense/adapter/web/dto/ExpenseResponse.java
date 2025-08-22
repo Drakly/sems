@@ -1,7 +1,7 @@
 package com.sems.expense.adapter.web.dto;
 
 import com.sems.expense.domain.model.ApprovalStep;
-import com.sems.expense.domain.model.Category;
+import com.sems.expense.domain.model.ExpenseCategory;
 import com.sems.expense.domain.model.Currency;
 import com.sems.expense.domain.model.ExpenseStatus;
 import lombok.AllArgsConstructor;
@@ -27,7 +27,7 @@ public class ExpenseResponse {
     private String description;
     private BigDecimal amount;
     private Currency currency;
-    private Category category;
+    private ExpenseCategory category;
     private ExpenseStatus status;
     private LocalDate expenseDate;
     private LocalDateTime createdAt;

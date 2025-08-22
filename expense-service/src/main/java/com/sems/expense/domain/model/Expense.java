@@ -23,7 +23,7 @@ public class Expense {
     private String description;
     private BigDecimal amount;
     private Currency currency;
-    private Category category;
+    private ExpenseCategory category;
     private UUID categoryId;
     private ExpenseStatus status;
     private LocalDate expenseDate;

@@ -633,7 +633,7 @@ const ReportForm: React.FC = () => {
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   Applied Filters
-                </Typography>
+        </Typography>
                 <Divider sx={{ mb: 2 }} />
                 <Stack spacing={1}>
                   {formData.categories.length > 0 && (
@@ -659,7 +659,7 @@ const ReportForm: React.FC = () => {
                   {(formData.minAmount > 0 || formData.maxAmount > 0) && (
                     <Box>
                       <Typography variant="body2" color="text.secondary">Amount Range:</Typography>
-                      <Typography variant="body1">
+        <Typography variant="body1">
                         ${formData.minAmount} - ${formData.maxAmount || '∞'}
                       </Typography>
                     </Box>
@@ -673,7 +673,7 @@ const ReportForm: React.FC = () => {
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   Report Tips
-                </Typography>
+        </Typography>
                 <Divider sx={{ mb: 2 }} />
                 <List dense>
                   <ListItem>
@@ -740,4 +740,4 @@ const ReportForm: React.FC = () => {
   );
 };
 
-export default ReportForm;
+export default ReportForm; 

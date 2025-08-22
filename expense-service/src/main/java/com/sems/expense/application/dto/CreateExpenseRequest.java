@@ -1,6 +1,6 @@
 package com.sems.expense.application.dto;
 
-import com.sems.expense.domain.model.Category;
+import com.sems.expense.domain.model.ExpenseCategory;
 import com.sems.expense.domain.model.Currency;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -36,7 +36,7 @@ public class CreateExpenseRequest {
     private Currency currency;
     
     @NotNull(message = "Category is required")
-    private Category category;
+    private ExpenseCategory category;
     
     @NotNull(message = "Expense date is required")
     @PastOrPresent(message = "Expense date cannot be in the future")
