@@ -67,24 +67,53 @@ const expenseService = {
 
   getUserExpenses: async (params: any = {}): Promise<Expense[]> => {
     const userId = localStorage.getItem('userId');
+    console.log('getUserExpenses - userId from localStorage:', userId);
+    console.log('getUserExpenses - userId type:', typeof userId);
+    
     if (!userId) {
       console.warn('No userId found in localStorage, attempting to get all expenses instead');
       // Fallback to getting all expenses if userId is not available
       try {
+        console.log('Falling back to getAllExpenses...');
         return await expenseService.getAllExpenses(params);
       } catch (error) {
+        console.error('Fallback getAllExpenses failed:', error);
         throw new Error('User ID not found and unable to fetch expenses. Please log in again.');
       }
     }
-    console.log('Getting user expenses for userId:', userId, 'with params:', params);
-    const response = await api.get(`${baseUrl}/user/${userId}`, { params });
-    console.log('User expenses response:', response.data);
-    return response.data;
+    
+    try {
+      console.log('Getting user expenses for userId:', userId, 'with params:', params);
+      console.log('Making request to:', `${baseUrl}/user/${userId}`);
+      const response = await api.get(`${baseUrl}/user/${userId}`, { params });
+      console.log('User expenses response:', response.data);
+      return response.data;
+    } catch (error: any) {
+      console.error('getUserExpenses failed:', error);
+      console.error('Error status:', error.response?.status);
+      console.error('Error data:', error.response?.data);
+      
+      if (error.response?.status === 404 || error.response?.status === 400) {
+        console.warn('User-specific endpoint failed, falling back to all expenses');
+        return await expenseService.getAllExpenses(params);
+      }
+      throw error;
+    }
   },
 
   getAllExpenses: async (params: any = {}): Promise<Expense[]> => {
-    const response = await api.get(`${baseUrl}`, { params });
-    return response.data;
+    console.log('getAllExpenses - Making request to:', baseUrl);
+    console.log('getAllExpenses - With params:', params);
+    try {
+      const response = await api.get(`${baseUrl}`, { params });
+      console.log('getAllExpenses - Response:', response.data);
+      return response.data;
+    } catch (error: any) {
+      console.error('getAllExpenses failed:', error);
+      console.error('Error status:', error.response?.status);
+      console.error('Error data:', error.response?.data);
+      throw error;
+    }
   },
 
   updateExpense: async (id: string, expenseData: Partial<ExpenseRequest>): Promise<Expense> => {
@@ -152,12 +181,22 @@ const expenseService = {
 
   // Get pending approvals for current user
   getPendingApprovalsForUser: async (params: any = {}): Promise<Expense[]> => {
-    console.log('Fetching pending approvals from:', `${workflowBaseUrl}/pending-approvals`);
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      console.warn('No userId found for pending approvals');
+      return [];
+    }
+    
+    console.log('Fetching pending approvals from:', `${workflowBaseUrl}/pending`);
+    console.log('Using approverId:', userId);
     const token = localStorage.getItem('token');
     console.log('Using token for pending approvals:', token ? 'Present' : 'Missing');
     
     try {
-      const response = await api.get<Expense[]>(`${workflowBaseUrl}/pending-approvals`, { params });
+      // Backend expects approverId as query parameter
+      const response = await api.get<Expense[]>(`${workflowBaseUrl}/pending`, { 
+        params: { approverId: userId, ...params }
+      });
       console.log('Pending approvals response:', response.data);
       return response.data;
     } catch (error: any) {

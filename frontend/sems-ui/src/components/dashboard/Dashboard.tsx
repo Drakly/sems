@@ -72,6 +72,9 @@ const Dashboard: React.FC = () => {
         // Test basic API connectivity first
         try {
           console.log("Testing basic API connectivity...");
+          console.log("Current auth token:", localStorage.getItem('token'));
+          console.log("Current user ID:", localStorage.getItem('userId'));
+          
           const testResponse = await fetch('http://localhost:8080/api/expenses', {
             method: 'GET',
             headers: {
@@ -82,8 +85,26 @@ const Dashboard: React.FC = () => {
             }
           });
           console.log("Direct API test response status:", testResponse.status);
+          const responseText = await testResponse.text();
+          console.log("Direct API response body:", responseText);
+          
           if (!testResponse.ok) {
             console.error("Direct API test failed:", testResponse.statusText);
+          }
+          
+          // Test workflow endpoint
+          if (localStorage.getItem('token')) {
+            console.log("Testing workflow stats endpoint...");
+            const workflowResponse = await fetch('http://localhost:8080/api/v1/expenses/workflow/stats', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+              }
+            });
+            console.log("Workflow API test response status:", workflowResponse.status);
+            const workflowText = await workflowResponse.text();
+            console.log("Workflow API response body:", workflowText);
           }
         } catch (directApiError) {
           console.error("Direct API test error:", directApiError);
