@@ -166,8 +166,6 @@ const Dashboard: React.FC = () => {
           categoryName = expense.category;
         } else if (expense.category.name) {
           categoryName = expense.category.name;
-        } else if (expense.category.displayName) {
-          categoryName = expense.category.displayName;
         }
       }
       
@@ -188,9 +186,11 @@ const Dashboard: React.FC = () => {
     console.log("Processing expenses for monthly chart:", apiExpenses);
     const monthTotals = apiExpenses.reduce((acc, expense) => {
       // Handle different possible date formats
-      let expenseDate = expense.expenseDate;
-      if (typeof expenseDate === 'string') {
-        expenseDate = new Date(expenseDate);
+      let expenseDate: Date;
+      if (typeof expense.expenseDate === 'string') {
+        expenseDate = new Date(expense.expenseDate);
+      } else {
+        expenseDate = new Date(expense.expenseDate);
       }
       
       if (expenseDate && !isNaN(expenseDate.getTime())) {
