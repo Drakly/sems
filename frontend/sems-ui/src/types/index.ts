@@ -41,18 +41,23 @@ export interface Expense {
   description: string;
   amount: number;
   currency: string;
-  category: Category;
+  category: string; // Backend returns ExpenseCategory enum as string
   status: ExpenseStatus | string;
-  createdBy: Partial<User>;
   userId: string;
   createdAt: string;
   expenseDate: string;
-  lastModifiedAt: string;
   updatedAt: string;
-  receipt?: string;
-  comments?: string;
-  requiresReceipt: boolean;
-  flaggedForReview: boolean;
+  approvedBy?: string;
+  approvedAt?: string;
+  receiptUrl?: string;
+  // Optional fields for enhanced workflow (if using the web DTO)
+  departmentId?: string;
+  projectId?: string;
+  currentApprovalLevel?: number;
+  rejectionReason?: string;
+  requiresReceipt?: boolean;
+  flaggedForReview?: boolean;
+  reviewComments?: string;
 }
 
 export interface ApprovalStep {

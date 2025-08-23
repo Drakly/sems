@@ -1,7 +1,7 @@
 import api from './api';
 import { Expense, ExpenseStatus, ApprovalStep, PaginatedResponse, ApprovalAction, ApprovalHistory, WorkflowStatistics } from '../types';
 
-const baseUrl = '/api/v1/expenses';  // This will work through the gateway on port 8080
+const baseUrl = '/api/expenses';  // This will work through the gateway on port 8080
 const workflowBaseUrl = '/api/v1/expenses/workflow';
 
 export interface ExpenseRequest {
@@ -126,7 +126,17 @@ const expenseService = {
         return [];
       }
       
-      return response.data;
+      // Convert UUIDs to strings and ensure proper format
+      const expenses = response.data.map(expense => ({
+        ...expense,
+        id: expense.id?.toString() || expense.id,
+        userId: expense.userId?.toString() || expense.userId,
+        approvedBy: expense.approvedBy?.toString() || expense.approvedBy,
+        departmentId: expense.departmentId?.toString() || expense.departmentId,
+        projectId: expense.projectId?.toString() || expense.projectId
+      }));
+      
+      return expenses;
     } catch (error: any) {
       console.error('getUserExpenses failed:', error);
       console.error('Error message:', error.message);
@@ -168,7 +178,17 @@ const expenseService = {
         return [];
       }
       
-      return response.data;
+      // Convert UUIDs to strings and ensure proper format
+      const expenses = response.data.map(expense => ({
+        ...expense,
+        id: expense.id?.toString() || expense.id,
+        userId: expense.userId?.toString() || expense.userId,
+        approvedBy: expense.approvedBy?.toString() || expense.approvedBy,
+        departmentId: expense.departmentId?.toString() || expense.departmentId,
+        projectId: expense.projectId?.toString() || expense.projectId
+      }));
+      
+      return expenses;
     } catch (error: any) {
       console.error('getAllExpenses failed:', error);
       console.error('Error message:', error.message);
