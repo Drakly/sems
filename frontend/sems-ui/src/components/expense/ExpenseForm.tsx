@@ -221,13 +221,25 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
     if (!validateForm()) return;
 
     try {
+      console.log('Submitting expense form with data:', formData);
+      
+      let result;
       if (mode === 'edit' && id) {
-        await dispatch(updateExpense({ id, expense: formData }) as any);
+        console.log('Updating expense with ID:', id);
+        result = await dispatch(updateExpense({ id, expense: formData }) as any);
       } else {
-        await dispatch(createExpense(formData) as any);
+        console.log('Creating new expense');
+        result = await dispatch(createExpense(formData) as any);
       }
-
-      navigate('/expenses');
+      
+      console.log('Expense operation result:', result);
+      
+      if (result.type.endsWith('/fulfilled')) {
+        console.log('Expense saved successfully, navigating to expense list');
+        navigate('/expenses');
+      } else {
+        console.error('Expense operation failed:', result);
+      }
     } catch (error) {
       console.error('Error saving expense:', error);
     }

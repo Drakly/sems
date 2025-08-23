@@ -53,14 +53,14 @@ const expenseService = {
     }
     
     const backendData = {
-      userId: userId, // Backend expects UUID string
+      userId: userId, // Backend expects UUID as string
       title: expenseData.title,
       description: expenseData.description || '',
       amount: expenseData.amount, // Backend converts to BigDecimal
       currency: expenseData.currency.toUpperCase(), // Backend expects Currency enum (USD, EUR, etc.)
-      category: expenseData.categoryId, // Backend expects category string/enum
+      category: expenseData.categoryId.toUpperCase(), // Backend expects ExpenseCategory enum
       expenseDate: expenseData.expenseDate, // Backend expects LocalDate (YYYY-MM-DD)
-      receiptUrl: null
+      receiptUrl: null // Will be updated after file upload if needed
     };
     
     console.log('createExpense - Backend data:', backendData);
@@ -70,7 +70,18 @@ const expenseService = {
       const response = await api.post<Expense>(`${baseUrl}`, backendData);
       console.log('createExpense - Response status:', response.status);
       console.log('createExpense - Response data:', response.data);
-      return response.data;
+      
+      // Convert the response to ensure proper format
+      const expense = {
+        ...response.data,
+        id: response.data.id?.toString() || response.data.id,
+        userId: response.data.userId?.toString() || response.data.userId,
+        approvedBy: response.data.approvedBy?.toString() || response.data.approvedBy,
+        departmentId: response.data.departmentId?.toString() || response.data.departmentId,
+        projectId: response.data.projectId?.toString() || response.data.projectId
+      };
+      
+      return expense;
     } catch (error: any) {
       console.error('createExpense failed:', error);
       console.error('Error message:', error.message);
@@ -81,13 +92,37 @@ const expenseService = {
         throw new Error('Network error: Unable to connect to server');
       }
       
+      // Provide more specific error messages
+      if (error.response?.status === 400) {
+        const errorData = error.response.data;
+        if (typeof errorData === 'object' && errorData.message) {
+          throw new Error(`Validation error: ${errorData.message}`);
+        }
+        throw new Error('Invalid expense data. Please check all required fields.');
+      }
+      
+      if (error.response?.status === 401) {
+        throw new Error('Authentication failed. Please log in again.');
+      }
+      
       throw error;
     }
   },
 
   getExpenseById: async (id: string): Promise<Expense> => {
     const response = await api.get<Expense>(`${baseUrl}/${id}`);
-    return response.data;
+    
+    // Convert UUIDs to strings for consistency
+    const expense = {
+      ...response.data,
+      id: response.data.id?.toString() || response.data.id,
+      userId: response.data.userId?.toString() || response.data.userId,
+      approvedBy: response.data.approvedBy?.toString() || response.data.approvedBy,
+      departmentId: response.data.departmentId?.toString() || response.data.departmentId,
+      projectId: response.data.projectId?.toString() || response.data.projectId
+    };
+    
+    return expense;
   },
 
   getUserExpenses: async (params: any = {}): Promise<Expense[]> => {
@@ -212,11 +247,22 @@ const expenseService = {
     if (expenseData.description) backendData.description = expenseData.description;
     if (expenseData.amount) backendData.amount = expenseData.amount;
     if (expenseData.currency) backendData.currency = expenseData.currency.toUpperCase();
-    if (expenseData.categoryId) backendData.category = expenseData.categoryId;
+    if (expenseData.categoryId) backendData.category = expenseData.categoryId.toUpperCase();
     if (expenseData.expenseDate) backendData.expenseDate = expenseData.expenseDate;
     
     const response = await api.put<Expense>(`${baseUrl}/${id}`, backendData);
-    return response.data;
+    
+    // Convert UUIDs to strings for consistency
+    const expense = {
+      ...response.data,
+      id: response.data.id?.toString() || response.data.id,
+      userId: response.data.userId?.toString() || response.data.userId,
+      approvedBy: response.data.approvedBy?.toString() || response.data.approvedBy,
+      departmentId: response.data.departmentId?.toString() || response.data.departmentId,
+      projectId: response.data.projectId?.toString() || response.data.projectId
+    };
+    
+    return expense;
   },
 
   deleteExpense: async (id: string): Promise<void> => {
