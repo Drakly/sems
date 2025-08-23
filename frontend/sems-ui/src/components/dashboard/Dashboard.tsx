@@ -27,6 +27,7 @@ import { RootState } from '../../store';
 import { getUserExpenses, getPendingApprovalsForUser, getWorkflowStatistics } from '../../store/slices/expenseSlice';
 import { getBudgetUtilization } from '../../store/slices/budgetSlice';
 import { Expense } from '../../types';
+import { formatCategoryForDisplay } from '../../utils/categoryUtils';
 
 
 
@@ -160,14 +161,7 @@ const Dashboard: React.FC = () => {
     console.log("Processing expenses for category chart:", apiExpenses);
     const categoryTotals = apiExpenses.reduce((acc, expense) => {
       // Backend returns category as enum string (e.g., "TRAVEL", "MEALS")
-      let categoryName = 'Other';
-      if (expense.category && typeof expense.category === 'string') {
-        // Convert enum format to display format (e.g., "TRAVEL" -> "Travel")
-        categoryName = expense.category.toLowerCase()
-          .split('_')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' ');
-      }
+      const categoryName = formatCategoryForDisplay(expense.category);
       
       acc[categoryName] = (acc[categoryName] || 0) + expense.amount;
       return acc;

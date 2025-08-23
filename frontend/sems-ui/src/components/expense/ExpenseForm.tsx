@@ -37,17 +37,26 @@ import {
 import { RootState } from '../../store';
 import { createExpense, updateExpense, getExpenseById } from '../../store/slices/expenseSlice';
 import { ExpenseRequest } from '../../services/expenseService';
+import { getCategoryOptions } from '../../utils/categoryUtils';
 
-// Smart expense categories with AI suggestions
+// Smart expense categories with AI suggestions - matching backend enum
 const EXPENSE_CATEGORIES = [
-  { id: 'TRAVEL', name: 'Travel & Transportation', icon: '✈️', keywords: ['uber', 'taxi', 'flight', 'hotel', 'gas', 'parking', 'rental'] },
-  { id: 'MEALS', name: 'Meals & Entertainment', icon: '🍽️', keywords: ['restaurant', 'lunch', 'dinner', 'coffee', 'catering'] },
-  { id: 'OFFICE_SUPPLIES', name: 'Office Supplies', icon: '📝', keywords: ['paper', 'pen', 'computer', 'software', 'printer'] },
-  { id: 'EQUIPMENT', name: 'Equipment & Hardware', icon: '💻', keywords: ['laptop', 'monitor', 'keyboard', 'mouse', 'phone'] },
-  { id: 'TRAINING', name: 'Training & Development', icon: '📚', keywords: ['course', 'training', 'certification', 'book', 'conference'] },
-  { id: 'MARKETING', name: 'Marketing & Advertising', icon: '📢', keywords: ['ad', 'marketing', 'promotion', 'banner', 'social'] },
-  { id: 'UTILITIES', name: 'Utilities & Services', icon: '⚡', keywords: ['electricity', 'internet', 'phone', 'subscription', 'service'] },
-  { id: 'OTHER', name: 'Other', icon: '📦', keywords: [] },
+  { id: 'TRAVEL', name: 'Travel', icon: '✈️', keywords: ['uber', 'taxi', 'flight', 'gas', 'parking', 'rental', 'train', 'bus'] },
+  { id: 'ACCOMMODATION', name: 'Accommodation', icon: '🏨', keywords: ['hotel', 'motel', 'airbnb', 'lodging', 'stay'] },
+  { id: 'MEALS', name: 'Meals', icon: '🍽️', keywords: ['restaurant', 'lunch', 'dinner', 'coffee', 'catering', 'food'] },
+  { id: 'ENTERTAINMENT', name: 'Entertainment', icon: '🎭', keywords: ['entertainment', 'movie', 'theater', 'event', 'show'] },
+  { id: 'OFFICE_SUPPLIES', name: 'Office Supplies', icon: '📝', keywords: ['paper', 'pen', 'supplies', 'stationery', 'printer'] },
+  { id: 'SOFTWARE', name: 'Software', icon: '💾', keywords: ['software', 'license', 'subscription', 'app', 'saas'] },
+  { id: 'HARDWARE', name: 'Hardware', icon: '💻', keywords: ['laptop', 'monitor', 'keyboard', 'mouse', 'phone', 'computer', 'equipment'] },
+  { id: 'TELECOMMUNICATION', name: 'Telecommunication', icon: '📞', keywords: ['phone', 'mobile', 'internet', 'telecom', 'communication'] },
+  { id: 'TRAINING', name: 'Training', icon: '📚', keywords: ['course', 'training', 'certification', 'book', 'conference', 'education'] },
+  { id: 'MARKETING', name: 'Marketing', icon: '📢', keywords: ['ad', 'marketing', 'promotion', 'banner', 'social', 'advertising'] },
+  { id: 'CONSULTING', name: 'Consulting', icon: '👥', keywords: ['consulting', 'consultant', 'advisory', 'professional', 'service'] },
+  { id: 'LEGAL', name: 'Legal', icon: '⚖️', keywords: ['legal', 'lawyer', 'attorney', 'law', 'court'] },
+  { id: 'INSURANCE', name: 'Insurance', icon: '🛡️', keywords: ['insurance', 'coverage', 'policy', 'premium'] },
+  { id: 'TAXES', name: 'Taxes', icon: '🏛️', keywords: ['tax', 'taxes', 'irs', 'government', 'filing'] },
+  { id: 'UTILITIES', name: 'Utilities', icon: '⚡', keywords: ['electricity', 'water', 'gas', 'utility', 'power'] },
+  { id: 'MISCELLANEOUS', name: 'Miscellaneous', icon: '📦', keywords: ['other', 'misc', 'miscellaneous'] },
 ];
 
 const CURRENCIES = ['USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD'];
@@ -55,13 +64,21 @@ const CURRENCIES = ['USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD'];
 // Smart amount suggestions based on category
 const AMOUNT_SUGGESTIONS = {
   TRAVEL: [50, 100, 200, 500, 1000],
+  ACCOMMODATION: [100, 200, 300, 500, 1000],
   MEALS: [15, 25, 50, 100],
+  ENTERTAINMENT: [25, 50, 100, 200],
   OFFICE_SUPPLIES: [20, 50, 100, 200],
-  EQUIPMENT: [100, 500, 1000, 2000],
+  SOFTWARE: [50, 100, 500, 1000],
+  HARDWARE: [100, 500, 1000, 2000],
+  TELECOMMUNICATION: [50, 100, 200, 500],
   TRAINING: [100, 500, 1000],
   MARKETING: [100, 500, 1000, 5000],
+  CONSULTING: [200, 500, 1000, 2000],
+  LEGAL: [200, 500, 1000, 2000],
+  INSURANCE: [100, 500, 1000, 2000],
+  TAXES: [100, 500, 1000, 5000],
   UTILITIES: [50, 100, 200, 500],
-  OTHER: [25, 50, 100, 200],
+  MISCELLANEOUS: [25, 50, 100, 200],
 };
 
 interface ExpenseFormProps {
@@ -109,7 +126,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ mode = 'create' }) => {
         description: currentExpense.description || '',
         amount: currentExpense.amount,
         currency: currentExpense.currency,
-        categoryId: currentExpense.category?.id || currentExpense.category?.name || '',
+        categoryId: currentExpense.category || '',
         expenseDate: currentExpense.expenseDate,
         departmentId: user?.department || '',
         projectId: '',

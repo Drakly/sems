@@ -31,6 +31,7 @@ import {
 } from '@mui/icons-material';
 import { RootState } from '../../store';
 import { getExpenseById, deleteExpense, submitExpenseForApproval } from '../../store/slices/expenseSlice';
+import { formatCategoryForDisplay } from '../../utils/categoryUtils';
 
 const STATUS_COLORS = {
   DRAFT: 'default',
@@ -185,7 +186,7 @@ const ExpenseDetail: React.FC = () => {
                     </Typography>
                   </Box>
                   <Typography variant="body1">
-                    {currentExpense.category?.name || 'Not specified'}
+                    {formatCategoryForDisplay(currentExpense.category) || 'Not specified'}
                   </Typography>
                 </Box>
 
@@ -209,7 +210,7 @@ const ExpenseDetail: React.FC = () => {
                     </Typography>
                   </Box>
                   <Typography variant="body1">
-                    {currentExpense.createdBy?.firstName} {currentExpense.createdBy?.lastName}
+                    User ID: {currentExpense.userId}
                   </Typography>
                 </Box>
 
@@ -227,7 +228,7 @@ const ExpenseDetail: React.FC = () => {
               </Box>
 
               {/* Receipt Section */}
-              {currentExpense.receipt && (
+              {currentExpense.receiptUrl && (
                 <>
                   <Divider />
                   <Box>
@@ -238,7 +239,7 @@ const ExpenseDetail: React.FC = () => {
                     <Button
                       variant="outlined"
                       startIcon={<DownloadIcon />}
-                      href={currentExpense.receipt}
+                      href={currentExpense.receiptUrl}
                       target="_blank"
                     >
                       View Receipt
@@ -248,7 +249,7 @@ const ExpenseDetail: React.FC = () => {
               )}
 
               {/* Comments Section */}
-              {currentExpense.comments && (
+              {currentExpense.reviewComments && (
                 <>
                   <Divider />
                   <Box>
@@ -256,7 +257,7 @@ const ExpenseDetail: React.FC = () => {
                       Comments
                     </Typography>
                     <Typography variant="body1">
-                      {currentExpense.comments}
+                      {currentExpense.reviewComments}
                     </Typography>
                   </Box>
                 </>
@@ -352,7 +353,7 @@ const ExpenseDetail: React.FC = () => {
                     <Chip
                       label="Receipt Required"
                       size="small"
-                      color={currentExpense.receipt ? 'success' : 'warning'}
+                      color={currentExpense.receiptUrl ? 'success' : 'warning'}
                       variant="outlined"
                     />
                   )}

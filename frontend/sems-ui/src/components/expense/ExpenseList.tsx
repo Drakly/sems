@@ -54,6 +54,7 @@ import {
 import { RootState } from '../../store';
 import { getUserExpenses, deleteExpense, submitExpenseForApproval } from '../../store/slices/expenseSlice';
 import { Expense, ExpenseStatus } from '../../types';
+import { formatCategoryForDisplay } from '../../utils/categoryUtils';
 
 const STATUS_COLORS = {
   DRAFT: 'default',
@@ -126,7 +127,7 @@ const ExpenseList: React.FC = () => {
 
     // Category filter
     if (categoryFilter) {
-      filtered = filtered.filter(expense => expense.category?.name === categoryFilter);
+      filtered = filtered.filter(expense => expense.category === categoryFilter);
     }
 
     // Sort
@@ -135,8 +136,8 @@ const ExpenseList: React.FC = () => {
       let bValue: any = b[sortBy as keyof Expense];
 
       if (sortBy === 'category') {
-        aValue = a.category?.name || '';
-        bValue = b.category?.name || '';
+        aValue = a.category || '';
+        bValue = b.category || '';
       }
 
       if (typeof aValue === 'string') {
@@ -444,7 +445,7 @@ const ExpenseList: React.FC = () => {
                 </TableCell>
                 <TableCell>
                   <Chip
-                    label={expense.category?.name || 'Other'}
+                    label={formatCategoryForDisplay(expense.category)}
                     size="small"
                     variant="outlined"
                   />
