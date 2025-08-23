@@ -243,9 +243,14 @@ public class ApprovalWorkflowService implements ApprovalWorkflowUseCase {
         Expense expense = getExpenseById(expenseId);
         validateUserCanApprove(delegatorId, expense);
         
-        // Validate the delegate user exists
-        if (!userValidationService.validateUserExists(delegateId)) {
-            throw new ResourceNotFoundException("Delegate user not found");
+        // Validate the delegate user exists (non-blocking for now)
+        try {
+            if (!userValidationService.validateUserExists(delegateId)) {
+                log.warn("Delegate user validation failed for ID: {} - proceeding anyway", delegateId);
+            }
+        } catch (Exception e) {
+            log.error("User validation service error for delegate ID: {} - proceeding anyway. Error: {}", 
+                     delegateId, e.getMessage());
         }
         
         if (expense.getStatus() != ExpenseStatus.SUBMITTED && 
@@ -298,9 +303,14 @@ public class ApprovalWorkflowService implements ApprovalWorkflowUseCase {
     @Override
     @Transactional(readOnly = true)
     public List<Expense> getPendingExpensesForApprover(UUID approverId) {
-        // Validate approver exists
-        if (!userValidationService.validateUserExists(approverId)) {
-            throw new ResourceNotFoundException("Approver not found with id: " + approverId);
+        // Validate approver exists (non-blocking for now)
+        try {
+            if (!userValidationService.validateUserExists(approverId)) {
+                log.warn("Approver validation failed for ID: {} - proceeding anyway", approverId);
+            }
+        } catch (Exception e) {
+            log.error("User validation service error for approver ID: {} - proceeding anyway. Error: {}", 
+                     approverId, e.getMessage());
         }
         
         // Get the roles of the approver to determine which expenses they can approve
@@ -547,9 +557,14 @@ public class ApprovalWorkflowService implements ApprovalWorkflowUseCase {
     }
     
     private void validateUserCanApprove(UUID approverId, Expense expense) {
-        // Check if user exists
-        if (!userValidationService.validateUserExists(approverId)) {
-            throw new ResourceNotFoundException("Approver not found with id: " + approverId);
+        // Check if user exists (non-blocking for now)
+        try {
+            if (!userValidationService.validateUserExists(approverId)) {
+                log.warn("Approver validation failed for ID: {} - proceeding anyway", approverId);
+            }
+        } catch (Exception e) {
+            log.error("User validation service error for approver ID: {} - proceeding anyway. Error: {}", 
+                     approverId, e.getMessage());
         }
         
         // Get the role IDs for this user

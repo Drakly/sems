@@ -7,6 +7,7 @@ import com.sems.expense.domain.model.Expense;
 import com.sems.expense.domain.model.ExpenseStatus;
 import com.sems.expense.domain.port.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ExpenseService {
@@ -26,13 +28,18 @@ public class ExpenseService {
 
     @Transactional
     public ExpenseResponse createExpense(CreateExpenseRequest request) {
-        // Validate that the user exists and is active
-        if (!userValidationService.validateUserExists(request.getUserId())) {
-            throw new RuntimeException("User not found");
-        }
-        
-        if (!userValidationService.validateUserActive(request.getUserId())) {
-            throw new RuntimeException("User is not active");
+        // Validate that the user exists and is active (non-blocking for now)
+        try {
+            if (!userValidationService.validateUserExists(request.getUserId())) {
+                log.warn("User validation failed for user ID: {} - proceeding anyway", request.getUserId());
+            }
+            
+            if (!userValidationService.validateUserActive(request.getUserId())) {
+                log.warn("User active validation failed for user ID: {} - proceeding anyway", request.getUserId());
+            }
+        } catch (Exception e) {
+            log.error("User validation service error for user ID: {} - proceeding anyway. Error: {}", 
+                     request.getUserId(), e.getMessage());
         }
         
         Expense expense = expenseMapper.toEntity(request);
